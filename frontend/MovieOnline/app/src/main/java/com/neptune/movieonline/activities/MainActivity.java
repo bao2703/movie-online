@@ -1,7 +1,9 @@
-package com.neptune.movieonline;
+package com.neptune.movieonline.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import com.neptune.movieonline.R;
 
 public class MainActivity extends AppCompatActivity {
 
