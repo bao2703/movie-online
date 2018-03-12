@@ -3,9 +3,15 @@
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
-    <string name="text_email">Email</string>
-    <string name="text_password">Password</string>
+    <string name="title_sign_in">Sign In</string>
+    <string name="title_register">Register</string>
+    <string name="label_name">Name</string>
+    <string name="label_register">Register</string>
+    <string name="label_email">Email</string>
+    <string name="label_password">Password</string>
+    <string name="label_confirm_password">Confirm Password</string>
     <string name="action_sign_in">Sign in</string>
+    <string name="action_register">Register</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
