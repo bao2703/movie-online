@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
@@ -30,15 +28,15 @@ namespace MovieOnline.Controllers
             user.Role = Role.None;
 
             if (_context.Users.IsExistEmail(user.Email)) return BadRequest();
-            
+
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
 
             return Ok();
         }
 
-        [HttpPost("signin")]
-        public IActionResult SignIn([FromBody] User user)
+        [HttpPost("login")]
+        public IActionResult Login([FromBody] User user)
         {
             if (user == null) return BadRequest();
             return Ok();

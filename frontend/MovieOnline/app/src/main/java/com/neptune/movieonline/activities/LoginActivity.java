@@ -7,21 +7,20 @@ import android.widget.EditText;
 
 import com.neptune.movieonline.R;
 
-public class SignInActivity extends AppCompatActivity {
-
+public class LoginActivity extends AppCompatActivity {
     private EditText editTextEmail, editTextPassword;
-    private Button buttonSignIn;
+    private Button buttonLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.activity_login);
         initialize();
     }
 
     private void initialize() {
         editTextEmail = findViewById(R.id.editTextEmail);
         editTextPassword = findViewById(R.id.editTextPassword);
-        buttonSignIn = findViewById(R.id.buttonSignIn);
+        buttonLogin = findViewById(R.id.buttonLogin);
     }
 }

@@ -5,7 +5,7 @@ package com.neptune.movieonline.utils;
  */
 
 public final class Rest {
-    public static final String URL = "http://10.0.2.2:64142/api";
+    public static final String URL = "http://10.0.2.2:5000/api";
 
     public final class Auth {
         public static final String URL = Rest.URL + "/auth";

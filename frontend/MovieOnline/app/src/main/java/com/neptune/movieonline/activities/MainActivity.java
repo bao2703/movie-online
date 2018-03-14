@@ -9,7 +9,7 @@ import android.widget.Button;
 import com.neptune.movieonline.R;
 
 public class MainActivity extends AppCompatActivity {
-    private Button buttonSignIn, buttonRegister;
+    private Button buttonLogin, buttonRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initialize();
 
-        buttonSignIn.setOnClickListener(new View.OnClickListener() {
+        buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intentSignIn = new Intent(MainActivity.this, SignInActivity.class);
+                Intent intentSignIn = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intentSignIn);
             }
         });
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initialize() {
-        buttonSignIn = findViewById(R.id.buttonSignIn);
+        buttonLogin = findViewById(R.id.buttonLogin);
         buttonRegister = findViewById(R.id.buttonRegister);
     }
 }
