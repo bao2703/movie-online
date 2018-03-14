@@ -7,15 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.models.User;
+import com.neptune.movieonline.requests.GsonRequest;
 import com.neptune.movieonline.utils.Rest;
 import com.neptune.movieonline.utils.VolleyManager;
-
-import org.json.JSONObject;
 
 /**
  * Created by PC on 3/9/2018.
@@ -34,19 +32,18 @@ public class RegisterActivity extends AppCompatActivity {
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                JsonObjectRequest jsonObjectRequest =
-                        new JsonObjectRequest(Request.Method.GET, Rest.Auth.URL + "/test", null, new Response.Listener<JSONObject>() {
-                            @Override
-                            public void onResponse(JSONObject response) {
-                                Log.e("Request", response.toString());
-                            }
-                        }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                Log.e("Request", error.toString());
-                            }
-                        });
-                VolleyManager.getInstance().addToRequestQueue(jsonObjectRequest);
+                GsonRequest<User> gsonRequest = new GsonRequest<>(Rest.Auth.URL + "/test", User.class, null, new Response.Listener<User>() {
+                    @Override
+                    public void onResponse(User response) {
+                        Log.e("Request", response.toString());
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("Request", error.toString());
+                    }
+                });
+                VolleyManager.getInstance().addToRequestQueue(gsonRequest);
             }
         });
     }
