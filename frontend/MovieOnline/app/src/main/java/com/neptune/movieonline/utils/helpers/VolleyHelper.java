@@ -1,4 +1,4 @@
-package com.neptune.movieonline.utils;
+package com.neptune.movieonline.utils.helpers;
 
 import android.content.Context;
 
@@ -10,18 +10,18 @@ import com.android.volley.toolbox.Volley;
  * Created by Neptune on 3/12/2018.
  */
 
-public class VolleyManager {
-    private static VolleyManager instance;
+public class VolleyHelper {
+    private static VolleyHelper instance;
     private RequestQueue requestQueue;
 
     public synchronized static void initialize(Context context) {
         if (instance == null) {
-            instance = new VolleyManager();
+            instance = new VolleyHelper();
             instance.requestQueue = Volley.newRequestQueue(context.getApplicationContext());
         }
     }
 
-    public synchronized static VolleyManager getInstance() {
+    public synchronized static VolleyHelper getInstance() {
         return instance;
     }
 

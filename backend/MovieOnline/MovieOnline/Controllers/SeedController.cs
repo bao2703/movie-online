@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MovieOnline.Data;
+using MovieOnline.Data.Seeds;
 
 namespace MovieOnline.Controllers
 {

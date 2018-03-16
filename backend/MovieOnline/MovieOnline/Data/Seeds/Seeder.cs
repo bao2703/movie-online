@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Bogus;
 using MovieOnline.Data.Domains;
 
-namespace MovieOnline.Data
+namespace MovieOnline.Data.Seeds
 {
     public class Seeder
     {
@@ -22,7 +22,6 @@ namespace MovieOnline.Data
             var userFaker = new Faker<User>().Rules((f, o) =>
             {
                 o.Name = f.Name.FindName();
-                o.Phone = f.Person.Phone;
                 o.Avatar = f.Internet.Avatar();
                 o.Email = f.Person.Email.ToLower();
                 o.Password = "1";

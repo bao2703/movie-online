@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MovieOnline.Data;
+using MovieOnline.Data.Seeds;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -28,9 +30,11 @@ namespace MovieOnline
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.Converters.Add(new StringEnumConverter());
+                options.SerializerSettings.Formatting = Formatting.Indented;
             });
 
             services.AddTransient<Seeder>();
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

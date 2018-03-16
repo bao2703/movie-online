@@ -3,6 +3,9 @@
     <string name="title_register">Register</string>
     <string name="title_login">Login</string>
 
+    <string name="title_register_failed">Register Failed</string>
+    <string name="title_error">Error</string>
+
     <string name="label_name">Name</string>
     <string name="label_register">Register</string>
     <string name="label_email">Email</string>
@@ -11,10 +14,12 @@
 
     <string name="action_login">Login</string>
     <string name="action_register">Register</string>
+    <string name="action_retry">Retry</string>
 
-    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_email_invalid">This email address is invalid</string>
+    <string name="error_email_conflict">This email address is conflict</string>
     <string name="error_invalid_password">This password is too short</string>
-    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_confirm_password_incorrect">Confirm password is incorrect</string>
     <string name="error_field_required">This field is required</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."

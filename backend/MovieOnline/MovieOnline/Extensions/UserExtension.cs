@@ -10,5 +10,10 @@ namespace MovieOnline.Extensions
         {
             return users.Any(x => x.Email == email);
         }
+
+        public static bool VerifyUser(this DbSet<User> users, string email, string password)
+        {
+            return users.Any(x => x.Email == email && x.Password == password);
+        }
     }
 }
