@@ -36,7 +36,7 @@ public class GsonHelper {
     }
 
     public static HashMap<String, String> fromJson(byte[] data) {
-        return fromJson(new String(data),
+        return getGson().fromJson(new String(data),
                 new TypeToken<HashMap<String, String>>() {
                 }.getType());
     }

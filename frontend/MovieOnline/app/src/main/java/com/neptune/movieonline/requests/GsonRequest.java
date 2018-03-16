@@ -7,6 +7,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.JsonSyntaxException;
+import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.GsonHelper;
 
 import java.io.UnsupportedEncodingException;
@@ -20,12 +21,13 @@ public class GsonRequest<T> extends Request<T> {
     private final Map<String, String> headers;
     private final Response.Listener<T> listener;
 
-    public GsonRequest(String url, Class<T> clazz, Map<String, String> headers,
+    public GsonRequest(int method, String url, Class<T> clazz, Map<String, String> headers,
                        Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        super(Method.GET, url, errorListener);
+        super(method, url, errorListener);
         this.clazz = clazz;
         this.headers = headers;
         this.listener = listener;
+        setRetryPolicy(Rest.DEFAULT_RETRY_POLICY);
     }
 
     @Override
@@ -46,5 +48,10 @@ public class GsonRequest<T> extends Request<T> {
         } catch (UnsupportedEncodingException | JsonSyntaxException e) {
             return Response.error(new ParseError(e));
         }
+    }
+
+    @Override
+    public String getBodyContentType() {
+        return "application/json; charset=" + getParamsEncoding();
     }
 }

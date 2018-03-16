@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -23,12 +22,13 @@ import com.neptune.movieonline.utils.helpers.VolleyHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by PC on 3/9/2018.
  */
 
-public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+public class RegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.editTextName)
     EditText editTextName;
@@ -53,12 +53,10 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_register);
         VolleyHelper.initialize(this);
         ButterKnife.bind(this);
-
-        buttonRegister.setOnClickListener(RegisterActivity.this);
     }
 
-    @Override
-    public void onClick(View view) {
+    @OnClick(R.id.buttonRegister)
+    public void onClickRegister() {
         User model = new User();
         model.setName(editTextName.getText().toString());
         model.setEmail(editTextEmail.getText().toString());
@@ -77,6 +75,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 progressDialog.dismiss();
                 Intent intentLogin = new Intent(RegisterActivity.this, LoginActivity.class);
                 startActivity(intentLogin);
+                finish();
             }
         }, new Response.ErrorListener() {
             @Override

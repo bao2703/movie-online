@@ -1,4 +1,6 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
 using MovieOnline.Data.Dtos;
@@ -21,8 +23,8 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var users = _context.Users;
-            var dtos = _mapper.Map<UserDto>(users);
+            var users = _context.Users.ToList();
+            var dtos = _mapper.Map<List<UserDto>>(users);
             return Ok(dtos);
         }
 

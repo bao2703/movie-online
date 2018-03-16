@@ -24,7 +24,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromHeader] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -46,7 +46,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromHeader] LoginModel model)
+        public IActionResult Login([FromBody] LoginModel model)
         {
             if (!ModelState.IsValid)
             {
