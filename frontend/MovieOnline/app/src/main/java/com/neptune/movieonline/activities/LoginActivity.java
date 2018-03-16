@@ -10,15 +10,26 @@ import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.User;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText editTextEmail, editTextPassword;
-    private Button buttonLogin;
+
+    @BindView(R.id.editTextEmail)
+    EditText editTextEmail;
+
+    @BindView(R.id.editTextPassword)
+    EditText editTextPassword;
+
+    @BindView(R.id.buttonLogin)
+    Button buttonLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        initialize();
+        VolleyHelper.initialize(this);
+        ButterKnife.bind(this);
 
         buttonLogin.setOnClickListener(LoginActivity.this);
     }
@@ -28,12 +39,5 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         User model = new User();
         model.setEmail(editTextEmail.getText().toString());
         model.setPassword(editTextPassword.getText().toString());
-    }
-
-    private void initialize() {
-        VolleyHelper.initialize(this);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        buttonLogin = findViewById(R.id.buttonLogin);
     }
 }

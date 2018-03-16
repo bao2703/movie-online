@@ -7,15 +7,25 @@ import android.view.View;
 import android.widget.Button;
 
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.utils.helpers.VolleyHelper;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
-    private Button buttonLogin, buttonRegister;
+
+    @BindView(R.id.buttonLogin)
+    Button buttonLogin;
+
+    @BindView(R.id.buttonRegister)
+    Button buttonRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initialize();
+        VolleyHelper.initialize(this);
+        ButterKnife.bind(this);
 
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -32,10 +42,5 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intentRegister);
             }
         });
-    }
-
-    private void initialize() {
-        buttonLogin = findViewById(R.id.buttonLogin);
-        buttonRegister = findViewById(R.id.buttonRegister);
     }
 }

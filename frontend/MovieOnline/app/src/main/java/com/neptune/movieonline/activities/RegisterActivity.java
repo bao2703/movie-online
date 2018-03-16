@@ -21,20 +21,38 @@ import com.neptune.movieonline.utils.helpers.DialogHelper;
 import com.neptune.movieonline.utils.helpers.GsonHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by PC on 3/9/2018.
  */
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
-    private EditText editTextName, editTextEmail, editTextPassword, editTextConfirmPassword;
-    private Button buttonRegister;
+
+    @BindView(R.id.editTextName)
+    EditText editTextName;
+
+    @BindView(R.id.editTextEmail)
+    EditText editTextEmail;
+
+    @BindView(R.id.editTextPassword)
+    EditText editTextPassword;
+
+    @BindView(R.id.editTextConfirmPassword)
+    EditText editTextConfirmPassword;
+
+    @BindView(R.id.buttonRegister)
+    Button buttonRegister;
+
     private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        initialize();
+        VolleyHelper.initialize(this);
+        ButterKnife.bind(this);
 
         buttonRegister.setOnClickListener(RegisterActivity.this);
     }
@@ -115,14 +133,5 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
 
         return result;
-    }
-
-    private void initialize() {
-        VolleyHelper.initialize(this);
-        editTextName = findViewById(R.id.editTextName);
-        editTextEmail = findViewById(R.id.editTextEmail);
-        editTextPassword = findViewById(R.id.editTextPassword);
-        editTextConfirmPassword = findViewById(R.id.editTextConfirmPassword);
-        buttonRegister = findViewById(R.id.buttonRegister);
     }
 }
