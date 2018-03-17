@@ -30,13 +30,13 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonRegister)
     public void onClickRegister() {
-        Intent intentRegister = new Intent(MainActivity.this, RegisterActivity.class);
-        startActivity(intentRegister);
+        Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        startActivity(registerIntent);
     }
 
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
-        Intent intentLogin = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intentLogin);
+        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(loginIntent);
     }
 }

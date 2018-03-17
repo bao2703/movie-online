@@ -8,7 +8,6 @@ using MovieOnline.Data.Dtos;
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]s")]
-    [Produces("application/json")]
     public class UserController : Controller
     {
         private readonly NeptuneContext _context;

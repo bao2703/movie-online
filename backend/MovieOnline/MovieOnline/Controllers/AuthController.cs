@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
@@ -11,7 +10,6 @@ using MovieOnline.Extensions;
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]")]
-    [Produces("application/json")]
     public class AuthController : Controller
     {
         private readonly NeptuneContext _context;
