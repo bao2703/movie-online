@@ -8,7 +8,7 @@ using MovieOnline.Data.Dtos;
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]s")]
-    public class UserController : Controller
+    public class UserController : BaseController
     {
         private readonly NeptuneContext _context;
         private readonly IMapper _mapper;

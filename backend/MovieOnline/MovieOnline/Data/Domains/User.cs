@@ -1,4 +1,6 @@
-﻿namespace MovieOnline.Data.Domains
+﻿using System.Collections.Generic;
+
+namespace MovieOnline.Data.Domains
 {
     public class User
     {
@@ -13,5 +15,7 @@
         public string Password { get; set; }
 
         public Role Role { get; set; }
+
+        public ICollection<Like> Likes { get; set; }
     }
 }

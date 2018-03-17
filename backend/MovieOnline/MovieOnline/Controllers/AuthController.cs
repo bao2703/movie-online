@@ -10,7 +10,7 @@ using MovieOnline.Extensions;
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]")]
-    public class AuthController : Controller
+    public class AuthController : BaseController
     {
         private readonly NeptuneContext _context;
         private readonly IMapper _mapper;

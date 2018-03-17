@@ -5,8 +5,7 @@ using MovieOnline.Data.Seeds;
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]")]
-    [Produces("application/json")]
-    public class SeedController : Controller
+    public class SeedController : BaseController
     {
         private readonly Seeder _seeder;
 

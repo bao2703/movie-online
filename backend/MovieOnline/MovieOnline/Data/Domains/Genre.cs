@@ -1,4 +1,6 @@
-﻿namespace MovieOnline.Data.Domains
+﻿using System.Collections.Generic;
+
+namespace MovieOnline.Data.Domains
 {
     public class Genre
     {
@@ -6,6 +8,8 @@
 
         public string Name { get; set; }
 
-        public string Title { get; set; }
+        public string Description { get; set; }
+
+        public ICollection<GenreMovie> GenreMovies { get; set; }
     }
 }

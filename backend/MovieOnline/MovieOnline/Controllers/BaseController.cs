@@ -2,7 +2,7 @@
 
 namespace MovieOnline.Controllers
 {
-    public abstract class BaseController : Controller
+    public class BaseController : Controller
     {
     }
 }

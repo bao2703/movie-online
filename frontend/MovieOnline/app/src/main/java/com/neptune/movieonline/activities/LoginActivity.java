@@ -35,10 +35,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
-        User model = new User();
-        model.setEmail(editTextEmail.getText().toString());
-        model.setPassword(editTextPassword.getText().toString());
-
         Log.d("Login", "Login Clicked!");
     }
 }

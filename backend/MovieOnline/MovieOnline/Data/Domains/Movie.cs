@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MovieOnline.Data.Domains
 {
@@ -14,6 +15,16 @@ namespace MovieOnline.Data.Domains
 
         public long Views { get; set; }
 
-        public string Image { get; set; }
+        public float Rating { get; set; }
+
+        public string Poster { get; set; }
+
+        public ICollection<GenreMovie> GenreMovies { get; set; }
+
+        public ICollection<Episode> Episodes { get; set; }
+
+        public ICollection<Like> Likes { get; set; }
+
+        public ICollection<Comment> Comments { get; set; }
     }
 }
