@@ -20,6 +20,9 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.buttonRegister)
     Button buttonRegister;
 
+    @BindView(R.id.buttonMovieList)
+    Button buttonMovieList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,13 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonRegister)
     public void onClickRegister() {
-        Intent registerIntent = new Intent(MainActivity.this, RegisterActivity.class);
+        Intent registerIntent = new Intent(this, RegisterActivity.class);
         startActivity(registerIntent);
     }
 
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
-        Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+        Intent loginIntent = new Intent(this, LoginActivity.class);
+        startActivity(loginIntent);
+    }
+
+    @OnClick(R.id.buttonMovieList)
+    public void onClickMovieList() {
+        Intent loginIntent = new Intent(this, MovieListActivity.class);
         startActivity(loginIntent);
     }
 }

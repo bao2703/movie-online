@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
+using MovieOnline.Data.Domains;
 
 namespace MovieOnline.Controllers
 {
@@ -19,7 +22,9 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok();
+            var movies = _context.Movies.ToList();
+            var dtos = _mapper.Map<List<Movie>>(movies);
+            return Ok(dtos);
         }
     }
 }
