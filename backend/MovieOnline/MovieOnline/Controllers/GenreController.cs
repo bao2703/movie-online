@@ -1,28 +1,29 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MovieOnline.Data;
 using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Repositories;
 
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]s")]
     public class GenreController : BaseController
     {
-        private readonly NeptuneContext _context;
+        private readonly IGenreRepository _genreRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GenreController(NeptuneContext context, IMapper mapper)
+        public GenreController(IMapper mapper, IUnitOfWork unitOfWork, IGenreRepository genreRepository)
         {
-            _context = context;
             _mapper = mapper;
+            _unitOfWork = unitOfWork;
+            _genreRepository = genreRepository;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            var genres = _context.Genres.ToList();
+            var genres = _genreRepository.ToList();
             var reponses = _mapper.Map<List<GenreReponse>>(genres);
             return Ok(reponses);
         }

@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MovieOnline.Data.Seeds;
+using MovieOnline.Data.Seeders;
 
 namespace MovieOnline.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]s")]
     public class SeedController : BaseController
     {
         private readonly Seeder _seeder;
@@ -18,7 +18,7 @@ namespace MovieOnline.Controllers
         public async Task<IActionResult> Init()
         {
             await _seeder.InitializeAsync();
-            return Ok();
+            return Ok("done");
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Bogus;
 using MovieOnline.Data.Domains;
 
-namespace MovieOnline.Data.Seeds
+namespace MovieOnline.Data.Seeders
 {
     public class Seeder
     {

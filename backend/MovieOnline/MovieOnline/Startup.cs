@@ -1,11 +1,10 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MovieOnline.Data;
-using MovieOnline.Data.Seeds;
+using MovieOnline.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
@@ -24,7 +23,6 @@ namespace MovieOnline
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<NeptuneContext>(options => options.UseSqlite("Data Source=neptune.db"));
-            services.AddMvc();
 
             services.AddMvc().AddJsonOptions(options =>
             {
@@ -33,8 +31,7 @@ namespace MovieOnline
                 options.SerializerSettings.Formatting = Formatting.Indented;
             });
 
-            services.AddTransient<Seeder>();
-            services.AddAutoMapper();
+            services.RegisterApplicationServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

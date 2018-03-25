@@ -1,24 +1,25 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MovieOnline.Data;
 using MovieOnline.Data.Domains;
 using MovieOnline.Data.Models.Reponses;
 using MovieOnline.Data.Models.Requests;
-using MovieOnline.Extensions;
+using MovieOnline.Repositories;
 
 namespace MovieOnline.Controllers
 {
     [Route("api/[controller]")]
     public class AuthController : BaseController
     {
-        private readonly NeptuneContext _context;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserRepository _userRepository;
 
-        public AuthController(NeptuneContext context, IMapper mapper)
+        public AuthController(IMapper mapper, IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
-            _context = context;
             _mapper = mapper;
+            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpPost("register")]
@@ -32,13 +33,13 @@ namespace MovieOnline.Controllers
             var user = _mapper.Map<User>(model);
             user.Email = user.Email.ToLower();
 
-            if (_context.Users.IsExistEmail(user.Email))
+            if (_userRepository.IsExistEmail(user.Email))
             {
                 return BadRequest(ErrorReponse.EmailConflict);
             }
 
-            await _context.Users.AddAsync(user);
-            await _context.SaveChangesAsync();
+            await _userRepository.AddAsync(user);
+            await _unitOfWork.SaveChangesAsync();
 
             return Ok();
         }
@@ -53,12 +54,12 @@ namespace MovieOnline.Controllers
 
             model.Email = model.Email.ToLower();
 
-            if (!_context.Users.IsExistEmail(model.Email))
+            if (!_userRepository.IsExistEmail(model.Email))
             {
                 return BadRequest(ErrorReponse.EmailNotFound);
             }
 
-            if (!_context.Users.VerifyUser(model.Email, model.Password))
+            if (!_userRepository.VerifyUser(model.Email, model.Password))
             {
                 return BadRequest(ErrorReponse.InvalidLogin);
             }
