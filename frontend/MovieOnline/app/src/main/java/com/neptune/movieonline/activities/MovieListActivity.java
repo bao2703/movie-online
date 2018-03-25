@@ -1,15 +1,20 @@
 package com.neptune.movieonline.activities;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.adapters.MovieListAdapter;
+import com.neptune.movieonline.models.Movie;
+import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
+import com.neptune.movieonline.utils.requests.GsonRequest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,7 +26,7 @@ public class MovieListActivity extends AppCompatActivity {
     RecyclerView recyclerViewMovie;
 
     MovieListAdapter movieListAdapter;
-    List<String> data;
+    List<Movie> data;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,17 +34,19 @@ public class MovieListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_list);
         VolleyHelper.initialize(this);
         ButterKnife.bind(this);
+        loadMovies();
+    }
 
-        data = new ArrayList<>();
-        for (int i = 0; i < 100; i++) {
-            data.add(String.valueOf(i));
-        }
-        movieListAdapter = new MovieListAdapter(data);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        recyclerViewMovie.setLayoutManager(layoutManager);
-        recyclerViewMovie.setAdapter(movieListAdapter);
+    private void loadMovies() {
+        GsonRequest<Movie[]> moviesRequest = new GsonRequest<>(Request.Method.GET, Rest.Movie.GET_ALL, Movie[].class,
+                new Response.Listener<Movie[]>() {
+                    @Override
+                    public void onResponse(Movie[] response) {
+                        data = new ArrayList<>(Arrays.asList(response));
+                        movieListAdapter = new MovieListAdapter(data);
+                        recyclerViewMovie.setAdapter(movieListAdapter);
+                    }
+                }, null);
+        VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
     }
 }

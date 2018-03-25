@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Bases;
 using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data.Models.Reponses
 {
-    public class GenreReponse : GenreEntity
+    public class GenreReponse : Genre
     {
     }
 
@@ -12,7 +12,7 @@ namespace MovieOnline.Data.Models.Reponses
     {
         public GenreReponseMapperProfile()
         {
-            CreateMap<Genre, GenreReponse>();
+            CreateMap<GenreEntity, GenreReponse>();
         }
     }
 }

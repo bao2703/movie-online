@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Error;
-import com.neptune.movieonline.models.User;
 import com.neptune.movieonline.utils.constants.ErrorCode;
 import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.DialogHelper;
@@ -50,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
-        if(!validateInput()){
+        if (!validateInput()) {
             return;
         }
 

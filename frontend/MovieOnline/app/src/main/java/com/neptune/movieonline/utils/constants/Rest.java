@@ -13,4 +13,10 @@ public interface Rest {
         String LOGIN = Auth.URL + "/login";
         String REGISTER = Auth.URL + "/register";
     }
+
+    interface Movie {
+        String URL = Rest.URL + "/movies";
+
+        String GET_ALL = Movie.URL;
+    }
 }

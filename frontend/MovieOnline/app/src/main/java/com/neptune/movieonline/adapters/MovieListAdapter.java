@@ -1,68 +1,45 @@
 package com.neptune.movieonline.adapters;
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.adapters.viewholders.MovieItemViewHolder;
+import com.neptune.movieonline.models.Movie;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by Neptune on 3/17/2018.
  */
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieItemViewHolder> {
-    private List<String> data;
+public class MovieListAdapter extends RecyclerView.Adapter<MovieItemViewHolder> {
+    private List<Movie> data;
 
-    public MovieListAdapter(List<String> data) {
+    public MovieListAdapter(List<Movie> data) {
         this.data = data;
     }
 
+    @NonNull
     @Override
-    public MovieItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MovieItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.movie_item, parent, false);
         return new MovieItemViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieItemViewHolder holder, int position) {
-        String item = data.get(position);
-        holder.textViewViews.setText(item);
+    public void onBindViewHolder(@NonNull MovieItemViewHolder holder, int position) {
+        Movie item = data.get(position);
+        holder.getTextViewName().setText(item.getName());
+        holder.getTextViewViews().setText(String.valueOf(item.getViews()));
     }
 
     @Override
     public int getItemCount() {
         return data.size();
-    }
-
-    class MovieItemViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.textViewName)
-        TextView textViewName;
-        @BindView(R.id.textViewViews)
-        TextView textViewViews;
-
-        public MovieItemViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
-    }
-
-    class LoadingViewHolder extends RecyclerView.ViewHolder {
-
-        ProgressBar progressBar;
-
-        public LoadingViewHolder(View itemView) {
-            super(itemView);
-            progressBar = itemView.findViewById(R.id.progressBar);
-        }
     }
 }

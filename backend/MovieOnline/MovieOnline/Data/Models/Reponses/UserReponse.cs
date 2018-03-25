@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Bases;
 using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data.Models.Reponses
 {
-    public class UserReponse : UserEntity
+    public class UserReponse : User
     {
     }
 
@@ -12,7 +12,7 @@ namespace MovieOnline.Data.Models.Reponses
     {
         public UserReponseMapperProfile()
         {
-            CreateMap<User, UserReponse>()
+            CreateMap<UserEntity, UserReponse>()
                 .ForMember(d => d.Password, s => s.Ignore());
         }
     }

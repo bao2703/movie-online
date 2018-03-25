@@ -1,12 +1,10 @@
 package com.neptune.movieonline.utils.requests;
 
 import com.android.volley.AuthFailureError;
-import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.ParseError;
 import com.android.volley.Request;
 import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.google.gson.JsonSyntaxException;
 import com.neptune.movieonline.utils.helpers.GsonHelper;
@@ -34,7 +32,9 @@ public class GsonRequest<T> extends Request<T> {
 
     @Override
     public byte[] getBody() throws AuthFailureError {
-        return GsonHelper.toJson(getBodyPayload()).getBytes();
+        Object payload = getBodyPayload();
+        if (payload == null) return null;
+        return GsonHelper.toJson(payload).getBytes();
     }
 
     @Override

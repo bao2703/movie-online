@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data
 {
@@ -10,40 +10,40 @@ namespace MovieOnline.Data
         {
         }
 
-        public DbSet<Movie> Movies { get; set; }
+        public DbSet<MovieEntity> Movies { get; set; }
 
-        public DbSet<Episode> Episodes { get; set; }
+        public DbSet<EpisodeEntity> Episodes { get; set; }
 
-        public DbSet<Genre> Genres { get; set; }
+        public DbSet<GenreEntity> Genres { get; set; }
 
-        public DbSet<Comment> Comments { get; set; }
+        public DbSet<CommentEntity> Comments { get; set; }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<GenreMovie>().HasKey(x => new { x.MovieId, x.GenreId });
+            modelBuilder.Entity<GenreMovieEntity>().HasKey(x => new { x.MovieId, x.GenreId });
 
-            modelBuilder.Entity<GenreMovie>()
+            modelBuilder.Entity<GenreMovieEntity>()
                 .HasOne(x => x.Movie)
                 .WithMany(x => x.GenreMovies)
                 .HasForeignKey(x => x.MovieId);
 
-            modelBuilder.Entity<GenreMovie>()
+            modelBuilder.Entity<GenreMovieEntity>()
                 .HasOne(x => x.Genre)
                 .WithMany(x => x.GenreMovies)
                 .HasForeignKey(x => x.GenreId);
 
-            modelBuilder.Entity<Like>().HasKey(x => new { x.MovieId, x.UserId });
+            modelBuilder.Entity<LikeEntity>().HasKey(x => new { x.MovieId, x.UserId });
 
-            modelBuilder.Entity<Like>()
+            modelBuilder.Entity<LikeEntity>()
                 .HasOne(x => x.Movie)
                 .WithMany(x => x.Likes)
                 .HasForeignKey(x => x.MovieId);
 
-            modelBuilder.Entity<Like>()
+            modelBuilder.Entity<LikeEntity>()
                 .HasOne(x => x.User)
                 .WithMany(x => x.Likes)
                 .HasForeignKey(x => x.UserId);

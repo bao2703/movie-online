@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Entities;
 using MovieOnline.Data.Models.Reponses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
@@ -30,7 +30,7 @@ namespace MovieOnline.Controllers
                 return BadRequest(ErrorReponse.InvalidPayload);
             }
 
-            var user = _mapper.Map<User>(model);
+            var user = _mapper.Map<UserEntity>(model);
             user.Email = user.Email.ToLower();
 
             if (_userRepository.IsExistEmail(user.Email))

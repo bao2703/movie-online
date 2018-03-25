@@ -1,19 +1,13 @@
-﻿using System;
+﻿using MovieOnline.Data.Bases;
 
 namespace MovieOnline.Data.Entities
 {
-    public class CommentEntity
+    public class CommentEntity : Comment
     {
-        public int Id { get; set; }
+        public UserEntity User { get; set; }
 
-        public string Content { get; set; }
+        public MovieEntity Movie { get; set; }
 
-        public DateTime DateCreated { get; set; }
-
-        public string UserId { get; set; }
-
-        public int? MovieId { get; set; }
-
-        public int? EpisodeId { get; set; }
+        public EpisodeEntity Episode { get; set; }
     }
 }

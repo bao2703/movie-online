@@ -2,7 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Bogus;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Bases;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data.Seeders
 {
@@ -49,7 +50,7 @@ namespace MovieOnline.Data.Seeders
             _context.Database.EnsureDeleted();
             _context.Database.EnsureCreated();
 
-            var userFaker = new Faker<User>().Rules((f, o) =>
+            var userFaker = new Faker<UserEntity>().Rules((f, o) =>
             {
                 o.Name = f.Name.FindName();
                 o.Avatar = f.Internet.Avatar();
@@ -81,10 +82,10 @@ namespace MovieOnline.Data.Seeders
 
             await _context.SaveChangesAsync();
 
-            var genres = new List<Genre>();
+            var genres = new List<GenreEntity>();
             foreach (var genreName in _genreNames)
             {
-                genres.Add(new Genre
+                genres.Add(new GenreEntity
                 {
                     Name = genreName,
                     Description = _faker.Lorem.Sentence()
@@ -94,7 +95,7 @@ namespace MovieOnline.Data.Seeders
             _context.Genres.AddRange(genres);
             await _context.SaveChangesAsync();
 
-            var movieFaker = new Faker<Movie>().Rules((f, o) =>
+            var movieFaker = new Faker<MovieEntity>().Rules((f, o) =>
             {
                 o.Name = f.Commerce.Product();
                 o.Release = f.Date.Past(5);
@@ -103,9 +104,9 @@ namespace MovieOnline.Data.Seeders
                 o.Rating = f.Random.Float(1, 5);
                 o.Poster = f.Image.Image(640, 480, true);
 
-                o.GenreMovies = new List<GenreMovie>();
+                o.GenreMovies = new List<GenreMovieEntity>();
                 var randomGenres = f.PickRandom(genres, f.Random.Number(2, 5)).ToList();
-                randomGenres.ForEach(g => o.GenreMovies.Add(new GenreMovie { Genre = g }));
+                randomGenres.ForEach(g => o.GenreMovies.Add(new GenreMovieEntity { Genre = g }));
             });
 
             var movies = movieFaker.Generate(100);

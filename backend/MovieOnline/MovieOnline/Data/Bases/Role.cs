@@ -1,4 +1,4 @@
-﻿namespace MovieOnline.Data.Domains
+﻿namespace MovieOnline.Data.Bases
 {
     public enum Role
     {

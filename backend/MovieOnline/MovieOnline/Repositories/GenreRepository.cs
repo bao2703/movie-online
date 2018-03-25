@@ -1,13 +1,13 @@
 ﻿using MovieOnline.Data;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Repositories
 {
-    public interface IGenreRepository : IRepository<Genre>
+    public interface IGenreRepository : IRepository<GenreEntity>
     {
     }
 
-    public class GenreRepository : Repository<Genre>, IGenreRepository
+    public class GenreRepository : Repository<GenreEntity>, IGenreRepository
     {
         public GenreRepository(NeptuneContext context) : base(context)
         {

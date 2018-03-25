@@ -1,13 +1,12 @@
-﻿namespace MovieOnline.Data.Entities
+﻿using System.Collections.Generic;
+using MovieOnline.Data.Bases;
+
+namespace MovieOnline.Data.Entities
 {
-    public class EpisodeEntity
+    public class EpisodeEntity : Episode
     {
-        public int Id { get; set; }
+        public MovieEntity Movie { get; set; }
 
-        public string Name { get; set; }
-
-        public string Source { get; set; }
-
-        public int MovieId { get; set; }
+        public ICollection<CommentEntity> Comments { get; set; }
     }
 }

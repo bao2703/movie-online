@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using AutoMapper;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data.Models.Requests
 {
@@ -31,8 +31,8 @@ namespace MovieOnline.Data.Models.Requests
     {
         public AuthRequestMapperProfile()
         {
-            CreateMap<RegisterRequest, User>();
-            CreateMap<LoginRequest, User>();
+            CreateMap<RegisterRequest, UserEntity>();
+            CreateMap<LoginRequest, UserEntity>();
         }
     }
 }

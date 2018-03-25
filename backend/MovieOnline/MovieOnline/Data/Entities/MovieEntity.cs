@@ -1,23 +1,16 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using MovieOnline.Data.Bases;
 
 namespace MovieOnline.Data.Entities
 {
-    public class MovieEntity
+    public class MovieEntity : Movie
     {
-        public int Id { get; set; }
+        public ICollection<GenreMovieEntity> GenreMovies { get; set; }
 
-        [Required]
-        public string Name { get; set; }
+        public ICollection<EpisodeEntity> Episodes { get; set; }
 
-        public DateTime Release { get; set; }
+        public ICollection<LikeEntity> Likes { get; set; }
 
-        public string Description { get; set; }
-
-        public long Views { get; set; }
-
-        public float Rating { get; set; }
-
-        public string Poster { get; set; }
+        public ICollection<CommentEntity> Comments { get; set; }
     }
 }

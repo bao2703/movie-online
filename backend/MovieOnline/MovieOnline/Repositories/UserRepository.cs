@@ -1,22 +1,22 @@
 ﻿using MovieOnline.Data;
-using MovieOnline.Data.Domains;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Repositories
 {
-    public interface IUserRepository : IRepository<User>
+    public interface IUserRepository : IRepository<UserEntity>
     {
-        User FindByEmail(string email);
+        UserEntity FindByEmail(string email);
         bool IsExistEmail(string email);
         bool VerifyUser(string email, string password);
     }
 
-    public class UserRepository : Repository<User>, IUserRepository
+    public class UserRepository : Repository<UserEntity>, IUserRepository
     {
         public UserRepository(NeptuneContext context) : base(context)
         {
         }
 
-        public User FindByEmail(string email)
+        public UserEntity FindByEmail(string email)
         {
             return SingleOrDefault(x => x.Email == email);
         }
