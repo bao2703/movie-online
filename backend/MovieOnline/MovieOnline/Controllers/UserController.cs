@@ -3,7 +3,7 @@ using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
-using MovieOnline.Data.Dtos;
+using MovieOnline.Data.Models.Reponses;
 
 namespace MovieOnline.Controllers
 {
@@ -23,16 +23,16 @@ namespace MovieOnline.Controllers
         public IActionResult Index()
         {
             var users = _context.Users.ToList();
-            var dtos = _mapper.Map<List<UserDto>>(users);
-            return Ok(dtos);
+            var reponses = _mapper.Map<List<UserReponse>>(users);
+            return Ok(reponses);
         }
 
         [HttpGet("{id}")]
         public IActionResult Index(int id)
         {
             var user = _context.Users.Find(id);
-            var dto = _mapper.Map<UserDto>(user);
-            return Ok(dto);
+            var reponse = _mapper.Map<UserReponse>(user);
+            return Ok(reponse);
         }
     }
 }

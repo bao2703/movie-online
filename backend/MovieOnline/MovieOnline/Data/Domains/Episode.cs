@@ -1,17 +1,10 @@
 ﻿using System.Collections.Generic;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data.Domains
 {
-    public class Episode
+    public class Episode : EpisodeEntity
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Source { get; set; }
-
-        public int MovieId { get; set; }
-
         public Movie Movie { get; set; }
 
         public ICollection<Comment> Comments { get; set; }

@@ -19,7 +19,6 @@ import java.io.UnsupportedEncodingException;
 
 public class GsonRequest<T> extends Request<T> {
 
-    private final static RetryPolicy RETRY_POLICY = new DefaultRetryPolicy(1000000, 0, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
     private final Class<T> clazz;
     private final Response.Listener<T> listener;
 
@@ -27,7 +26,6 @@ public class GsonRequest<T> extends Request<T> {
         super(method, url, errorListener);
         this.clazz = clazz;
         this.listener = listener;
-        setRetryPolicy(RETRY_POLICY);
     }
 
     public Object getBodyPayload() {

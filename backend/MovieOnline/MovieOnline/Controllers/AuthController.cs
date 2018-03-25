@@ -3,8 +3,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
 using MovieOnline.Data.Domains;
-using MovieOnline.Data.Errors;
-using MovieOnline.Data.Models;
+using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Requests;
 using MovieOnline.Extensions;
 
 namespace MovieOnline.Controllers
@@ -22,11 +22,11 @@ namespace MovieOnline.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterModel model)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(Error.InvalidPayload);
+                return BadRequest(ErrorReponse.InvalidPayload);
             }
 
             var user = _mapper.Map<User>(model);
@@ -34,7 +34,7 @@ namespace MovieOnline.Controllers
 
             if (_context.Users.IsExistEmail(user.Email))
             {
-                return BadRequest(Error.EmailConflict);
+                return BadRequest(ErrorReponse.EmailConflict);
             }
 
             await _context.Users.AddAsync(user);
@@ -44,23 +44,23 @@ namespace MovieOnline.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] LoginModel model)
+        public IActionResult Login([FromBody] LoginRequest model)
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(Error.InvalidPayload);
+                return BadRequest(ErrorReponse.InvalidPayload);
             }
 
             model.Email = model.Email.ToLower();
 
             if (!_context.Users.IsExistEmail(model.Email))
             {
-                return BadRequest(Error.EmailNotFound);
+                return BadRequest(ErrorReponse.EmailNotFound);
             }
 
             if (!_context.Users.VerifyUser(model.Email, model.Password))
             {
-                return BadRequest(Error.InvalidLogin);
+                return BadRequest(ErrorReponse.InvalidLogin);
             }
 
             return Ok();

@@ -2,37 +2,37 @@
 using AutoMapper;
 using MovieOnline.Data.Domains;
 
-namespace MovieOnline.Data.Models
+namespace MovieOnline.Data.Models.Requests
 {
-    public class RegisterModel
+    public class RegisterRequest
     {
         [Required]
         public string Name { get; set; }
 
-        [EmailAddress]
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }
     }
 
-    public class LoginModel
+    public class LoginRequest
     {
-        [EmailAddress]
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
         public string Password { get; set; }
     }
 
-    public class AuthMapperProfile : Profile
+    public class AuthRequestMapperProfile : Profile
     {
-        public AuthMapperProfile()
+        public AuthRequestMapperProfile()
         {
-            CreateMap<RegisterModel, User>();
-            CreateMap<LoginModel, User>();
+            CreateMap<RegisterRequest, User>();
+            CreateMap<LoginRequest, User>();
         }
     }
 }

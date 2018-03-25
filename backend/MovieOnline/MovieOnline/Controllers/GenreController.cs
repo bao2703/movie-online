@@ -1,6 +1,9 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
+using MovieOnline.Data.Models.Reponses;
 
 namespace MovieOnline.Controllers
 {
@@ -19,7 +22,9 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok();
+            var genres = _context.Genres.ToList();
+            var reponses = _mapper.Map<List<GenreReponse>>(genres);
+            return Ok(reponses);
         }
     }
 }

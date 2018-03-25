@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.android.volley.NetworkError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -81,12 +83,14 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         NetworkResponse networkResponse = error.networkResponse;
-                        Error errorResponse = GsonHelper.fromJson(networkResponse.data, Error.class);
+                        if (networkResponse != null && networkResponse.data != null) {
+                            Error errorResponse = GsonHelper.fromJson(networkResponse.data, Error.class);
 
-                        switch (errorResponse.getCode()) {
-                            case ErrorCode.EMAIL_CONFLICT:
-                                editTextEmail.setError(getString(R.string.error_email_conflict));
-                                editTextEmail.requestFocus();
+                            switch (errorResponse.getCode()) {
+                                case ErrorCode.EMAIL_CONFLICT:
+                                    editTextEmail.setError(getString(R.string.error_email_conflict));
+                                    editTextEmail.requestFocus();
+                            }
                         }
                     }
                 }) {

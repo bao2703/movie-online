@@ -1,15 +1,10 @@
 ﻿using System.Collections.Generic;
+using MovieOnline.Data.Entities;
 
 namespace MovieOnline.Data.Domains
 {
-    public class Genre
+    public class Genre : GenreEntity
     {
-        public int Id { get; set; }
-
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
         public ICollection<GenreMovie> GenreMovies { get; set; }
     }
 }
