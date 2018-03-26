@@ -35,8 +35,12 @@ public class GsonHelper {
         return getGson().fromJson(new String(bytes), clazz);
     }
 
+    public static <T> T fromJson(byte[] bytes, Type typeOfT) {
+        return fromJson(new String(bytes), typeOfT);
+    }
+
     public static HashMap<String, String> fromJson(byte[] data) {
-        return getGson().fromJson(new String(data),
+        return fromJson(data,
                 new TypeToken<HashMap<String, String>>() {
                 }.getType());
     }

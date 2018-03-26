@@ -22,8 +22,7 @@ import butterknife.ButterKnife;
 
 public class MovieListActivity extends AppCompatActivity {
 
-    @BindView(R.id.recyclerViewMovie)
-    RecyclerView recyclerViewMovie;
+    @BindView(R.id.recyclerViewMovie) RecyclerView recyclerViewMovie;
 
     MovieListAdapter movieListAdapter;
     List<Movie> data;
@@ -46,7 +45,7 @@ public class MovieListActivity extends AppCompatActivity {
                         movieListAdapter = new MovieListAdapter(data);
                         recyclerViewMovie.setAdapter(movieListAdapter);
                     }
-                }, null);
+                });
         VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
     }
 }

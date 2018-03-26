@@ -14,14 +14,9 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.buttonLogin)
-    Button buttonLogin;
-
-    @BindView(R.id.buttonRegister)
-    Button buttonRegister;
-
-    @BindView(R.id.buttonMovieList)
-    Button buttonMovieList;
+    @BindView(R.id.buttonLogin) Button buttonLogin;
+    @BindView(R.id.buttonRegister) Button buttonRegister;
+    @BindView(R.id.buttonMovieList) Button buttonMovieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

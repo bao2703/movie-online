@@ -18,8 +18,8 @@ namespace MovieOnline.Controllers
         public AuthController(IMapper mapper, IUnitOfWork unitOfWork, IUserRepository userRepository)
         {
             _mapper = mapper;
-            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
+            _userRepository = userRepository;
         }
 
         [HttpPost("register")]

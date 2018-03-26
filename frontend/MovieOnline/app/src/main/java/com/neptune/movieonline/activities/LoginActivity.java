@@ -27,14 +27,9 @@ import butterknife.OnClick;
 
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R.id.editTextEmail)
-    EditText editTextEmail;
-
-    @BindView(R.id.editTextPassword)
-    EditText editTextPassword;
-
-    @BindView(R.id.buttonLogin)
-    Button buttonLogin;
+    @BindView(R.id.editTextEmail) EditText editTextEmail;
+    @BindView(R.id.editTextPassword) EditText editTextPassword;
+    @BindView(R.id.buttonLogin) Button buttonLogin;
 
     private ProgressDialog progressDialog;
 
@@ -80,7 +75,6 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
         VolleyHelper.getInstance().addToRequestQueue(loginRequest);
-        //Log.d("Login", "Login Clicked!");
     }
 
     private boolean validateInput() {
@@ -100,6 +94,5 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return result;
-
     }
 }

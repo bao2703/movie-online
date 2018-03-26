@@ -32,20 +32,11 @@ import butterknife.OnClick;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    @BindView(R.id.editTextName)
-    EditText editTextName;
-
-    @BindView(R.id.editTextEmail)
-    EditText editTextEmail;
-
-    @BindView(R.id.editTextPassword)
-    EditText editTextPassword;
-
-    @BindView(R.id.editTextConfirmPassword)
-    EditText editTextConfirmPassword;
-
-    @BindView(R.id.buttonRegister)
-    Button buttonRegister;
+    @BindView(R.id.editTextName) EditText editTextName;
+    @BindView(R.id.editTextEmail) EditText editTextEmail;
+    @BindView(R.id.editTextPassword) EditText editTextPassword;
+    @BindView(R.id.editTextConfirmPassword) EditText editTextConfirmPassword;
+    @BindView(R.id.buttonRegister) Button buttonRegister;
 
     private ProgressDialog progressDialog;
 
@@ -66,7 +57,12 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog = DialogHelper.createProgressDialog(RegisterActivity.this);
         progressDialog.show();
 
-        GsonRequest<String> registerRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.REGISTER, String.class,
+        User payload = new User();
+        payload.setName(editTextName.getText().toString());
+        payload.setEmail(editTextEmail.getText().toString());
+        payload.setPassword(editTextPassword.getText().toString());
+
+        GsonRequest<String> registerRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.REGISTER, String.class, payload,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -91,16 +87,7 @@ public class RegisterActivity extends AppCompatActivity {
                             }
                         }
                     }
-                }) {
-            @Override
-            public Object getBodyPayload() {
-                User payload = new User();
-                payload.setName(editTextName.getText().toString());
-                payload.setEmail(editTextEmail.getText().toString());
-                payload.setPassword(editTextPassword.getText().toString());
-                return payload;
-            }
-        };
+                });
 
         VolleyHelper.getInstance().addToRequestQueue(registerRequest);
     }
