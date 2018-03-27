@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Error;
+import com.neptune.movieonline.models.User;
 import com.neptune.movieonline.utils.constants.ErrorCode;
 import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.DialogHelper;
@@ -49,6 +50,10 @@ public class LoginActivity extends AppCompatActivity {
 
         progressDialog = DialogHelper.createProgressDialog(LoginActivity.this);
         progressDialog.show();
+
+        User payload = new User();
+        payload.setEmail(editTextEmail.getText().toString());
+        payload.setPassword(editTextPassword.getText().toString());
 
         final GsonRequest<String> loginRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.LOGIN, String.class,
                 new Response.Listener<String>() {
