@@ -1,7 +1,11 @@
-export const ActionTypes = {
+import { createAction } from 'redux-actions';
+
+const ActionTypes = {
 	ADD: 'ADD',
 	SHOW: 'SHOW',
 };
+
+export const Add = createAction(ActionTypes.ADD);
 
 let nextTodoId = 1
 export const addTodo = (text) => {

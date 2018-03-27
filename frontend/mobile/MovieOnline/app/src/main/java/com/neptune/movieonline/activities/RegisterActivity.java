@@ -62,7 +62,7 @@ public class RegisterActivity extends AppCompatActivity {
         payload.setEmail(editTextEmail.getText().toString());
         payload.setPassword(editTextPassword.getText().toString());
 
-        GsonRequest<String> registerRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.REGISTER, String.class, payload,
+        GsonRequest<String> registerRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.REGISTER, payload, String.class,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

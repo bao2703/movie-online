@@ -28,7 +28,9 @@ export class App extends Component {
           <input value={this.state.text} onChange={this.handleChange} />
           <button onClick={this.handleClick}>Add</button>
         </div>
-        {this.props.todos.map(todo => <Todo key={todo.id} text={todo.text} />)}
+        {this.props.todos.map(todo =>
+          <Todo key={todo.id} text={todo.text} />
+        )}
       </div>
     );
   }
@@ -39,7 +41,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  addTodo: addTodo
+  addTodo
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

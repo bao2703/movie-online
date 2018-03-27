@@ -54,11 +54,6 @@ namespace MovieOnline.Controllers
 
             model.Email = model.Email.ToLower();
 
-            if (!_userRepository.IsExistEmail(model.Email))
-            {
-                return BadRequest(ErrorReponse.EmailNotFound);
-            }
-
             if (!_userRepository.VerifyUser(model.Email, model.Password))
             {
                 return BadRequest(ErrorReponse.InvalidLogin);

@@ -18,5 +18,6 @@ public interface Rest {
         String URL = Rest.URL + "/movies";
 
         String GET_ALL = Movie.URL;
+        String GET = Movie.URL;
     }
 }

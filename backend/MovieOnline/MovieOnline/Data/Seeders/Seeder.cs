@@ -53,7 +53,7 @@ namespace MovieOnline.Data.Seeders
             var userFaker = new Faker<UserEntity>().Rules((f, o) =>
             {
                 o.Name = f.Name.FindName();
-                o.Avatar = f.Internet.Avatar();
+                o.AvatarUrl = f.Internet.Avatar();
                 o.Email = f.Person.Email.ToLower();
                 o.Password = "1";
                 o.Role = f.PickRandom(o.Role);
@@ -99,10 +99,10 @@ namespace MovieOnline.Data.Seeders
             {
                 o.Name = f.Commerce.Product();
                 o.Release = f.Date.Past(5);
-                o.Description = f.Lorem.Sentence();
+                o.Description = f.Lorem.Sentences(f.Random.Number(5, 10));
                 o.Views = f.Random.Number(1000000);
                 o.Rating = f.Random.Float(1, 5);
-                o.Poster = f.Image.Image(640, 480, true);
+                o.PosterUrl = f.Person.Avatar;
 
                 o.GenreMovies = new List<GenreMovieEntity>();
                 var randomGenres = f.PickRandom(genres, f.Random.Number(2, 5)).ToList();

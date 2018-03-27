@@ -32,7 +32,7 @@ public class GsonHelper {
     }
 
     public static <T> T fromJson(byte[] bytes, Class<T> clazz) {
-        return getGson().fromJson(new String(bytes), clazz);
+        return fromJson(new String(bytes), clazz);
     }
 
     public static <T> T fromJson(byte[] bytes, Type typeOfT) {

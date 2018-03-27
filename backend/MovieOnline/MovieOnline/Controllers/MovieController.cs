@@ -27,5 +27,13 @@ namespace MovieOnline.Controllers
             var reponses = _mapper.Map<List<MovieReponse>>(movies);
             return Ok(reponses);
         }
+
+        [HttpGet("{id}")]
+        public IActionResult Index(int id)
+        {
+            var movie = _movieRepository.FindById(id);
+            var reponse = _mapper.Map<MovieReponse>(movie);
+            return Ok(reponse);
+        }
     }
 }

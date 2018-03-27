@@ -18,6 +18,6 @@ namespace MovieOnline.Data.Bases
 
         public float Rating { get; set; }
 
-        public string Poster { get; set; }
+        public string PosterUrl { get; set; }
     }
 }

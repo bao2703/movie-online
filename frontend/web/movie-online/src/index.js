@@ -3,8 +3,10 @@ import ReactDOM from 'react-dom';
 import registerServiceWorker from './registerServiceWorker';
 
 import { Provider } from 'react-redux';
-import store from './redux/store';
+import configureStore from './redux/store';
 import App from './containers/App';
+
+const store = configureStore();
 
 ReactDOM.render(
   <Provider store={store}>

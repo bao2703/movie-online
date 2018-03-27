@@ -33,16 +33,16 @@ public class MovieListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_list);
         VolleyHelper.initialize(this);
         ButterKnife.bind(this);
-        loadMovies();
+        fetchMovies();
     }
 
-    private void loadMovies() {
+    private void fetchMovies() {
         GsonRequest<Movie[]> moviesRequest = new GsonRequest<>(Request.Method.GET, Rest.Movie.GET_ALL, Movie[].class,
                 new Response.Listener<Movie[]>() {
                     @Override
                     public void onResponse(Movie[] response) {
                         data = new ArrayList<>(Arrays.asList(response));
-                        movieListAdapter = new MovieListAdapter(data);
+                        movieListAdapter = new MovieListAdapter(MovieListActivity.this, data);
                         recyclerViewMovie.setAdapter(movieListAdapter);
                     }
                 });

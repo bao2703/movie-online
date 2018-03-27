@@ -13,7 +13,7 @@ public class Movie {
     private String description;
     private long views;
     private float rating;
-    private String poster;
+    private String posterUrl;
 
     public Integer getId() {
         return id;
@@ -63,11 +63,11 @@ public class Movie {
         this.rating = rating;
     }
 
-    public String getPoster() {
-        return poster;
+    public String getPosterUrl() {
+        return posterUrl;
     }
 
-    public void setPoster(String poster) {
-        this.poster = poster;
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 }

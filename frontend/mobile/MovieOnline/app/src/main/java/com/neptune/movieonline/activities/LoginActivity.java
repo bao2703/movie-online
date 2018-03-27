@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -55,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         payload.setEmail(editTextEmail.getText().toString());
         payload.setPassword(editTextPassword.getText().toString());
 
-        final GsonRequest<String> loginRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.LOGIN, String.class,
+        GsonRequest<String> loginRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.LOGIN, payload, String.class,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -70,11 +71,13 @@ public class LoginActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         progressDialog.dismiss();
                         NetworkResponse networkResponse = error.networkResponse;
-                        Error errorResponse = GsonHelper.fromJson(networkResponse.data, Error.class);
+                        if (networkResponse != null && networkResponse.data != null) {
+                            Error errorResponse = GsonHelper.fromJson(networkResponse.data, Error.class);
 
-                        switch (errorResponse.getCode()) {
-                            case ErrorCode.INVALID_LOGIN:
-                                Toast.makeText(LoginActivity.this, "Email or password is incorrect.", Toast.LENGTH_SHORT).show();
+                            switch (errorResponse.getCode()) {
+                                case ErrorCode.INVALID_LOGIN:
+                                    Toast.makeText(LoginActivity.this, "Email or password is incorrect.", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }
                 });
@@ -90,6 +93,9 @@ public class LoginActivity extends AppCompatActivity {
 
         if (email.isEmpty()) {
             editTextEmail.setError(getString(R.string.error_field_required));
+            result = false;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            editTextEmail.setError(getString(R.string.error_email_invalid));
             result = false;
         }
 

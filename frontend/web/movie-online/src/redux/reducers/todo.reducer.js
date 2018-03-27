@@ -1,20 +1,12 @@
-import { ActionTypes } from '../actions/todo.action';
+import { handleActions } from 'redux-actions';
+import { Add } from '../actions/todo.action';
 
 const initialState = [];
 
-const todoReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case ActionTypes.ADD:
-      return [
-        ...state,
-        {
-          id: action.payload.id,
-          text: action.payload.text
-        }
-      ]
-    default:
-      return state
+const todoReducer = handleActions({
+  [Add](state, { payload }) {
+    return [...state, payload]
   }
-}
+}, initialState);
 
 export default todoReducer

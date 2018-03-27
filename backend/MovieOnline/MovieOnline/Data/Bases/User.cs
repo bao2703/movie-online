@@ -8,7 +8,7 @@ namespace MovieOnline.Data.Bases
 
         public string Name { get; set; }
 
-        public string Avatar { get; set; }
+        public string AvatarUrl { get; set; }
 
         [Required]
         [EmailAddress]

@@ -7,7 +7,7 @@ public class User {
     private Integer id;
     private String name;
     private String phone;
-    private String avatar;
+    private String avatarUrl;
     private String email;
     private String password;
     private Role role;
@@ -36,12 +36,12 @@ public class User {
         this.phone = phone;
     }
 
-    public String getAvatar() {
-        return avatar;
+    public String getAvatarUrl() {
+        return avatarUrl;
     }
 
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 
     public String getEmail() {
@@ -74,7 +74,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
-                ", avatar='" + avatar + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 ", role=" + role +
