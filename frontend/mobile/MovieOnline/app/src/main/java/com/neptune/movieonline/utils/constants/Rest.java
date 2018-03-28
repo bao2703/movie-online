@@ -20,4 +20,10 @@ public interface Rest {
         String GET_ALL = Movie.URL;
         String GET = Movie.URL;
     }
+
+    interface Comment {
+        String URL = Rest.URL + "/comments";
+
+        String GET_ALL = Comment.URL;
+    }
 }

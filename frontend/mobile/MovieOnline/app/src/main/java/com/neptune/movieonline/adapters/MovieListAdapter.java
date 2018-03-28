@@ -24,11 +24,11 @@ import java.util.List;
 public class MovieListAdapter extends RecyclerView.Adapter<MovieItemViewHolder> {
 
     private Context context;
-    private List<Movie> data;
+    private List<Movie> movieList;
 
-    public MovieListAdapter(Context context, List<Movie> data) {
+    public MovieListAdapter(Context context, List<Movie> movieList) {
         this.context = context;
-        this.data = data;
+        this.movieList = movieList;
     }
 
     @NonNull
@@ -41,7 +41,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull MovieItemViewHolder holder, int position) {
-        final Movie item = data.get(position);
+        final Movie item = movieList.get(position);
 
         holder.getTextViewName().setText(item.getName());
         holder.getTextViewViews().setText(String.valueOf(item.getViews()));
@@ -63,6 +63,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return movieList.size();
     }
 }
