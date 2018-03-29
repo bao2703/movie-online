@@ -1,11 +1,13 @@
 import { handleActions } from 'redux-actions';
-import { Add } from '../actions/todo.action';
 
 const initialState = [];
 
 const todoReducer = handleActions({
-  [Add](state, { payload }) {
-    return [...state, payload]
+  ADD: (state, action) => {
+    return [...state, action.payload];
+  },
+  DELETE: (state, action) => {
+    return state.filter(todo => todo.id !== action.payload.id);
   }
 }, initialState);
 

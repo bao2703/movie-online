@@ -4,7 +4,7 @@ import registerServiceWorker from './registerServiceWorker';
 
 import { Provider } from 'react-redux';
 import configureStore from './redux/store';
-import App from './containers/App';
+import App from './containers/app.component';
 
 const store = configureStore();
 
