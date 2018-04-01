@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import { Switch, Route } from 'react-router';
+import { ConnectedRouter as Router } from 'react-router-redux';
+import { History } from './../redux/store';
 
 import { connect } from 'react-redux';
 
@@ -20,7 +23,7 @@ export class App extends Component {
   render() {
     return (
       <div>
-        <BrowserRouter>
+        <Router history={History}>
           <div>
             <Header />
             <Switch>
@@ -29,7 +32,7 @@ export class App extends Component {
               <Route path='/register' component={Register} />
             </Switch>
           </div>
-        </BrowserRouter>
+        </Router>
       </div>
     );
   }

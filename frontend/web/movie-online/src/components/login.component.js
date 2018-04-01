@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AuthActions } from '../redux/actions';
 
-
-
 class Login extends Component {
 
   constructor(props) {

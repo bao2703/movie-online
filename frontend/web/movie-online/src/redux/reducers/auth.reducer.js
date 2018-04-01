@@ -1,6 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-const INITIAL_STATE = [];
+const initialState = [];
 
 export const AuthReducer = handleActions({
   LOGIN: (state, { payload }) => {
@@ -9,4 +9,4 @@ export const AuthReducer = handleActions({
   REGISTER: (state, { payload }) => {
     return { ...state, payload };
   }
-}, INITIAL_STATE);
+}, initialState);
