@@ -1,10 +1,9 @@
 import { combineReducers } from 'redux';
-import todoReducer from './todo.reducer';
-import authReducer from './auth.reducer';
 
-const rootReducer = combineReducers({
-  todoReducer,
-  authReducer
-})
+import { routerReducer } from 'react-router-redux';
+import { AuthReducer } from './auth.reducer';
 
-export default rootReducer;
+export const RootReducer = combineReducers({
+  AuthReducer,
+  routerReducer
+});

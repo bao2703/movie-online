@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
 import { connect } from 'react-redux';
-import Todo from './../components/todo.component';
+
+import Header from './../components/header.component';
+import Home from './../components/home.component';
 import Login from './../components/login.component';
-import { todoActions } from '../redux/actions/todo.action';
+import Register from './../components/register.component';
 
 export class App extends Component {
 
@@ -10,42 +14,33 @@ export class App extends Component {
     super(props);
 
     this.state = {
-      text: ''
-    }
-  }
-
-  onChange = (e) => {
-    this.setState({ text: e.target.value });
-  }
-
-  onClick = () => {
-    if (this.state.text) {
-      this.props.addTodo(this.state.text);
     }
   }
 
   render() {
     return (
       <div>
-        <div>
-          <input value={this.state.text} onChange={this.onChange} />
-          <button onClick={this.onClick}>Add</button>
-        </div>
-        {this.props.todos.map(todo =>
-          <Todo key={todo.id} todo={todo} />
-        )}
-        <Login />
+        <BrowserRouter>
+          <div>
+            <Header />
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/login' component={Login} />
+              <Route path='/register' component={Register} />
+            </Switch>
+          </div>
+        </BrowserRouter>
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => ({
-  todos: state.todoReducer
+
 })
 
 const mapDispatchToProps = {
-  addTodo: todoActions.add
+
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

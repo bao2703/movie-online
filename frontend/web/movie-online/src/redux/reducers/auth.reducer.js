@@ -1,11 +1,12 @@
 import { handleActions } from 'redux-actions';
 
-const initialState = [];
+const INITIAL_STATE = [];
 
-const authReducer = handleActions({
-  LOGIN: (state, action) => {
-    return [...state, action.payload];
+export const AuthReducer = handleActions({
+  LOGIN: (state, { payload }) => {
+    return { ...state, payload };
+  },
+  REGISTER: (state, { payload }) => {
+    return { ...state, payload };
   }
-}, initialState);
-
-export default authReducer
+}, INITIAL_STATE);

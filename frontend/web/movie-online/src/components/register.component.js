@@ -4,20 +4,19 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { AuthActions } from '../redux/actions';
 
-
-
-class Login extends Component {
+class Register extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      confirmPassword: ''
     }
   }
 
-  onLogin = () => {
-    this.props.login(this.state.email, this.state.password);
+  onRegister = () => {
+    this.props.register(this.state.email, this.state.password);
   }
 
   render() {
@@ -33,15 +32,21 @@ class Login extends Component {
         <div>
           Password
           <input
-            type='password'
             value={this.state.password}
             onChange={(e) => this.setState({ password: e.target.value })}
           />
         </div>
         <div>
-          <button onClick={this.onLogin}>Login</button>
-          <Link to='/register'>
-            Register
+          Confirm Password
+          <input
+            value={this.state.confirmPassword}
+            onChange={(e) => this.setState({ confirmPassword: e.target.value })}
+          />
+        </div>
+        <div>
+          <button onClick={this.onRegister}>Register</button>
+          <Link to='/login'>
+            Login
           </Link>
         </div>
       </div>
@@ -54,7 +59,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  login: AuthActions.login
+  register: AuthActions.register
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default connect(mapStateToProps, mapDispatchToProps)(Register)

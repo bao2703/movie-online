@@ -1,16 +1,19 @@
 import { applyMiddleware, createStore, compose } from 'redux';
+
 import { createLogger } from 'redux-logger';
 import thunk from 'redux-thunk';
-import rootReducer from '../reducers';
 
-const configureStore = (preloadedState) => {
+import { RootReducer } from '../reducers';
+
+const logger = createLogger();
+//const router = routerMiddleware(browserHistory)
+
+export const ConfigureStore = (preloadedState) => {
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
   return createStore(
-    rootReducer,
+    RootReducer,
     preloadedState,
-    composeEnhancers(applyMiddleware(thunk, createLogger()))
+    composeEnhancers(applyMiddleware(thunk, logger))
   );
 };
-
-export default configureStore;
