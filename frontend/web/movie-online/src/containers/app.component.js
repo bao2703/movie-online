@@ -9,7 +9,6 @@ import { connect } from 'react-redux';
 import Header from './../components/header.component';
 import Home from './../components/home.component';
 import Login from './../components/login.component';
-import Register from './../components/register.component';
 
 export class App extends Component {
 
@@ -27,9 +26,8 @@ export class App extends Component {
           <div>
             <Header />
             <Switch>
-              <Route exact path='/' component={Home} />
-              <Route path='/login' component={Login} />
-              <Route path='/register' component={Register} />
+              <Route exact path="/" component={Home} />
+              <Route path="/login" component={Login} />
             </Switch>
           </div>
         </Router>
