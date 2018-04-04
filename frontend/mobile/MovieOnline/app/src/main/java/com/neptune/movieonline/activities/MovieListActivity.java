@@ -4,14 +4,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.adapters.MovieListAdapter;
 import com.neptune.movieonline.models.Movie;
-import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
+import com.neptune.movieonline.utils.requests.MovieRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,8 +23,8 @@ public class MovieListActivity extends AppCompatActivity {
 
     @BindView(R.id.recyclerViewMovieList) RecyclerView recyclerViewMovieList;
 
-    MovieListAdapter movieListAdapter;
-    List<Movie> movieList;
+    private MovieListAdapter movieListAdapter;
+    private List<Movie> movieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +36,7 @@ public class MovieListActivity extends AppCompatActivity {
     }
 
     private void fetchMovies() {
-        GsonRequest<Movie[]> moviesRequest = new GsonRequest<>(Request.Method.GET, Rest.Movie.GET_ALL, Movie[].class,
+        GsonRequest<Movie[]> moviesRequest = MovieRequest.getAll(
                 new Response.Listener<Movie[]>() {
                     @Override
                     public void onResponse(Movie[] response) {
@@ -45,7 +44,7 @@ public class MovieListActivity extends AppCompatActivity {
                         movieListAdapter = new MovieListAdapter(MovieListActivity.this, movieList);
                         recyclerViewMovieList.setAdapter(movieListAdapter);
                     }
-                });
+                }, null);
         VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
     }
 }

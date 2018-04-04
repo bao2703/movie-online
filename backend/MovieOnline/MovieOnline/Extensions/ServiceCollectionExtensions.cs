@@ -15,6 +15,7 @@ namespace MovieOnline.Extensions
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IMovieRepository, MovieRepository>();
             services.AddTransient<IGenreRepository, GenreRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
         }
     }
 }

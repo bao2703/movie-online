@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.textViewName) TextView textViewContent;
+    @BindView(R.id.textViewContent) TextView textViewContent;
 
     public CommentViewHolder(View itemView) {
         super(itemView);

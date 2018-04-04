@@ -10,7 +10,7 @@ namespace MovieOnline.Data.Bases
 
         public DateTime DateCreated { get; set; }
 
-        public string UserId { get; set; }
+        public int UserId { get; set; }
 
         public int? MovieId { get; set; }
 

@@ -45,7 +45,6 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
 
         holder.getTextViewName().setText(item.getName());
         holder.getTextViewViews().setText(String.valueOf(item.getViews()));
-
         Glide.with(context)
                 .load(item.getPosterUrl())
                 .apply(GlideHelper.POSTER_OPTIONS)

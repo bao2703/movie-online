@@ -6,17 +6,16 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.adapters.CommentListAdapter;
 import com.neptune.movieonline.models.Comment;
 import com.neptune.movieonline.models.Movie;
-import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.GlideHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
+import com.neptune.movieonline.utils.requests.MovieRequest;
 
 import java.util.List;
 
@@ -30,8 +29,11 @@ public class MovieDetailActivity extends AppCompatActivity {
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
     @BindView(R.id.recyclerViewCommentList) RecyclerView recyclerViewCommentList;
 
-    CommentListAdapter commentListAdapter;
-    List<Comment> commentList;
+    private int movieId = getIntent().getIntExtra("id", -1);
+    private Movie movie;
+
+    private CommentListAdapter commentListAdapter;
+    private List<Comment> commentList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,19 +46,20 @@ public class MovieDetailActivity extends AppCompatActivity {
     }
 
     private void fetchMovie() {
-        final int id = getIntent().getIntExtra("id", 0);
-        GsonRequest<Movie> movieRequest = new GsonRequest<>(Request.Method.GET, Rest.Movie.GET, id, Movie.class,
+
+        GsonRequest<Movie> movieRequest = MovieRequest.get(movieId,
                 new Response.Listener<Movie>() {
                     @Override
                     public void onResponse(Movie response) {
-                        textViewName.setText(response.getName());
-                        textViewDescription.setText(response.getDescription());
+                        movie = response;
+                        textViewName.setText(movie.getName());
+                        textViewDescription.setText(movie.getDescription());
                         Glide.with(MovieDetailActivity.this)
-                                .load(response.getPosterUrl())
+                                .load(movie.getPosterUrl())
                                 .apply(GlideHelper.POSTER_OPTIONS)
                                 .into(imageViewPoster);
                     }
-                });
+                }, null);
         VolleyHelper.getInstance().addToRequestQueue(movieRequest);
     }
 

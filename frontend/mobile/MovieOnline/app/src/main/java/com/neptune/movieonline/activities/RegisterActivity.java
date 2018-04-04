@@ -9,17 +9,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Error;
 import com.neptune.movieonline.models.User;
 import com.neptune.movieonline.utils.constants.ErrorCode;
-import com.neptune.movieonline.utils.constants.Rest;
 import com.neptune.movieonline.utils.helpers.DialogHelper;
 import com.neptune.movieonline.utils.helpers.GsonHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
+import com.neptune.movieonline.utils.requests.AuthRequest;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 
 import butterknife.BindView;
@@ -62,7 +61,7 @@ public class RegisterActivity extends AppCompatActivity {
         payload.setEmail(editTextEmail.getText().toString());
         payload.setPassword(editTextPassword.getText().toString());
 
-        GsonRequest<String> registerRequest = new GsonRequest<String>(Request.Method.POST, Rest.Auth.REGISTER, payload, String.class,
+        GsonRequest<String> registerRequest = AuthRequest.register(payload,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {

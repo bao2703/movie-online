@@ -21,31 +21,19 @@ public class GsonRequest<T> extends Request<T> {
     private final Response.Listener<T> listener;
     private Object bodyPayload;
 
-    public GsonRequest(int method, String url, Class<T> clazz, Response.Listener<T> listener) {
-        this(method, url, null, clazz, listener, null);
+    public GsonRequest(Class<T> clazz, int method, String url, Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        this(clazz, method, url, null, listener, errorListener);
     }
 
-    public GsonRequest(int method, String url, Class<T> clazz, Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        this(method, url, null, clazz, listener, errorListener);
+    public GsonRequest(Class<T> clazz, int method, String url, int id, Response.Listener<T> listener, Response.ErrorListener errorListener) {
+        this(clazz, method, url + "/" + id, null, listener, errorListener);
     }
 
-    public GsonRequest(int method, String url, int id, Class<T> clazz, Response.Listener<T> listener) {
-        this(method, url, id, clazz, listener, null);
-    }
-
-    public GsonRequest(int method, String url, int id, Class<T> clazz, Response.Listener<T> listener, Response.ErrorListener errorListener) {
-        this(method, url + "/" + id, null, clazz, listener, errorListener);
-    }
-
-    public GsonRequest(int method, String url, Object bodyPayload, Class<T> clazz, Response.Listener<T> listener) {
-        this(method, url, bodyPayload, clazz, listener, null);
-    }
-
-    public GsonRequest(int method, String url, Object bodyPayload, Class<T> clazz, Response.Listener<T> listener, Response.ErrorListener errorListener) {
+    public GsonRequest(Class<T> clazz, int method, String url, Object bodyPayload, Response.Listener<T> listener, Response.ErrorListener errorListener) {
         super(method, url, errorListener);
         this.clazz = clazz;
-        this.listener = listener;
         this.bodyPayload = bodyPayload;
+        this.listener = listener;
     }
 
     @Override

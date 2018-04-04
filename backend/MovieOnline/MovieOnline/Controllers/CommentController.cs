@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MovieOnline.Data.Models.Reponses;
 using MovieOnline.Repositories;
 
 namespace MovieOnline.Controllers
@@ -21,7 +23,9 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return Ok();
+            var comments = _commentRepository.ToList();
+            var dtos = _mapper.Map<List<CommentReponse>>(comments);
+            return Ok(dtos);
         }
     }
 }

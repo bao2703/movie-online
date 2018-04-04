@@ -59,23 +59,21 @@ namespace MovieOnline.Data.Seeders
                 o.Role = f.PickRandom(o.Role);
             });
 
-            var index = 1;
             var admins = userFaker.Generate(25);
-            admins.ToList().ForEach(x =>
+            for (var i = 0; i < admins.Count; i++)
             {
-                x.Role = Role.Administrator;
-                x.Name = $"admin{index}";
-                x.Email = $"admin{index++}@gmail.com";
-            });
+                admins[i].Role = Role.Administrator;
+                admins[i].Name = $"admin{i}";
+                admins[i].Email = $"admin{i}@gmail.com";
+            }
 
-            index = 1;
             var users = userFaker.Generate(50);
-            users.ToList().ForEach(x =>
+            for (var i = 0; i < users.Count; i++)
             {
-                x.Role = Role.None;
-                x.Name = $"user{index}";
-                x.Email = $"user{index++}@gmail.com";
-            });
+                users[i].Role = Role.None;
+                users[i].Name = $"user{i}";
+                users[i].Email = $"user{i}gmail.com";
+            }
 
             _context.Users.AddRange(users);
             _context.Users.AddRange(admins);
@@ -102,7 +100,7 @@ namespace MovieOnline.Data.Seeders
                 o.Description = f.Lorem.Sentences(f.Random.Number(5, 10));
                 o.Views = f.Random.Number(1000000);
                 o.Rating = f.Random.Float(1, 5);
-                o.PosterUrl = f.Person.Avatar;
+                o.PosterUrl = f.Image.Image();
 
                 o.GenreMovies = new List<GenreMovieEntity>();
                 var randomGenres = f.PickRandom(genres, f.Random.Number(2, 5)).ToList();
@@ -111,6 +109,17 @@ namespace MovieOnline.Data.Seeders
 
             var movies = movieFaker.Generate(100);
             _context.Movies.AddRange(movies);
+
+            var commentFaker = new Faker<CommentEntity>().Rules((f, o) =>
+            {
+                o.Content = f.Lorem.Sentences(f.Random.Number(1, 4));
+                o.DateCreated = f.Date.Past();
+                o.UserId = f.PickRandom(users).Id;
+                o.MovieId = f.PickRandom(movies).Id;
+            });
+
+            var comments = commentFaker.Generate(50);
+            _context.Comments.AddRange(comments);
 
             await _context.SaveChangesAsync();
         }
