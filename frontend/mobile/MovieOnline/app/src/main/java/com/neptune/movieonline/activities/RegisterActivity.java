@@ -1,9 +1,7 @@
 package com.neptune.movieonline.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,14 +20,13 @@ import com.neptune.movieonline.utils.requests.AuthRequest;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * Created by PC on 3/9/2018.
  */
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     @BindView(R.id.editTextName) EditText editTextName;
     @BindView(R.id.editTextEmail) EditText editTextEmail;
@@ -43,8 +40,6 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-        VolleyHelper.initialize(this);
-        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.buttonRegister)
@@ -57,17 +52,16 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.show();
 
         User payload = new User();
-        payload.setName(editTextName.getText().toString());
-        payload.setEmail(editTextEmail.getText().toString());
-        payload.setPassword(editTextPassword.getText().toString());
+        payload.setName(getName());
+        payload.setEmail(getEmail());
+        payload.setPassword(getPassword());
 
         GsonRequest<String> registerRequest = AuthRequest.register(payload,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                        startActivity(loginIntent);
+                        startActivity(LoginActivity.class);
                         finish();
                     }
                 },
@@ -94,10 +88,10 @@ public class RegisterActivity extends AppCompatActivity {
     private boolean validateInput() {
         boolean result = true;
 
-        final String name = editTextName.getText().toString();
-        final String email = editTextEmail.getText().toString();
-        final String password = editTextPassword.getText().toString();
-        final String confirmPassword = editTextConfirmPassword.getText().toString();
+        final String name = getName();
+        final String email = getEmail();
+        final String password = getPassword();
+        final String confirmPassword = getConfirmPassword();
 
         if (name.isEmpty()) {
             editTextName.setError(getString(R.string.error_field_required));
@@ -128,5 +122,21 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public String getName() {
+        return editTextName.getText().toString();
+    }
+
+    public String getEmail() {
+        return editTextEmail.getText().toString();
+    }
+
+    public String getPassword() {
+        return editTextPassword.getText().toString();
+    }
+
+    public String getConfirmPassword() {
+        return editTextConfirmPassword.getText().toString();
     }
 }

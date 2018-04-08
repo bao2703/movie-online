@@ -12,5 +12,10 @@ namespace MovieOnline.Repositories
         public CommentRepository(NeptuneContext context) : base(context)
         {
         }
+
+        public CommentEntity FindByMovieId(int movieId)
+        {
+            return null;
+        }
     }
 }

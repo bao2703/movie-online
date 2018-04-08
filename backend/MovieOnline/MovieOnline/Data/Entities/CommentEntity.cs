@@ -7,7 +7,5 @@ namespace MovieOnline.Data.Entities
         public UserEntity User { get; set; }
 
         public MovieEntity Movie { get; set; }
-
-        public EpisodeEntity Episode { get; set; }
     }
 }

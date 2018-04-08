@@ -1,7 +1,6 @@
 package com.neptune.movieonline.activities;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.Response;
@@ -17,9 +16,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class MovieListActivity extends AppCompatActivity {
+public class MovieListActivity extends BaseActivity {
 
     @BindView(R.id.recyclerViewMovieList) RecyclerView recyclerViewMovieList;
 
@@ -30,8 +28,6 @@ public class MovieListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_list);
-        VolleyHelper.initialize(this);
-        ButterKnife.bind(this);
         fetchMovies();
     }
 

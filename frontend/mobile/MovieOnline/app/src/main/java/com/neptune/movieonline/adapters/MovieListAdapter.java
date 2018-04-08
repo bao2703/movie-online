@@ -13,6 +13,7 @@ import com.neptune.movieonline.R;
 import com.neptune.movieonline.activities.MovieDetailActivity;
 import com.neptune.movieonline.adapters.viewholders.MovieItemViewHolder;
 import com.neptune.movieonline.models.Movie;
+import com.neptune.movieonline.utils.constants.Extra;
 import com.neptune.movieonline.utils.helpers.GlideHelper;
 
 import java.util.List;
@@ -54,7 +55,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieItemViewHolder> 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MovieDetailActivity.class);
-                intent.putExtra("id", item.getId());
+                intent.putExtra(Extra.MOVIE_ID, item.getId());
                 context.startActivity(intent);
             }
         });

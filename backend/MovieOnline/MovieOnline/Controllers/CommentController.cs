@@ -24,8 +24,8 @@ namespace MovieOnline.Controllers
         public IActionResult Index()
         {
             var comments = _commentRepository.ToList();
-            var dtos = _mapper.Map<List<CommentReponse>>(comments);
-            return Ok(dtos);
+            var reponses = _mapper.Map<List<CommentReponse>>(comments);
+            return Ok(reponses);
         }
     }
 }

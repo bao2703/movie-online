@@ -1,9 +1,7 @@
 package com.neptune.movieonline.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,10 +21,9 @@ import com.neptune.movieonline.utils.requests.AuthRequest;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.editTextEmail) EditText editTextEmail;
     @BindView(R.id.editTextPassword) EditText editTextPassword;
@@ -38,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        VolleyHelper.initialize(this);
-        ButterKnife.bind(this);
     }
 
     @OnClick(R.id.buttonLogin)
@@ -52,16 +47,15 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
 
         User payload = new User();
-        payload.setEmail(editTextEmail.getText().toString());
-        payload.setPassword(editTextPassword.getText().toString());
+        payload.setEmail(getEmail());
+        payload.setPassword(getPassword());
 
         GsonRequest<String> loginRequest = AuthRequest.login(payload,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        Intent homepageIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(homepageIntent);
+                        startActivity(MainActivity.class);
                         finish();
                     }
                 },
@@ -85,8 +79,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private boolean validateInput() {
-        final String email = editTextEmail.getText().toString();
-        final String password = editTextPassword.getText().toString();
+        final String email = getEmail();
+        final String password = getPassword();
 
         boolean result = true;
 
@@ -104,5 +98,13 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         return result;
+    }
+
+    public String getEmail() {
+        return editTextEmail.getText().toString();
+    }
+
+    public String getPassword() {
+        return editTextPassword.getText().toString();
     }
 }

@@ -1,6 +1,7 @@
 package com.neptune.movieonline.models;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Neptune on 3/25/2018.
@@ -14,6 +15,7 @@ public class Movie {
     private long views;
     private float rating;
     private String posterUrl;
+    private List<Comment> comments;
 
     public Integer getId() {
         return id;
@@ -69,5 +71,13 @@ public class Movie {
 
     public void setPosterUrl(String posterUrl) {
         this.posterUrl = posterUrl;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
 }
