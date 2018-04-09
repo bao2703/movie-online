@@ -9,9 +9,9 @@ namespace MovieOnline.Controllers
     [Route("api/[controller]s")]
     public class GenreController : BaseController
     {
-        private readonly IGenreRepository _genreRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IGenreRepository _genreRepository;
 
         public GenreController(IMapper mapper, IUnitOfWork unitOfWork, IGenreRepository genreRepository)
         {
@@ -21,7 +21,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult GetAll()
         {
             var genres = _genreRepository.ToList();
             var reponses = _mapper.Map<List<GenreReponse>>(genres);

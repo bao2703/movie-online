@@ -9,9 +9,9 @@ namespace MovieOnline.Controllers
     [Route("api/[controller]s")]
     public class CommentController : BaseController
     {
-        private readonly ICommentRepository _commentRepository;
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly ICommentRepository _commentRepository;
 
         public CommentController(IMapper mapper, IUnitOfWork unitOfWork, ICommentRepository commentRepository)
         {
@@ -21,7 +21,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult GetAll()
         {
             var comments = _commentRepository.ToList();
             var reponses = _mapper.Map<List<CommentReponse>>(comments);

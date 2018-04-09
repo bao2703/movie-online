@@ -23,7 +23,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult GetAll()
         {
             var users = _userRepository.ToList();
             var reponses = _mapper.Map<List<UserReponse>>(users);
@@ -31,7 +31,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult Index(int id)
+        public IActionResult Get(int id)
         {
             var user = _userRepository.FindById(id);
             var reponse = _mapper.Map<UserReponse>(user);

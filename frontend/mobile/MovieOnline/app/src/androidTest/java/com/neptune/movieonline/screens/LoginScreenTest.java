@@ -1,4 +1,4 @@
-package com.neptune.movieonline.activities;
+package com.neptune.movieonline.screens;
 
 import android.support.test.espresso.ViewInteraction;
 import android.support.test.espresso.intent.rule.IntentsTestRule;
@@ -6,6 +6,8 @@ import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.activities.LoginActivity;
+import com.neptune.movieonline.activities.MainActivity;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,13 +28,13 @@ import static com.neptune.movieonline.utils.ViewMatchersExtension.hasErrorText;
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class LoginActivityTest {
+public class LoginScreenTest {
 
     @Rule
     public IntentsTestRule<LoginActivity> activityRule = new IntentsTestRule<>(LoginActivity.class);
 
     @Test
-    public void test_whenClickLoginWithInvalidEmail_shouldShowError() {
+    public void shouldShowError_whenClickLoginWithInvalidEmail() {
         ViewInteraction editTextEmail = onView(withId(R.id.editTextEmail)).perform(typeText("test"));
         onView(withId(R.id.buttonLogin)).perform(click());
 
@@ -40,18 +42,16 @@ public class LoginActivityTest {
     }
 
     @Test
-    public void test_whenClickLoginWithEmptyInput_shouldShowError() {
-        ViewInteraction editTextEmail = onView(withId(R.id.editTextEmail)).perform(typeText(""));
-        ViewInteraction editTextPassword = onView(withId(R.id.editTextPassword)).perform(typeText(""));
+    public void shouldShowError_whenClickLoginWithEmptyInput() {
         onView(withId(R.id.buttonLogin)).perform(click());
 
-        editTextEmail.check(matches(hasErrorText(R.string.error_field_required)));
-        editTextPassword.check(matches(hasErrorText(R.string.error_field_required)));
+        onView(withId(R.id.editTextEmail)).check(matches(hasErrorText(R.string.error_field_required)));
+        onView(withId(R.id.editTextPassword)).check(matches(hasErrorText(R.string.error_field_required)));
     }
 
     @Test
-    public void test_whenClickLoginWithRightAccount_shouldNavigateToMainScreen() {
-        onView(withId(R.id.editTextEmail)).perform(typeText("admin@gmail.com"));
+    public void shouldLoginSuccess_whenClickLoginWithRightAccount() {
+        onView(withId(R.id.editTextEmail)).perform(typeText("admin1@gmail.com"));
         onView(withId(R.id.editTextPassword)).perform(typeText("1"));
         onView(withId(R.id.buttonLogin)).perform(click());
 
