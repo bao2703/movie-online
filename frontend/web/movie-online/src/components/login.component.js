@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
-import { AuthActions } from '../redux/actions';
+import { authActions } from '../redux/actions';
 
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -16,8 +16,8 @@ class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: ''
+      email: 'admin1@gmail.com',
+      password: '1'
     }
   }
 
@@ -71,7 +71,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  login: AuthActions.login
+  login: authActions.login
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

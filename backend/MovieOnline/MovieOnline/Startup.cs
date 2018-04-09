@@ -24,6 +24,8 @@ namespace MovieOnline
         {
             services.AddDbContext<NeptuneContext>(options => options.UseSqlite("Data Source=neptune.db"));
 
+            services.AddCors();
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
@@ -42,7 +44,15 @@ namespace MovieOnline
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
+            });
+
             app.UseMvc();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
         }
     }
