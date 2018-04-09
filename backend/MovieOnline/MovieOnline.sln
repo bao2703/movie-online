@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieOnline", "MovieOnline\MovieOnline.csproj", "{A45257D4-F103-4F64-ACD3-9D664A95CD87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieOnline", "MovieOnline\MovieOnline.csproj", "{A45257D4-F103-4F64-ACD3-9D664A95CD87}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MovieOnlineTest", "MovieOnlineTest\MovieOnlineTest.csproj", "{6EDE081E-8E79-46BB-83AF-139E8C712D52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{A45257D4-F103-4F64-ACD3-9D664A95CD87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A45257D4-F103-4F64-ACD3-9D664A95CD87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A45257D4-F103-4F64-ACD3-9D664A95CD87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EDE081E-8E79-46BB-83AF-139E8C712D52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EDE081E-8E79-46BB-83AF-139E8C712D52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EDE081E-8E79-46BB-83AF-139E8C712D52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EDE081E-8E79-46BB-83AF-139E8C712D52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

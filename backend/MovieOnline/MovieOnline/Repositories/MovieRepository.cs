@@ -20,8 +20,12 @@ namespace MovieOnline.Repositories
         public List<CommentEntity> FindComments(int id)
         {
             var movie = DbSet.Include(m => m.Comments).SingleOrDefault(m => m.Id == id);
-            if (movie == null) return null;
-			return movie.Comments.ToList();
+            if (movie == null)
+            {
+                return null;
+            }
+
+            return movie.Comments.ToList();
         }
-  }
+    }
 }
