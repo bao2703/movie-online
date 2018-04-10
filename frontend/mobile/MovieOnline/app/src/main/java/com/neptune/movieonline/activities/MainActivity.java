@@ -1,18 +1,12 @@
 package com.neptune.movieonline.activities;
 
 import android.os.Bundle;
-import android.widget.Button;
 
 import com.neptune.movieonline.R;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-
-    @BindView(R.id.buttonLogin) Button buttonLogin;
-    @BindView(R.id.buttonRegister) Button buttonRegister;
-    @BindView(R.id.buttonMovieList) Button buttonMovieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -29,9 +29,9 @@ public class MovieDetailActivity extends BaseActivity {
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
     @BindView(R.id.recyclerViewCommentList) RecyclerView recyclerViewCommentList;
 
-    private int movieId;
-    private Movie movie;
-    private CommentListAdapter commentListAdapter;
+    int movieId;
+    Movie movie;
+    CommentListAdapter commentListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +64,8 @@ public class MovieDetailActivity extends BaseActivity {
                 new Response.Listener<Comment[]>() {
                     @Override
                     public void onResponse(Comment[] response) {
-                        if (response == null) {
-                            movie.setComments(new ArrayList<Comment>());
-                        } else {
-                            movie.setComments(new ArrayList<>(Arrays.asList(response)));
-                        }
-                        commentListAdapter = new CommentListAdapter(MovieDetailActivity.this, movie.getComments());
+                        movie.setComments(new ArrayList<>(Arrays.asList(response)));
+                        commentListAdapter = new CommentListAdapter(movie.getComments());
                         recyclerViewCommentList.setAdapter(commentListAdapter);
                     }
                 }, null);

@@ -7,7 +7,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.neptune.movieonline.R;
-import com.neptune.movieonline.utils.helpers.VolleyHelper;
 
 import butterknife.ButterKnife;
 
@@ -24,7 +23,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void setContentView(int layoutResID) {
         super.setContentView(layoutResID);
-        VolleyHelper.initialize(this);
         ButterKnife.bind(this);
     }
 

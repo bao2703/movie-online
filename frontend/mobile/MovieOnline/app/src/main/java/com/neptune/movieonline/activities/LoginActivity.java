@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -16,6 +15,7 @@ import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Error;
 import com.neptune.movieonline.models.User;
 import com.neptune.movieonline.utils.constants.ErrorCode;
+import com.neptune.movieonline.utils.constants.Preference;
 import com.neptune.movieonline.utils.helpers.DialogHelper;
 import com.neptune.movieonline.utils.helpers.GsonHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
@@ -29,19 +29,13 @@ public class LoginActivity extends BaseActivity {
 
     @BindView(R.id.editTextEmail) EditText editTextEmail;
     @BindView(R.id.editTextPassword) EditText editTextPassword;
-    @BindView(R.id.buttonLogin) Button buttonLogin;
 
-    private ProgressDialog progressDialog;
-    public static final String pref = "Information" ;
-    public static final String email = "";
-    public static final String password = "";
-    SharedPreferences sharedPreferences;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sharedPreferences = getSharedPreferences(pref, Context.MODE_PRIVATE);
     }
 
     @OnClick(R.id.buttonLogin)
@@ -62,14 +56,7 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
-                        String emailTemp = editTextEmail.getText().toString();
-                        String passwordTemp = editTextPassword.getText().toString();
-
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(email, emailTemp);
-                        editor.putString(password, passwordTemp);
-                        editor.commit();
-
+                        saveSession();
                         startActivity(MainActivity.class);
                         finish();
                     }
@@ -91,6 +78,12 @@ public class LoginActivity extends BaseActivity {
                 });
 
         VolleyHelper.getInstance().addToRequestQueue(loginRequest);
+    }
+
+    public void saveSession() {
+        SharedPreferences.Editor editor = getSharedPreferences(Preference.CURRENT_USER, Context.MODE_PRIVATE).edit();
+        editor.putString(Preference.Key.EMAIL, getEmail());
+        editor.apply();
     }
 
     private boolean validateInput() {

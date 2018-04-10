@@ -21,8 +21,8 @@ public class MovieListActivity extends BaseActivity {
 
     @BindView(R.id.recyclerViewMovieList) RecyclerView recyclerViewMovieList;
 
-    private MovieListAdapter movieListAdapter;
-    private List<Movie> movieList;
+    MovieListAdapter movieListAdapter;
+    List<Movie> movieList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
