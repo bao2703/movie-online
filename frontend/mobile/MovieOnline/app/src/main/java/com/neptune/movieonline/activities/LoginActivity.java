@@ -1,6 +1,8 @@
 package com.neptune.movieonline.activities;
 
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.widget.Button;
@@ -30,11 +32,16 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.buttonLogin) Button buttonLogin;
 
     private ProgressDialog progressDialog;
+    public static final String pref = "Information" ;
+    public static final String email = "";
+    public static final String password = "";
+    SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        sharedPreferences = getSharedPreferences(pref, Context.MODE_PRIVATE);
     }
 
     @OnClick(R.id.buttonLogin)
@@ -55,6 +62,14 @@ public class LoginActivity extends BaseActivity {
                     @Override
                     public void onResponse(String response) {
                         progressDialog.dismiss();
+                        String emailTemp = editTextEmail.getText().toString();
+                        String passwordTemp = editTextPassword.getText().toString();
+
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString(email, emailTemp);
+                        editor.putString(password, passwordTemp);
+                        editor.commit();
+
                         startActivity(MainActivity.class);
                         finish();
                     }
