@@ -11,18 +11,18 @@
         android:id="@+id/imageViewPoster"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:scaleType="centerCrop"
         android:contentDescription="Poster"
+        android:scaleType="centerCrop"
         app:srcCompat="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/textViewName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/text_size_larger"
-        android:textStyle="bold"
         android:gravity="center"
-        android:text="Name" />
+        android:text="Name"
+        android:textSize="@dimen/text_size_larger"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/textViewDescription"
@@ -34,7 +34,7 @@
         android:id="@+id/recyclerViewComment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_marginTop="30dp"
+        android:orientation="vertical"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
 </LinearLayout>

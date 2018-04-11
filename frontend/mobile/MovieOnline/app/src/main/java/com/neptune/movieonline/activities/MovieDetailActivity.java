@@ -13,11 +13,11 @@ import com.neptune.movieonline.models.Comment;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Extra;
 import com.neptune.movieonline.utils.helpers.GlideHelper;
+import com.neptune.movieonline.utils.helpers.GsonHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 import com.neptune.movieonline.utils.requests.MovieRequest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.BindView;
@@ -29,42 +29,37 @@ public class MovieDetailActivity extends BaseActivity {
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
     @BindView(R.id.recyclerViewComment) RecyclerView recyclerView;
 
-    int movieId;
-    Movie movie;
+    Movie MOVIE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        movieId = getIntent().getIntExtra(Extra.MOVIE_ID, Integer.MIN_VALUE);
-        fetchMovie();
+        getDataFromIntent();
+        setData();
+        fetchComments();
     }
 
-    private void fetchMovie() {
-        GsonRequest<Movie> movieRequest = MovieRequest.get(movieId,
-                new Response.Listener<Movie>() {
-                    @Override
-                    public void onResponse(Movie response) {
-                        movie = response;
-                        textViewName.setText(movie.getName());
-                        textViewDescription.setText(movie.getDescription());
-                        Glide.with(MovieDetailActivity.this)
-                                .load(movie.getPosterUrl())
-                                .apply(GlideHelper.POSTER_OPTIONS)
-                                .into(imageViewPoster);
-                        fetchComments();
-                    }
-                }, null);
-        VolleyHelper.getInstance().addToRequestQueue(movieRequest);
+    private void getDataFromIntent() {
+        MOVIE = GsonHelper.fromJson(getIntent().getStringExtra(Extra.MOVIE), Movie.class);
+    }
+
+    private void setData() {
+        setTitle(MOVIE.getName());
+        textViewName.setText(MOVIE.getName());
+        textViewDescription.setText(MOVIE.getDescription());
+        Glide.with(this)
+                .load(MOVIE.getPosterUrl())
+                .apply(GlideHelper.POSTER_OPTIONS)
+                .into(imageViewPoster);
     }
 
     private void fetchComments() {
-        GsonRequest<Comment[]> commentRequest = MovieRequest.getComments(movieId,
+        GsonRequest<Comment[]> commentRequest = MovieRequest.getComments(MOVIE.getId(),
                 new Response.Listener<Comment[]>() {
                     @Override
                     public void onResponse(Comment[] response) {
-                        movie.setComments(new ArrayList<>(Arrays.asList(response)));
-                        recyclerView.setAdapter(new CommentRecyclerViewAdapter(movie.getComments()));
+                        recyclerView.setAdapter(new CommentRecyclerViewAdapter(Arrays.asList(response)));
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(commentRequest);

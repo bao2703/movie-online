@@ -18,6 +18,7 @@ public interface Api {
         String URL = Api.URL + "/genres";
 
         String GET_ALL = Genre.URL;
+        String GET_MOVIES = Genre.URL + "/movies";
     }
 
     interface Movie {

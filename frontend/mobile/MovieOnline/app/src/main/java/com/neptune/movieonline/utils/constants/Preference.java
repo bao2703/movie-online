@@ -5,7 +5,7 @@ package com.neptune.movieonline.utils.constants;
  */
 
 public interface Preference {
-    String CURRENT_USER = "CURRENT_USER";
+    String SESSION = "SESSION";
 
     interface Key {
         String EMAIL = "EMAIL";

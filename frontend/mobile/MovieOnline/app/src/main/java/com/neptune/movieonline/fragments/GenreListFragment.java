@@ -29,7 +29,7 @@ import butterknife.ButterKnife;
 public class GenreListFragment extends Fragment {
 
     @BindView(R.id.recyclerViewGenre) RecyclerView recyclerView;
-    List<Genre> genres;
+    private List<Genre> genres;
     private OnGenreClickListener listener;
 
     @Override

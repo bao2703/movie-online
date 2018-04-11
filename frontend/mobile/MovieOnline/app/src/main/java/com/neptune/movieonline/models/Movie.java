@@ -1,6 +1,5 @@
 package com.neptune.movieonline.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,10 +16,6 @@ public class Movie {
     private float rating;
     private String posterUrl;
     private List<Comment> comments;
-
-    public Movie() {
-        comments = new ArrayList<>();
-    }
 
     public Integer getId() {
         return id;

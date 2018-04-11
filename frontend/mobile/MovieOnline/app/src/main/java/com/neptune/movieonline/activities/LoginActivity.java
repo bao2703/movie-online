@@ -81,7 +81,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     public void saveSession() {
-        SharedPreferences.Editor editor = getSharedPreferences(Preference.CURRENT_USER, Context.MODE_PRIVATE).edit();
+        SharedPreferences.Editor editor = getSharedPreferences(Preference.SESSION, Context.MODE_PRIVATE).edit();
         editor.putString(Preference.Key.EMAIL, getEmail());
         editor.apply();
     }

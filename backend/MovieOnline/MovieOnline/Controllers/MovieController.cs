@@ -40,7 +40,7 @@ namespace MovieOnline.Controllers
         [HttpGet("comments/{id}")]
         public IActionResult GetComments(int id)
         {
-            var comments = _movieRepository.FindComments(id).ToList();
+            var comments = _movieRepository.FindCommentsById(id).ToList();
             var reponses = _mapper.Map<List<CommentReponse>>(comments);
             return Ok(reponses);
         }

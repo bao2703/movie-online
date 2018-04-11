@@ -5,5 +5,6 @@ package com.neptune.movieonline.utils.constants;
  */
 
 public interface Extra {
-    String MOVIE_ID = "MOVIE_ID";
+    String MOVIE = "MOVIE";
+    String GENRE = "GENRE";
 }

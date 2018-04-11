@@ -8,7 +8,7 @@ namespace MovieOnline.Repositories
 {
     public interface IMovieRepository : IRepository<MovieEntity>
     {
-        IEnumerable<CommentEntity> FindComments(int id);
+        IEnumerable<CommentEntity> FindCommentsById(int id);
     }
 
     public class MovieRepository : Repository<MovieEntity>, IMovieRepository
@@ -17,7 +17,7 @@ namespace MovieOnline.Repositories
         {
         }
 
-        public IEnumerable<CommentEntity> FindComments(int id)
+        public IEnumerable<CommentEntity> FindCommentsById(int id)
         {
             var movie = DbSet.Include(m => m.Comments).SingleOrDefault(m => m.Id == id);
             if (movie == null)

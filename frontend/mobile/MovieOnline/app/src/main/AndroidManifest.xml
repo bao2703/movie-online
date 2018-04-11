@@ -27,12 +27,20 @@
         </activity>
         <activity
             android:name=".activities.LoginActivity"
-            android:label="@string/title_login" />
+            android:label="@string/title_login"
+            android:parentActivityName=".activities.MainActivity" />
         <activity
             android:name=".activities.RegisterActivity"
-            android:label="@string/title_register" />
-        <activity android:name=".activities.MovieListActivity" />
-        <activity android:name=".activities.MovieDetailActivity"></activity>
+            android:label="@string/title_register"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <activity
+            android:name=".activities.GenreDetailActivity"
+            android:parentActivityName=".activities.MainActivity" />
+
+        <activity
+            android:name=".activities.MovieDetailActivity"
+            android:parentActivityName=".activities.GenreDetailActivity" />
     </application>
 
 </manifest>
