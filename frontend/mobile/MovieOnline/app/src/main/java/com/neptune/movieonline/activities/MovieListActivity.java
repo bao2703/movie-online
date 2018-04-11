@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.android.volley.Response;
 import com.neptune.movieonline.R;
-import com.neptune.movieonline.adapters.MovieListAdapter;
+import com.neptune.movieonline.adapters.MovieRecyclerViewAdapter;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
@@ -19,10 +19,8 @@ import butterknife.BindView;
 
 public class MovieListActivity extends BaseActivity {
 
-    @BindView(R.id.recyclerViewMovieList) RecyclerView recyclerViewMovieList;
-
-    MovieListAdapter movieListAdapter;
-    List<Movie> movieList;
+    @BindView(R.id.recyclerViewMovie) RecyclerView recyclerView;
+    List<Movie> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +34,12 @@ public class MovieListActivity extends BaseActivity {
                 new Response.Listener<Movie[]>() {
                     @Override
                     public void onResponse(Movie[] response) {
-                        movieList = new ArrayList<>(Arrays.asList(response));
-                        movieListAdapter = new MovieListAdapter(MovieListActivity.this, movieList);
-                        recyclerViewMovieList.setAdapter(movieListAdapter);
+                        movies = new ArrayList<>(Arrays.asList(response));
+                        recyclerView.setAdapter(new MovieRecyclerViewAdapter(MovieListActivity.this, movies));
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
     }
 }
+
+

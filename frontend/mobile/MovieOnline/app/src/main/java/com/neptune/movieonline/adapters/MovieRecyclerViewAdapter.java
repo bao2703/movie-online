@@ -26,14 +26,14 @@ import butterknife.ButterKnife;
  * Created by Neptune on 3/17/2018.
  */
 
-public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
+public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
-    private List<Movie> movieList;
+    private List<Movie> items;
 
-    public MovieListAdapter(Context context, List<Movie> movieList) {
+    public MovieRecyclerViewAdapter(Context context, List<Movie> items) {
         this.context = context;
-        this.movieList = movieList;
+        this.items = items;
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Movie item = movieList.get(position);
+        final Movie item = items.get(position);
 
         holder.textViewName.setText(item.getName());
         holder.textViewViews.setText(String.valueOf(item.getViews()));
@@ -67,16 +67,16 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     @Override
     public int getItemCount() {
-        return movieList.size();
+        return items.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.textViewName) TextView textViewName;
         @BindView(R.id.textViewViews) TextView textViewViews;
         @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

@@ -14,6 +14,12 @@ public interface Api {
         String REGISTER = Auth.URL + "/register";
     }
 
+    interface Genre {
+        String URL = Api.URL + "/genres";
+
+        String GET_ALL = Genre.URL;
+    }
+
     interface Movie {
         String URL = Api.URL + "/movies";
 

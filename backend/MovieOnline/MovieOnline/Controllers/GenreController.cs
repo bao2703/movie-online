@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data.Models.Reponses;
@@ -23,7 +24,7 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var genres = _genreRepository.ToList();
+            var genres = _genreRepository.OrderBy(g => g.Name).ToList();
             var reponses = _mapper.Map<List<GenreReponse>>(genres);
             return Ok(reponses);
         }

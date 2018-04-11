@@ -14,7 +14,7 @@ import java.util.HashMap;
 public class GsonHelper {
     private static Gson gson;
 
-    public static Gson getGson() {
+    private static Gson getGson() {
         if (gson == null) {
             gson = new GsonBuilder()
                     .setDateFormat("dd-MM-yyyy")

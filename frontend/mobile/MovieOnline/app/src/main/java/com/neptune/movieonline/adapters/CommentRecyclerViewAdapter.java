@@ -19,12 +19,12 @@ import butterknife.ButterKnife;
  * Created by Neptune on 3/28/2018.
  */
 
-public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.ViewHolder> {
+public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
 
-    private List<Comment> commentList;
+    private List<Comment> items;
 
-    public CommentListAdapter(List<Comment> commentList) {
-        this.commentList = commentList;
+    public CommentRecyclerViewAdapter(List<Comment> items) {
+        this.items = items;
     }
 
     @NonNull
@@ -37,21 +37,21 @@ public class CommentListAdapter extends RecyclerView.Adapter<CommentListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final Comment item = commentList.get(position);
+        final Comment item = items.get(position);
 
         holder.textViewContent.setText(item.getContent());
     }
 
     @Override
     public int getItemCount() {
-        return commentList.size();
+        return items.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.textViewContent) TextView textViewContent;
 
-        ViewHolder(View itemView) {
+        public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }

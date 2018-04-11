@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
 import com.neptune.movieonline.R;
-import com.neptune.movieonline.adapters.CommentListAdapter;
+import com.neptune.movieonline.adapters.CommentRecyclerViewAdapter;
 import com.neptune.movieonline.models.Comment;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Extra;
@@ -27,11 +27,10 @@ public class MovieDetailActivity extends BaseActivity {
     @BindView(R.id.textViewName) TextView textViewName;
     @BindView(R.id.textViewDescription) TextView textViewDescription;
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
-    @BindView(R.id.recyclerViewCommentList) RecyclerView recyclerViewCommentList;
+    @BindView(R.id.recyclerViewComment) RecyclerView recyclerView;
 
     int movieId;
     Movie movie;
-    CommentListAdapter commentListAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +38,6 @@ public class MovieDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_movie_detail);
         movieId = getIntent().getIntExtra(Extra.MOVIE_ID, Integer.MIN_VALUE);
         fetchMovie();
-        fetchComments();
     }
 
     private void fetchMovie() {
@@ -54,6 +52,7 @@ public class MovieDetailActivity extends BaseActivity {
                                 .load(movie.getPosterUrl())
                                 .apply(GlideHelper.POSTER_OPTIONS)
                                 .into(imageViewPoster);
+                        fetchComments();
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(movieRequest);
@@ -65,8 +64,7 @@ public class MovieDetailActivity extends BaseActivity {
                     @Override
                     public void onResponse(Comment[] response) {
                         movie.setComments(new ArrayList<>(Arrays.asList(response)));
-                        commentListAdapter = new CommentListAdapter(movie.getComments());
-                        recyclerViewCommentList.setAdapter(commentListAdapter);
+                        recyclerView.setAdapter(new CommentRecyclerViewAdapter(movie.getComments()));
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(commentRequest);

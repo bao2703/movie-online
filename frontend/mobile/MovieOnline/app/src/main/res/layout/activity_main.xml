@@ -18,9 +18,9 @@
         android:layout_height="wrap_content"
         android:text="@string/action_register" />
 
-    <Button
-        android:id="@+id/buttonMovieList"
+    <fragment
+        android:id="@+id/fragmentGenre"
+        android:name="com.neptune.movieonline.fragments.GenreListFragment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Movie List" />
+        android:layout_height="match_parent" />
 </LinearLayout>

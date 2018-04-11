@@ -3,10 +3,12 @@ package com.neptune.movieonline.activities;
 import android.os.Bundle;
 
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.fragments.GenreListFragment;
+import com.neptune.movieonline.models.Genre;
 
 import butterknife.OnClick;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements GenreListFragment.OnGenreClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +26,8 @@ public class MainActivity extends BaseActivity {
         startActivity(LoginActivity.class);
     }
 
-    @OnClick(R.id.buttonMovieList)
-    public void onClickMovieList() {
+    @Override
+    public void onGenreClickListener(Genre item) {
         startActivity(MovieListActivity.class);
     }
 }

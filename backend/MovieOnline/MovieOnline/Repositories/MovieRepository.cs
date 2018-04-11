@@ -8,7 +8,7 @@ namespace MovieOnline.Repositories
 {
     public interface IMovieRepository : IRepository<MovieEntity>
     {
-        List<CommentEntity> FindComments(int id);
+        IEnumerable<CommentEntity> FindComments(int id);
     }
 
     public class MovieRepository : Repository<MovieEntity>, IMovieRepository
@@ -17,15 +17,14 @@ namespace MovieOnline.Repositories
         {
         }
 
-        public List<CommentEntity> FindComments(int id)
+        public IEnumerable<CommentEntity> FindComments(int id)
         {
             var movie = DbSet.Include(m => m.Comments).SingleOrDefault(m => m.Id == id);
             if (movie == null)
             {
                 return null;
             }
-
-            return movie.Comments.ToList();
+            return movie.Comments.OrderBy(c => c.DateCreated);
         }
     }
 }

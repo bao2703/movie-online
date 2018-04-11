@@ -3,7 +3,6 @@ package com.neptune.movieonline.activities;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Patterns;
-import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.NetworkResponse;
@@ -32,7 +31,6 @@ public class RegisterActivity extends BaseActivity {
     @BindView(R.id.editTextEmail) EditText editTextEmail;
     @BindView(R.id.editTextPassword) EditText editTextPassword;
     @BindView(R.id.editTextConfirmPassword) EditText editTextConfirmPassword;
-    @BindView(R.id.buttonRegister) Button buttonRegister;
 
     private ProgressDialog progressDialog;
 
