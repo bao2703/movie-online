@@ -1,7 +1,12 @@
 package com.neptune.movieonline.activities;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +26,7 @@ import com.neptune.movieonline.utils.requests.MovieRequest;
 import java.util.Arrays;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class MovieDetailActivity extends BaseActivity {
 
@@ -28,6 +34,7 @@ public class MovieDetailActivity extends BaseActivity {
     @BindView(R.id.textViewDescription) TextView textViewDescription;
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
     @BindView(R.id.recyclerViewComment) RecyclerView recyclerView;
+    @BindView(R.id.editTextComment) EditText editTextComment;
 
     Movie MOVIE;
 
@@ -38,6 +45,14 @@ public class MovieDetailActivity extends BaseActivity {
         getDataFromIntent();
         setData();
         fetchComments();
+        initView();
+    }
+
+    private void initView() {
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(), R.drawable.line_divider);
+        dividerItemDecoration.setDrawable(drawable);
+        recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     private void getDataFromIntent() {
@@ -63,5 +78,10 @@ public class MovieDetailActivity extends BaseActivity {
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(commentRequest);
+    }
+
+    @OnClick(R.id.buttonComment)
+    public void onClickComment() {
+
     }
 }
