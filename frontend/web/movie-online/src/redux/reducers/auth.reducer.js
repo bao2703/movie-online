@@ -1,27 +1,27 @@
 import { handleActions } from 'redux-actions'
-import { LoginRequest, LoginSuccess, LoginFailure } from '../actions/auth.action';
 
 const initialState = {
-  fetching: false
+  fetching: false,
+  isAuthenticated: false
 };
 
 export const authReducer = handleActions({
-  [LoginRequest]: (state, { payload }) => {
-    return {
-      ...state,
-      fetching: true
-    }
-  },
-  [LoginSuccess]: (state, { payload }) => {
-    return {
-      ...state,
-      fetching: false
-    }
-  },
-  [LoginFailure]: (state, { payload }) => {
-    return {
-      ...state,
-      fetching: false
-    }
-  }
+  LOGIN_REQUEST: state => ({
+    ...state,
+    fetching: true
+  }),
+  LOGIN_SUCCESS: state => ({
+    ...state,
+    fetching: false,
+    isAuthenticated: true
+  }),
+  LOGIN_FAILURE: state => ({
+    ...state,
+    fetching: false,
+    isAuthenticated: false
+  }),
+  LOGOUT: state => ({
+    ...state,
+    isAuthenticated: false
+  })
 }, initialState);

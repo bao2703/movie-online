@@ -25,10 +25,6 @@ class Login extends Component {
     this.setState({ [name]: e.target.value });
   }
 
-  onLogin = () => {
-    this.props.login(this.state.email, this.state.password);
-  }
-
   render() {
     const { email, password } = this.state;
 
@@ -56,7 +52,9 @@ class Login extends Component {
               </div>
               <div className="card-footer">
                 <Button component={Link} to="/forgot" onClick={this.onLogin}>Forgot password?</Button>
-                <Button className="float-right" color="primary" variant="raised" onClick={this.onLogin}>Log in</Button>
+                <Button className="float-right" color="primary" variant="raised" onClick={() => this.props.startLogin(email, password)}>
+                  Log in
+                </Button>
               </div>
             </div>
           </Grid>
@@ -71,7 +69,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  login: authActions.login
+  startLogin: authActions.startLogin
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

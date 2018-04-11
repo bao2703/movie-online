@@ -5,6 +5,7 @@ import { ConnectedRouter as Router } from 'react-router-redux';
 import { History } from './../redux/store';
 
 import { connect } from 'react-redux';
+import { authActions } from '../redux/actions';
 
 import Header from './../components/header.component';
 import Home from './../components/home.component';
@@ -17,6 +18,10 @@ export class App extends Component {
 
     this.state = {
     }
+  }
+
+  componentDidMount() {
+    this.props.startCheckLogin();
   }
 
   render() {
@@ -41,7 +46,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-
+  startCheckLogin: authActions.startCheckLogin
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

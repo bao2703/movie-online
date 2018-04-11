@@ -1,28 +1,55 @@
-import { createAction } from 'redux-actions';
+import { createActions } from 'redux-actions';
 import { push } from 'react-router-redux';
 import { authService } from '../../services';
 
-const prefix = '[Auth]';
+const {
+  loginRequest,
+  loginSuccess,
+  loginFailure,
+  logout,
+  checkLogin
+} = createActions(
+  'LOGIN_REQUEST',
+  'LOGIN_SUCCESS',
+  'LOGIN_FAILURE',
+  'LOGOUT',
+  "CHECK_LOGIN"
+);
 
-export const LoginRequest = createAction(prefix + '[LoginRequest]');
-export const LoginSuccess = createAction(prefix + '[LoginSuccess]');
-export const LoginFailure = createAction(prefix + '[LoginFailure]');
-
-const login = (email, password) => {
+const startLogin = (email, password) => {
   return dispatch => {
-    dispatch(LoginRequest());
-
+    dispatch(loginRequest());
     authService.login(email, password)
-      .then(response => {
-        dispatch(LoginSuccess(response.data));
+      .then(() => {
+        dispatch(loginSuccess());
         dispatch(push('/'));
       })
-      .catch(error => {
-        dispatch(LoginFailure(error));
-      });
+      .catch(error => dispatch(loginFailure(new Error(error))));
   };
 }
 
+const startlogout = () => {
+  return dispatch => {
+    authService.logout();
+    dispatch(logout());
+    dispatch(push('/login'));
+  };
+}
+
+const startCheckLogin = () => {
+  return dispatch => {
+    dispatch(checkLogin());
+    if (authService.isAuthenticated()) {
+      dispatch(loginSuccess());
+    } else {
+      dispatch(loginFailure());
+      dispatch(push('/login'));
+    }
+  }
+}
+
 export const authActions = {
-  login
+  startLogin,
+  startlogout,
+  startCheckLogin
 };
