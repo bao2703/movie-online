@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MovieOnline.Common;
 using MovieOnline.Data.Entities;
 using MovieOnline.Data.Models.Reponses;
 using MovieOnline.Data.Models.Requests;
@@ -54,12 +55,16 @@ namespace MovieOnline.Controllers
 
             model.Email = model.Email.ToLower();
 
-            if (!_userRepository.VerifyUser(model.Email, model.Password))
+            var user = _userRepository.FindByEmail(model.Email);
+
+            if (user == null || user.Password != model.Password)
             {
                 return BadRequest(ErrorReponse.InvalidLogin);
             }
 
-            return Ok();
+            var jwt = Helper.GenerateJwt(user);
+
+            return Ok(jwt);
         }
     }
 }

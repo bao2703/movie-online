@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MovieOnline.Common;
 using MovieOnline.Data;
 using MovieOnline.Extensions;
 using Newtonsoft.Json;
@@ -33,6 +35,16 @@ namespace MovieOnline
                 options.SerializerSettings.Formatting = Formatting.Indented;
             });
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false;
+                options.SaveToken = true;
+
+                options.TokenValidationParameters = JwtConfig.TokenValidationParameters;
+            });
+
+            services.AddAuthorization();
+
             services.RegisterApplicationServices();
         }
 
@@ -50,6 +62,8 @@ namespace MovieOnline
                     .AllowAnyHeader()
                     .AllowAnyMethod();
             });
+
+            app.UseAuthentication();
 
             app.UseMvc();
             app.UseDefaultFiles();
