@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.neptune.movieonline.activities.CommentActivity">
+
+    <EditText
+        android:id="@+id/editTextComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Type something"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/buttonComment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/action_comment" />
+
+    <fragment
+        android:id="@+id/fragmentCommentList"
+        android:name="com.neptune.movieonline.fragments.CommentListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
+</LinearLayout>

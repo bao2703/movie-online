@@ -5,11 +5,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Comment;
 
+import java.text.DateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,6 +42,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
         final Comment item = items.get(position);
 
         holder.textViewContent.setText(item.getContent());
+        holder.textViewDateCreated.setText(DateFormat.getDateInstance().format(item.getDateCreated()));
     }
 
     @Override
@@ -49,7 +52,9 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
+        @BindView(R.id.imageViewAvatar) ImageView imageViewAvatar;
         @BindView(R.id.textViewContent) TextView textViewContent;
+        @BindView(R.id.textViewDateCreated) TextView textViewDateCreated;
 
         public ViewHolder(View itemView) {
             super(itemView);

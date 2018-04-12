@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data.Models.Reponses;
@@ -23,7 +24,7 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var comments = _commentRepository.ToList();
+            var comments = _commentRepository.OrderBy(c => c.DateCreated).ToList();
             var reponses = _mapper.Map<List<CommentReponse>>(comments);
             return Ok(reponses);
         }

@@ -29,16 +29,12 @@ public class GenreDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_genre_detail);
-        getDataFromIntent();
         setData();
         fetchMovies();
     }
 
-    private void getDataFromIntent() {
-        GENRE = GsonHelper.fromJson(getIntent().getStringExtra(Extra.GENRE), Genre.class);
-    }
-
     private void setData() {
+        GENRE = GsonHelper.fromJson(getIntent().getStringExtra(Extra.GENRE), Genre.class);
         setTitle(GENRE.getName());
     }
 

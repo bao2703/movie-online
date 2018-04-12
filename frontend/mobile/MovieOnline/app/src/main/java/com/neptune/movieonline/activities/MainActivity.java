@@ -2,7 +2,6 @@ package com.neptune.movieonline.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
 
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.fragments.GenreListFragment;
