@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MovieOnline.Data.Entities;
 using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 
 namespace MovieOnline.Controllers
@@ -27,6 +30,22 @@ namespace MovieOnline.Controllers
             var comments = _commentRepository.OrderBy(c => c.DateCreated).ToList();
             var reponses = _mapper.Map<List<CommentReponse>>(comments);
             return Ok(reponses);
+        }
+
+        [HttpPost()]
+        public async Task<IActionResult> Comments([FromBody] CommentRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ErrorReponse.InvalidPayload);
+            }
+
+            var comment = _mapper.Map<CommentEntity>(model);
+
+            await _commentRepository.AddAsync(comment);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
