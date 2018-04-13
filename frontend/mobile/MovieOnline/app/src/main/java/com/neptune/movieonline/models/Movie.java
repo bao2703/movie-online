@@ -1,5 +1,6 @@
 package com.neptune.movieonline.models;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -7,7 +8,7 @@ import java.util.List;
  * Created by Neptune on 3/25/2018.
  */
 
-public class Movie {
+public class Movie implements Serializable {
     private Integer id;
     private String name;
     private Date release;

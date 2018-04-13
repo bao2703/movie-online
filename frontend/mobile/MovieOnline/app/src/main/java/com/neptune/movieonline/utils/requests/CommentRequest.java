@@ -19,7 +19,7 @@ public class CommentRequest {
     }
 
     @NonNull
-    public static GsonRequest<String> comments(Comment payload, Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        return new GsonRequest<>(String.class, Request.Method.POST, Api.Comment.COMMENT, payload, listener, errorListener);
+    public static GsonRequest<String> createComment(Comment payload, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        return new GsonRequest<>(String.class, Request.Method.POST, Api.Comment.CREATE, payload, listener, errorListener);
     }
 }

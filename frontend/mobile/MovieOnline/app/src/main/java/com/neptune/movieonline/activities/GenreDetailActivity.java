@@ -9,7 +9,6 @@ import com.neptune.movieonline.adapters.MovieRecyclerViewAdapter;
 import com.neptune.movieonline.models.Genre;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Extra;
-import com.neptune.movieonline.utils.helpers.GsonHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GenreRequest;
 import com.neptune.movieonline.utils.requests.GsonRequest;
@@ -34,7 +33,7 @@ public class GenreDetailActivity extends BaseActivity {
     }
 
     private void setData() {
-        GENRE = GsonHelper.fromJson(getIntent().getStringExtra(Extra.GENRE), Genre.class);
+        GENRE = (Genre) getIntent().getSerializableExtra(Extra.GENRE);
         setTitle(GENRE.getName());
     }
 

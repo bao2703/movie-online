@@ -24,7 +24,7 @@ namespace MovieOnline.Repositories
             {
                 return null;
             }
-            return movie.Comments.OrderBy(c => c.DateCreated);
+            return movie.Comments.OrderByDescending(c => c.DateCreated);
         }
     }
 }

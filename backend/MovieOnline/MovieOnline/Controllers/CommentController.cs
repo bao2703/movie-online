@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -27,13 +28,13 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var comments = _commentRepository.OrderBy(c => c.DateCreated).ToList();
+            var comments = _commentRepository.OrderByDescending(c => c.DateCreated).ToList();
             var reponses = _mapper.Map<List<CommentReponse>>(comments);
             return Ok(reponses);
         }
 
-        [HttpPost()]
-        public async Task<IActionResult> Comments([FromBody] CommentRequest model)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CommentRequest model)
         {
             if (!ModelState.IsValid)
             {
@@ -41,6 +42,7 @@ namespace MovieOnline.Controllers
             }
 
             var comment = _mapper.Map<CommentEntity>(model);
+            comment.DateCreated = DateTime.Today;
 
             await _commentRepository.AddAsync(comment);
             await _unitOfWork.SaveChangesAsync();

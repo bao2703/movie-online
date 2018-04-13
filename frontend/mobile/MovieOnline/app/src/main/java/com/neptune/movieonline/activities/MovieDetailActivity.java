@@ -1,5 +1,6 @@
 package com.neptune.movieonline.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,7 +10,6 @@ import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Extra;
 import com.neptune.movieonline.utils.helpers.GlideHelper;
-import com.neptune.movieonline.utils.helpers.GsonHelper;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -30,7 +30,7 @@ public class MovieDetailActivity extends BaseActivity {
     }
 
     private void setData() {
-        MOVIE = GsonHelper.fromJson(getIntent().getStringExtra(Extra.MOVIE), Movie.class);
+        MOVIE = (Movie) getIntent().getSerializableExtra(Extra.MOVIE);
         setTitle(MOVIE.getName());
         textViewName.setText(MOVIE.getName());
         textViewDescription.setText(MOVIE.getDescription());
@@ -42,6 +42,8 @@ public class MovieDetailActivity extends BaseActivity {
 
     @OnClick(R.id.buttonComment)
     public void onClickComment() {
-        startActivity(CommentActivity.class);
+        Intent intent = new Intent(this, CommentActivity.class);
+        intent.putExtra(Extra.MOVIE, MOVIE);
+        startActivity(intent);
     }
 }

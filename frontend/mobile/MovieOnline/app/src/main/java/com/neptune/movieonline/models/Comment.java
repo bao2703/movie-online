@@ -11,6 +11,8 @@ public class Comment {
     private Integer id;
     private String content;
     private Date dateCreated;
+    private Integer userId;
+    private Integer movieId;
 
     public Integer getId() {
         return id;
@@ -34,5 +36,21 @@ public class Comment {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    public Integer getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(Integer movieId) {
+        this.movieId = movieId;
     }
 }

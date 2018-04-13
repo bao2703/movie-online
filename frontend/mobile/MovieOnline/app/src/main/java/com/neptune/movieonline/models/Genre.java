@@ -1,10 +1,12 @@
 package com.neptune.movieonline.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Neptune on 3/25/2018.
  */
 
-public class Genre {
+public class Genre implements Serializable {
     private Integer id;
     private String name;
     private String description;

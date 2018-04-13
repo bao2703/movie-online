@@ -33,6 +33,6 @@ public interface Api {
         String URL = Api.URL + "/comments";
 
         String GET_ALL = Comment.URL;
-        String COMMENT = Comment.URL;
+        String CREATE = Comment.URL;
     }
 }

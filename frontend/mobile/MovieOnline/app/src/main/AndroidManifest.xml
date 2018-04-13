@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".App"
@@ -38,7 +39,13 @@
         <activity
             android:name=".activities.MovieDetailActivity"
             android:parentActivityName=".activities.GenreDetailActivity" />
-        <activity android:name=".activities.CommentActivity" />
+        <activity
+            android:name=".activities.CommentActivity"
+            android:parentActivityName=".activities.MovieDetailActivity" />
+        <activity
+            android:name=".activities.SearchActivity"
+            android:label="@string/title_search"
+            android:parentActivityName=".activities.MainActivity" />
     </application>
 
 </manifest>

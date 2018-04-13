@@ -11,11 +11,13 @@ namespace MovieOnline.Data.Models.Requests
     public class CommentRequest
     {
         [Required]
-        public string Id { get; set; }
-
-        [Required]
         public string Content { get; set; }
 
+        [Required]
+        public int UserId { get; set; }
+
+        [Required]
+        public int MovieId { get; set; }
     }
 
     public class CommentRequestMapperProfile : Profile

@@ -7,7 +7,6 @@ import com.neptune.movieonline.R;
 import com.neptune.movieonline.fragments.GenreListFragment;
 import com.neptune.movieonline.models.Genre;
 import com.neptune.movieonline.utils.constants.Extra;
-import com.neptune.movieonline.utils.helpers.GsonHelper;
 
 import butterknife.OnClick;
 
@@ -32,7 +31,7 @@ public class MainActivity extends BaseActivity implements GenreListFragment.OnGe
     @Override
     public void onGenreClickListener(Genre item) {
         Intent intent = new Intent(this, GenreDetailActivity.class);
-        intent.putExtra(Extra.GENRE, GsonHelper.toJson(item));
+        intent.putExtra(Extra.GENRE, item);
         startActivity(intent);
     }
 }
