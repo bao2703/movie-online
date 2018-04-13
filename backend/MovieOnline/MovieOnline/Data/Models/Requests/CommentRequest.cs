@@ -14,7 +14,7 @@ namespace MovieOnline.Data.Models.Requests
         public string Id { get; set; }
 
         [Required]
-        public string Context { get; set; }
+        public string Content { get; set; }
 
     }
 

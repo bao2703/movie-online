@@ -17,4 +17,9 @@ public class CommentRequest {
     public static GsonRequest<Comment[]> getAll(Response.Listener<Comment[]> listener, Response.ErrorListener errorListener) {
         return new GsonRequest<>(Comment[].class, Request.Method.GET, Api.Comment.GET_ALL, listener, errorListener);
     }
+
+    @NonNull
+    public static GsonRequest<String> comments(Comment payload, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        return new GsonRequest<>(String.class, Request.Method.POST, Api.Comment.COMMENT, payload, listener, errorListener);
+    }
 }

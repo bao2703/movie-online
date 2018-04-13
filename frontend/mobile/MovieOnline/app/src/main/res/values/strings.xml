@@ -22,4 +22,6 @@
     <string name="error_password_invalid">This password is too short</string>
     <string name="error_confirm_password_incorrect">Confirm password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+
+    <string name="error_content_invalid">This comment is too long</string>
 </resources>
