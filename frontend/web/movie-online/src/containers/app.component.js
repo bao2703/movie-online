@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 
 import { Switch, Route } from 'react-router';
 import { ConnectedRouter as Router } from 'react-router-redux';
-import { History } from './../redux/store';
+import { history } from './../redux/store';
 
 import { connect } from 'react-redux';
 import { authActions } from '../redux/actions';
@@ -27,7 +27,7 @@ export class App extends Component {
   render() {
     return (
       <div>
-        <Router history={History}>
+        <Router history={history}>
           <div>
             <Header />
             <Switch>
