@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 
-import { Switch, Route } from 'react-router';
-import { ConnectedRouter as Router } from 'react-router-redux';
-import { history } from './../redux/store';
-
-import { connect } from 'react-redux';
-import { authActions } from '../redux/actions';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from './../components/header.component';
 import Home from './../components/home.component';
@@ -13,21 +8,10 @@ import Login from './../components/login.component';
 
 export class App extends Component {
 
-  constructor(props) {
-    super(props);
-
-    this.state = {
-    }
-  }
-
-  componentDidMount() {
-    this.props.startCheckLogin();
-  }
-
   render() {
     return (
       <div>
-        <Router history={history}>
+        <Router>
           <div>
             <Header />
             <Switch>
@@ -41,13 +25,4 @@ export class App extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-  startCheckLogin: authActions.startCheckLogin
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App)
-
+export default App

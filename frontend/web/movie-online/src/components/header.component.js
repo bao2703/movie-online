@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-import { authActions } from '../redux/actions';
+import { authService } from '../services';
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -13,8 +12,13 @@ import MenuIcon from 'material-ui-icons/Menu';
 
 export class Header extends Component {
 
+  logout = () => {
+    authService.logout();
+    this.props.history.push('/login');
+  }
+
   render() {
-    const { isAuthenticated } = this.props;
+    const { isLoggedIn } = this.state;
 
     return (
       <div>
@@ -30,8 +34,8 @@ export class Header extends Component {
                 </Typography>
               </Button>
             </div>
-            {isAuthenticated &&
-              <Button className="ml-auto" color="inherit" onClick={() => this.props.startlogout()}>
+            {isLoggedIn &&
+              <Button className="ml-auto" color="inherit" onClick={() => this.logout()}>
                 Log out
               </Button>
             }
@@ -48,12 +52,4 @@ const styles = {
   }
 }
 
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
-})
-
-const mapDispatchToProps = {
-  startlogout: authActions.startlogout
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header)
+export default withRouter(Header)

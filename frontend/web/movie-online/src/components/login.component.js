@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
-import { authActions } from '../redux/actions';
+import { authService } from '../services';
 
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';
@@ -17,12 +15,21 @@ class Login extends Component {
     super(props);
     this.state = {
       email: 'admin1@gmail.com',
-      password: '1'
+      password: '1',
+      fetching: false
     }
   }
 
   onTextChange = name => e => {
     this.setState({ [name]: e.target.value });
+  }
+
+  login = (email, password) => {
+    this.setState({ fetching: true });
+    authService.login(email, password).then(() => {
+      this.setState({ fetching: false });
+      this.props.history.push('/');
+    });
   }
 
   render() {
@@ -51,8 +58,12 @@ class Login extends Component {
                 />
               </div>
               <div className="card-footer">
-                <Button component={Link} to="/forgot" onClick={this.onLogin}>Forgot password?</Button>
-                <Button className="float-right" color="primary" variant="raised" onClick={() => this.props.startLogin(email, password)}>
+                <Button className="float-right"
+                  color="primary"
+                  variant="raised"
+                  onClick={() => this.login(email, password)}
+                  disabled={this.state.fetching}
+                >
                   Log in
                 </Button>
               </div>
@@ -64,12 +75,4 @@ class Login extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
-
-})
-
-const mapDispatchToProps = {
-  startLogin: authActions.startLogin
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login

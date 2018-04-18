@@ -16,7 +16,7 @@ const logout = () => {
   localStorage.removeItem(Storage.TOKEN);
 }
 
-const isAuthenticated = () => {
+const isLoggedIn = () => {
   const token = localStorage.getItem(Storage.TOKEN);
 
   return token != null;
@@ -25,5 +25,5 @@ const isAuthenticated = () => {
 export const authService = {
   login,
   logout,
-  isAuthenticated
+  isLoggedIn
 };
