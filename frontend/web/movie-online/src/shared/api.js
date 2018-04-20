@@ -10,5 +10,6 @@ export const Auth = {
 }
 
 export const Movie = {
-  GET_ALL: Api.MOVIE
+  GET_ALL: Api.MOVIE,
+  CREATE: Api.MOVIE
 }

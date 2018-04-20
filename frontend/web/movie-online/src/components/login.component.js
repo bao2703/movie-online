@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { authService } from '../services';
+import * as authService from '../services/auth.service';
 
 import AppBar from 'material-ui/AppBar';
 import TextField from 'material-ui/TextField';

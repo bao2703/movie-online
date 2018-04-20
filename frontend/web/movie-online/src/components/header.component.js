@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
-import { authService } from '../services';
+import * as authService from '../services/auth.service';
 
 import AppBar from 'material-ui/AppBar';
 import Toolbar from 'material-ui/Toolbar';
@@ -18,7 +18,7 @@ export class Header extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.state;
+    const { isLoggedIn } = false;
 
     return (
       <div>
