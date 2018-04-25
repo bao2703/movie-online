@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using MovieOnline.Data.Entities;
 using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 
 namespace MovieOnline.Controllers
@@ -35,6 +38,54 @@ namespace MovieOnline.Controllers
             var genres = _genreRepository.FindMoviesById(id).ToList();
             var reponses = _mapper.Map<List<MovieReponse>>(genres);
             return Ok(reponses);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] GenreRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ErrorReponse.InvalidPayload);
+            }
+
+            var genre = _mapper.Map<GenreEntity>(model);
+
+            await _genreRepository.AddAsync(genre);
+            await _unitOfWork.SaveChangesAsync();
+ 
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit([FromBody] GenreRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ErrorReponse.InvalidPayload);
+            }
+
+            var genre = _mapper.Map<GenreEntity>(model);
+
+            _genreRepository.Update(genre);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromBody] GenreRequest model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ErrorReponse.InvalidPayload);
+            }
+
+            var genre = _mapper.Map<GenreEntity>(model);
+
+            _genreRepository.Remove(genre);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
         }
     }
 }
