@@ -6,6 +6,7 @@ import Header from './../components/header.component';
 import Home from './../components/home.component';
 import Movie from './../components/movie.component';
 import Login from './../components/login.component';
+import Genre from './../components/genre.component';
 
 export class App extends Component {
 
@@ -17,10 +18,12 @@ export class App extends Component {
             <Header />
             <Link to="/login">Login</Link>
             <Link to="/movie">Movie</Link>
+            <Link to="/genre">Genre</Link>
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/movie" component={Movie} />
               <Route path="/login" component={Login} />
+              <Route path="/genre" component={Genre} />
             </Switch>
           </div>
         </Router>

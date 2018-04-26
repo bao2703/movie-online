@@ -11,20 +11,15 @@ namespace MovieOnline.Data.Models.Requests
     public class GenreRequest
     {
         [Required]
-        public string Id { get; set; }
-
-        [Required]
         public string Name { get; set; }
 
-        [Required]
-        public string Description { get; set; }
+    }
 
-        public class GenreRequestMapperProfile : Profile
+    public class GenreRequestMapperProfile : Profile
+    {
+        public GenreRequestMapperProfile()
         {
-            public GenreRequestMapperProfile()
-            {
-                CreateMap<GenreRequest, GenreEntity>();
-            }
+            CreateMap<GenreRequest, GenreEntity>();
         }
     }
 }
