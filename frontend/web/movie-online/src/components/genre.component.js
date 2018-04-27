@@ -44,10 +44,7 @@ export class Genre extends Component {
   }
 
   edit = () => {
-    const genre = {name: this.state.name, description: this.state.description};
-    genreService.edit(genre).then(() => {
-      this.componentDidMount();
-    })
+    
     this.handleClose();
   }
 
@@ -95,6 +92,7 @@ export class Genre extends Component {
               id="name"
               label="Name"
               type="text"
+              value=""
               fullWidth
             />
             <TextField
@@ -102,6 +100,7 @@ export class Genre extends Component {
               id="description"
               label="Description"
               type="text"
+              value=""
               fullWidth
             />
           </DialogContent>
