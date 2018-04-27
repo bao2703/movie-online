@@ -56,7 +56,7 @@ namespace MovieOnline.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> Edit([FromBody] GenreRequest model)
         {
             if (!ModelState.IsValid)
@@ -72,7 +72,7 @@ namespace MovieOnline.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] GenreRequest model)
         {
             if (!ModelState.IsValid)

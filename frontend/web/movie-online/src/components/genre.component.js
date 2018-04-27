@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import * as genreService from '../services/genre.service';
 
+import Button from 'material-ui/Button';
+import TextField from 'material-ui/TextField';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle} from 'material-ui/Dialog';
 
 export class Genre extends Component {
   constructor(props) {
@@ -9,9 +12,19 @@ export class Genre extends Component {
 
     this.state = {
       genres: [],
-      name: ''
+      name: '',
+      description: '',
+      open: false
     }
   }
+
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
         
   componentDidMount() {
     genreService.fetch().then(genres => {
@@ -31,15 +44,16 @@ export class Genre extends Component {
   }
 
   edit = () => {
-
+    const genre = {name: this.state.name, description: this.state.description};
+    genreService.edit(genre).then(() => {
+      this.componentDidMount();
+    })
+    this.handleClose();
   }
 
   delete = () => {
-
-  }
-      
-  onClickItem = () => {
-    console.log("Clicked");
+    
+    this.handleClose();
   }
 
   render() {
@@ -49,8 +63,6 @@ export class Genre extends Component {
       <div>
         <input onChange={this.onTextChange('name')} />
         <button onClick={() => this.add()}>Add</button>
-        <button onClick={() => this.edit()}>Edit</button>
-        <button onClick={() => this.delete()}>Delete</button>
         <Table>
           <TableHead>
             <TableRow>
@@ -61,7 +73,7 @@ export class Genre extends Component {
           </TableHead>
           <TableBody>
             {genres.map(genre =>
-              <TableRow key={genre.id} onClick={() => this.onClickItem()}>
+              <TableRow key={genre.id} onClick={this.handleClickOpen}>
                 <TableCell>{genre.id}</TableCell>
                 <TableCell>{genre.name}</TableCell>
                 <TableCell>{genre.description}</TableCell>
@@ -69,6 +81,42 @@ export class Genre extends Component {
             )}
           </TableBody>
         </Table>
+
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogTitle id="form-dialog-title">Edit</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Name"
+              type="text"
+              fullWidth
+            />
+            <TextField
+              margin="dense"
+              id="description"
+              label="Description"
+              type="text"
+              fullWidth
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={this.handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={this.delete} color="primary">
+              Delete
+            </Button>
+            <Button onClick={this.edit} color="primary">
+              Save
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     )
   }  
