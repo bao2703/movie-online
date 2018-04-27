@@ -38,6 +38,10 @@ export class Genre extends Component {
 
   }
       
+  onClickItem = () => {
+    console.log("Clicked");
+  }
+
   render() {
     const { genres } = this.state;
 
@@ -57,7 +61,7 @@ export class Genre extends Component {
           </TableHead>
           <TableBody>
             {genres.map(genre =>
-              <TableRow key={genre.id}>
+              <TableRow key={genre.id} onClick={() => this.onClickItem()}>
                 <TableCell>{genre.id}</TableCell>
                 <TableCell>{genre.name}</TableCell>
                 <TableCell>{genre.description}</TableCell>
@@ -67,8 +71,7 @@ export class Genre extends Component {
         </Table>
       </div>
     )
-  }
-      
+  }  
 }
 
 export default Genre
