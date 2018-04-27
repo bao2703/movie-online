@@ -19,7 +19,7 @@ export class Genre extends Component {
   }
 
   handleClickOpen = () => {
-    this.setState({ open: true });
+    this.setState({ open: true});
   };
 
   handleClose = () => {
@@ -70,7 +70,7 @@ export class Genre extends Component {
           </TableHead>
           <TableBody>
             {genres.map(genre =>
-              <TableRow key={genre.id} onClick={this.handleClickOpen}>
+              <TableRow key={genre.id} onClick={() => this.handleClickOpen()}>
                 <TableCell>{genre.id}</TableCell>
                 <TableCell>{genre.name}</TableCell>
                 <TableCell>{genre.description}</TableCell>
@@ -92,7 +92,7 @@ export class Genre extends Component {
               id="name"
               label="Name"
               type="text"
-              value=""
+              //value=""
               fullWidth
             />
             <TextField
@@ -100,7 +100,7 @@ export class Genre extends Component {
               id="description"
               label="Description"
               type="text"
-              value=""
+              //value=""
               fullWidth
             />
           </DialogContent>
