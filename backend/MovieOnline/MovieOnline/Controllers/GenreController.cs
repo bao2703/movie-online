@@ -52,19 +52,22 @@ namespace MovieOnline.Controllers
 
             await _genreRepository.AddAsync(genre);
             await _unitOfWork.SaveChangesAsync();
- 
+
             return Ok();
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Edit([FromBody] GenreRequest model)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(int id, [FromBody] GenreRequest model)
         {
-            if (!ModelState.IsValid)
+            var genre = _genreRepository.FindById(id);
+
+            if (!ModelState.IsValid || genre == null)
             {
                 return BadRequest(ErrorReponse.InvalidPayload);
             }
 
-            var genre = _mapper.Map<GenreEntity>(model);
+            genre.Name = model.Name;
+            genre.Description = model.Description;
 
             _genreRepository.Update(genre);
             await _unitOfWork.SaveChangesAsync();
@@ -72,15 +75,15 @@ namespace MovieOnline.Controllers
             return Ok();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] GenreRequest model)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
         {
-            if (!ModelState.IsValid)
+            var genre = _genreRepository.FindById(id);
+
+            if (genre == null)
             {
                 return BadRequest(ErrorReponse.InvalidPayload);
             }
-
-            var genre = _mapper.Map<GenreEntity>(model);
 
             _genreRepository.Remove(genre);
             await _unitOfWork.SaveChangesAsync();
