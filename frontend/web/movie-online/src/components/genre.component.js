@@ -105,14 +105,15 @@ class EditGenreDialog extends Component {
   }
 
   onEdit = () => {
-    this.props.closeDialog();
+    const { genre } = this.props;
+    genreService.edit(genre.id, genre).then(() => {
+      this.props.onClose();
+    })
   }
 
   onRemove = () => {
-    const { genre } = this.props;
-    genreService.remove(genre.id).then(() => {
-      this.props.onClose();
-    });
+    
+    this.props.onClose();
   }
 
   render() {

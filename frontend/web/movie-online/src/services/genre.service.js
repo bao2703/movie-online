@@ -10,7 +10,7 @@ export const create = genre => {
 }
 
 export const edit = (id, genre) => {
-  return axios.put(Genre.EDI + '/' + id, genre);
+  return axios.put(Genre.EDIT + '/' + id, genre);
 }
 
 export const remove = id => {
