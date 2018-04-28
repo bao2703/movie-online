@@ -95,29 +95,43 @@ class EditGenreDialog extends Component {
     super(props);
 
     this.state = {
+      id: '',
       name: '',
       description: ''
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { genre } = nextProps;
+    this.setState({
+      id: genre.id,
+      name: genre.name,
+      description: genre.description
+    });
+  }
+
+  onEdit = () => {
+    const { id, name, description } = this.state;
+    genreService.edit(id, { name, description }).then(() => {
+      this.props.onClose();
+    })
+  }
+
+  onRemove = () => {
+    const { id } = this.state;
+    genreService.remove(id).then(() => {
+      this.props.onClose();
+    });
   }
 
   onTextChange = name => e => {
     this.setState({ [name]: e.target.value });
   }
 
-  onEdit = () => {
-    const { genre } = this.props;
-    genreService.edit(genre.id, genre).then(() => {
-      this.props.onClose();
-    })
-  }
-
-  onRemove = () => {
-    
-    this.props.onClose();
-  }
-
   render() {
-    const { genre, ...other } = this.props;
+    const { ...other } = this.props;
+    const { name, description } = this.state;
+
     return (
       <Dialog {...other}>
         <DialogTitle>Edit</DialogTitle>
@@ -126,14 +140,14 @@ class EditGenreDialog extends Component {
             autoFocus
             margin="normal"
             label="Name"
-            value={genre.name}
+            value={name}
             onChange={this.onTextChange('name')}
             fullWidth
           />
           <TextField
             margin="normal"
             label="Description"
-            value={genre.description}
+            value={description}
             onChange={this.onTextChange('description')}
             fullWidth
           />
