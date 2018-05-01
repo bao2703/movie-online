@@ -48,7 +48,7 @@ export class Genre extends Component {
   add = () => {
     const genre = { name: this.state.name };
     genreService.create(genre).then(() => {
-      this.fetchGenres();
+      this.componentDidMount();
     })
   }
 

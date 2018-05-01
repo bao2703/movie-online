@@ -12,7 +12,9 @@ export const Auth = {
 
 export const Movie = {
   GET_ALL: Api.MOVIE,
-  CREATE: Api.MOVIE
+  CREATE: Api.MOVIE,
+  EDIT: Api.MOVIE,
+  DELETE: Api.MOVIE
 }
 
 export const Genre = {

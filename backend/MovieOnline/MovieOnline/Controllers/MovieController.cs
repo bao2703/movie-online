@@ -63,5 +63,40 @@ namespace MovieOnline.Controllers
 
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Edit(int id, [FromBody] MovieRequest model)
+        {
+            var movie = _movieRepository.FindById(id);
+
+            if (!ModelState.IsValid || movie == null)
+            {
+                return BadRequest(ErrorReponse.InvalidPayload);
+            }
+
+            movie.Name = model.Name;
+            movie.Description = model.Description;
+
+            _movieRepository.Update(movie);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var movie = _movieRepository.FindById(id);
+
+            if (movie == null)
+            {
+                return BadRequest(ErrorReponse.InvalidPayload);
+            }
+
+            _movieRepository.Remove(movie);
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

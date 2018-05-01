@@ -9,4 +9,12 @@ export const create = movie => {
   return axios.post(Movie.CREATE, movie);
 }
 
+export const edit = (id, movie) => {
+  return axios.put(Movie.EDIT + '/' + id, movie);
+}
+
+export const remove = id => {
+  return axios.delete(Movie.DELETE + '/' + id);
+}
+
 const map = response => response.data;

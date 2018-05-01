@@ -12,6 +12,9 @@ namespace MovieOnline.Data.Models.Requests
     {
         [Required]
         public string Name { get; set; }
+
+        public string Description { get; set; }
+
     }
 
     public class MovieRequestMapperProfile : Profile
