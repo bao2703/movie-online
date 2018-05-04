@@ -70,6 +70,11 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         return items.size();
     }
 
+    public void setItems(List<Movie> items) {
+        this.items = items;
+        notifyDataSetChanged();
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.textViewName) TextView textViewName;

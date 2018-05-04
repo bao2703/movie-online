@@ -15,8 +15,8 @@ import com.neptune.movieonline.utils.constants.Api;
 public class MovieRequest {
 
     @NonNull
-    public static GsonRequest<Movie[]> getAll(Response.Listener<Movie[]> listener, Response.ErrorListener errorListener) {
-        return new GsonRequest<>(Movie[].class, Request.Method.GET, Api.Movie.GET_ALL, listener, errorListener);
+    public static GsonRequest<Movie[]> getAll(String searchString, Response.Listener<Movie[]> listener, Response.ErrorListener errorListener) {
+        return new GsonRequest<>(Movie[].class, Request.Method.GET, Api.Movie.GET_ALL + "?searchString=" + searchString, listener, errorListener);
     }
 
     @NonNull
