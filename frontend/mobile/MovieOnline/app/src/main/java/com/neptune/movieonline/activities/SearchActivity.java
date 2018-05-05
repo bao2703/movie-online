@@ -1,5 +1,6 @@
 package com.neptune.movieonline.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
@@ -8,10 +9,12 @@ import android.widget.EditText;
 
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.fragments.MovieListFragment;
+import com.neptune.movieonline.models.Movie;
+import com.neptune.movieonline.utils.constants.Extra;
 
 import static com.neptune.movieonline.R.id.fragment_container;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseActivity implements MovieListFragment.OnMovieClickListener {
 
     private MovieListFragment movieListFragment;
 
@@ -31,7 +34,7 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.search, menu);
 
         final MenuItem searchItem = menu.findItem(R.id.item_search);
         searchItem.setActionView(new SearchView(this));
@@ -66,5 +69,12 @@ public class SearchActivity extends BaseActivity {
         });
 
         return true;
+    }
+
+    @Override
+    public void onMovieClickListener(Movie item) {
+        Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra(Extra.MOVIE, item);
+        startActivity(intent);
     }
 }

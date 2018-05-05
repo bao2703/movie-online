@@ -25,7 +25,7 @@ public class CommentActivity extends BaseActivity {
 
     @BindView(R.id.editTextComment) EditText editTextComment;
 
-    Movie MOVIE;
+    private Movie MOVIE;
     private ProgressDialog progressDialog;
     private CommentListFragment commentListFragment;
 

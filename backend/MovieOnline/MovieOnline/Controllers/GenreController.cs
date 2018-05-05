@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data.Entities;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 
@@ -28,7 +28,7 @@ namespace MovieOnline.Controllers
         public IActionResult GetAll()
         {
             var genres = _genreRepository.OrderBy(g => g.Name).ToList();
-            var reponses = _mapper.Map<List<GenreReponse>>(genres);
+            var reponses = _mapper.Map<List<GenreResponse>>(genres);
             return Ok(reponses);
         }
 
@@ -36,7 +36,7 @@ namespace MovieOnline.Controllers
         public IActionResult GetMovies(int id)
         {
             var genres = _genreRepository.FindMoviesById(id).ToList();
-            var reponses = _mapper.Map<List<MovieReponse>>(genres);
+            var reponses = _mapper.Map<List<MovieResponse>>(genres);
             return Ok(reponses);
         }
 
@@ -45,7 +45,7 @@ namespace MovieOnline.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             var genre = _mapper.Map<GenreEntity>(model);
@@ -63,7 +63,7 @@ namespace MovieOnline.Controllers
 
             if (!ModelState.IsValid || genre == null)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             genre.Name = model.Name;
@@ -82,7 +82,7 @@ namespace MovieOnline.Controllers
 
             if (genre == null)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             _genreRepository.Remove(genre);

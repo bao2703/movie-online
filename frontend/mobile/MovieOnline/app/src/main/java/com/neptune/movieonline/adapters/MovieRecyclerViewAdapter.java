@@ -1,7 +1,6 @@
 package com.neptune.movieonline.adapters;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +11,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.neptune.movieonline.R;
-import com.neptune.movieonline.activities.MovieDetailActivity;
+import com.neptune.movieonline.fragments.MovieListFragment;
 import com.neptune.movieonline.models.Movie;
-import com.neptune.movieonline.utils.constants.Extra;
 import com.neptune.movieonline.utils.helpers.GlideHelper;
 
 import java.util.List;
@@ -30,10 +28,12 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
     private Context context;
     private List<Movie> items;
+    private MovieListFragment.OnMovieClickListener listener;
 
-    public MovieRecyclerViewAdapter(Context context, List<Movie> items) {
+    public MovieRecyclerViewAdapter(Context context, List<Movie> items, MovieListFragment.OnMovieClickListener listener) {
         this.context = context;
         this.items = items;
+        this.listener = listener;
     }
 
     @NonNull
@@ -58,9 +58,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, MovieDetailActivity.class);
-                intent.putExtra(Extra.MOVIE, item);
-                context.startActivity(intent);
+                listener.onMovieClickListener(item);
             }
         });
     }

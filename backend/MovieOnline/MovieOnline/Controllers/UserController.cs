@@ -2,7 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Repositories;
 
 namespace MovieOnline.Controllers
@@ -26,7 +26,7 @@ namespace MovieOnline.Controllers
         public IActionResult GetAll()
         {
             var users = _userRepository.ToList();
-            var reponses = _mapper.Map<List<UserReponse>>(users);
+            var reponses = _mapper.Map<List<UserResponse>>(users);
             return Ok(reponses);
         }
 
@@ -34,7 +34,7 @@ namespace MovieOnline.Controllers
         public IActionResult Get(int id)
         {
             var user = _userRepository.FindById(id);
-            var reponse = _mapper.Map<UserReponse>(user);
+            var reponse = _mapper.Map<UserResponse>(user);
             return Ok(reponse);
         }
     }

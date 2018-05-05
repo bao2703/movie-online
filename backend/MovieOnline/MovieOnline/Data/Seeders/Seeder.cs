@@ -110,6 +110,15 @@ namespace MovieOnline.Data.Seeders
             var movies = movieFaker.Generate(100);
             _context.Movies.AddRange(movies);
 
+            var episodeFaker =  new Faker<EpisodeEntity>().Rules((f, o) =>
+            {
+                o.Name = f.Name.FirstName();
+                o.MovieId = f.PickRandom(movies).Id;
+            });
+
+            var episodes = episodeFaker.Generate(500);
+            _context.Episodes.AddRange(episodes);
+
             var commentFaker = new Faker<CommentEntity>().Rules((f, o) =>
             {
                 o.Content = f.Lorem.Sentences(f.Random.Number(1, 4));

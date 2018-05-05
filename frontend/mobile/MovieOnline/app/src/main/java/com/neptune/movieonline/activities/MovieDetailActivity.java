@@ -20,7 +20,7 @@ public class MovieDetailActivity extends BaseActivity {
     @BindView(R.id.textViewDescription) TextView textViewDescription;
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
 
-    Movie MOVIE;
+    private Movie MOVIE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +38,13 @@ public class MovieDetailActivity extends BaseActivity {
                 .load(MOVIE.getPosterUrl())
                 .apply(GlideHelper.POSTER_OPTIONS)
                 .into(imageViewPoster);
+    }
+
+    @OnClick(R.id.buttonEpisodes)
+    public void onClickEpisodes() {
+        Intent intent = new Intent(this, EpisodeListActivity.class);
+        intent.putExtra(Extra.MOVIE, MOVIE);
+        startActivity(intent);
     }
 
     @OnClick(R.id.buttonComment)

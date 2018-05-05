@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 public class CommentListFragment extends Fragment {
 
     private static final String ARG_MOVIE_ID = "MOVIE_ID";
-    @BindView(R.id.recyclerViewComment) RecyclerView recyclerView;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     private Integer MOVIE_ID;
 
     public static CommentListFragment newInstance(Integer movieId) {

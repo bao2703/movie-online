@@ -3,7 +3,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Common;
 using MovieOnline.Data.Entities;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 
@@ -28,7 +28,7 @@ namespace MovieOnline.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             var user = _mapper.Map<UserEntity>(model);
@@ -36,7 +36,7 @@ namespace MovieOnline.Controllers
 
             if (_userRepository.IsExistEmail(user.Email))
             {
-                return BadRequest(ErrorReponse.EmailConflict);
+                return BadRequest(ErrorResponse.EmailConflict);
             }
 
             await _userRepository.AddAsync(user);
@@ -50,7 +50,7 @@ namespace MovieOnline.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             model.Email = model.Email.ToLower();
@@ -59,7 +59,7 @@ namespace MovieOnline.Controllers
 
             if (user == null || user.Password != model.Password)
             {
-                return BadRequest(ErrorReponse.InvalidLogin);
+                return BadRequest(ErrorResponse.InvalidLogin);
             }
 
             var jwt = Helper.GenerateJwt(user);

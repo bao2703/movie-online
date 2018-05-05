@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data.Entities;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 
@@ -29,7 +29,7 @@ namespace MovieOnline.Controllers
         public IActionResult GetAll()
         {
             var comments = _commentRepository.OrderByDescending(c => c.DateCreated).ToList();
-            var reponses = _mapper.Map<List<CommentReponse>>(comments);
+            var reponses = _mapper.Map<List<CommentResponse>>(comments);
             return Ok(reponses);
         }
 
@@ -38,7 +38,7 @@ namespace MovieOnline.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             var comment = _mapper.Map<CommentEntity>(model);

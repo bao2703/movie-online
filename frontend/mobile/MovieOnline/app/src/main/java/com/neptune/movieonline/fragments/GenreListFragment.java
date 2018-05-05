@@ -21,15 +21,13 @@ import com.neptune.movieonline.utils.requests.GsonRequest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GenreListFragment extends Fragment {
 
-    @BindView(R.id.recyclerViewGenre) RecyclerView recyclerView;
-    private List<Genre> genres;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     private OnGenreClickListener listener;
 
     @Override
@@ -57,8 +55,7 @@ public class GenreListFragment extends Fragment {
                 new Response.Listener<Genre[]>() {
                     @Override
                     public void onResponse(Genre[] response) {
-                        genres = new ArrayList<>(Arrays.asList(response));
-                        recyclerView.setAdapter(new GenreRecyclerViewAdapter(genres, listener));
+                        recyclerView.setAdapter(new GenreRecyclerViewAdapter(new ArrayList<>(Arrays.asList(response)), listener));
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(moviesRequest);

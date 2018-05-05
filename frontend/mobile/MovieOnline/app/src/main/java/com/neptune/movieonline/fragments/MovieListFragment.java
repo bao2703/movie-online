@@ -1,6 +1,7 @@
 package com.neptune.movieonline.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,13 +29,20 @@ import butterknife.ButterKnife;
  * Created by Neptune on 4/12/2018.
  */
 
-public class MovieListFragment extends Fragment {
+public class MovieListFragment extends Fragment implements Response.Listener<Movie[]> {
 
-    @BindView(R.id.recyclerViewMovie) RecyclerView recyclerView;
-    MovieRecyclerViewAdapter adapter;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    private MovieRecyclerViewAdapter adapter;
+    private OnMovieClickListener listener;
 
     public static MovieListFragment newInstance() {
         return new MovieListFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (OnMovieClickListener) context;
     }
 
     @Override
@@ -52,29 +60,26 @@ public class MovieListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        adapter = new MovieRecyclerViewAdapter(getActivity(), new ArrayList<Movie>(), listener);
+        recyclerView.setAdapter(adapter);
     }
 
     public void fetchMovies(String searchString) {
-        GsonRequest<Movie[]> moviesRequest = MovieRequest.getAll(searchString,
-                new Response.Listener<Movie[]>() {
-                    @Override
-                    public void onResponse(Movie[] response) {
-                        adapter = new MovieRecyclerViewAdapter(getActivity(), new ArrayList<>(Arrays.asList(response)));
-                        recyclerView.setAdapter(adapter);
-                    }
-                }, null);
+        GsonRequest<Movie[]> moviesRequest = MovieRequest.getAll(searchString, this, null);
         VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
     }
 
-    public void fetchMovies(int genreId) {
-        GsonRequest<Movie[]> moviesRequest = GenreRequest.getMovies(genreId,
-                new Response.Listener<Movie[]>() {
-                    @Override
-                    public void onResponse(Movie[] response) {
-                        adapter = new MovieRecyclerViewAdapter(getActivity(), new ArrayList<>(Arrays.asList(response)));
-                        recyclerView.setAdapter(adapter);
-                    }
-                }, null);
+    public void fetchMovies(Integer genreId) {
+        GsonRequest<Movie[]> moviesRequest = GenreRequest.getMovies(genreId, this, null);
         VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
+    }
+
+    @Override
+    public void onResponse(Movie[] response) {
+        adapter.setItems(new ArrayList<>(Arrays.asList(response)));
+    }
+
+    public interface OnMovieClickListener {
+        void onMovieClickListener(Movie item);
     }
 }

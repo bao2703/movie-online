@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.neptune.movieonline.models.Comment;
+import com.neptune.movieonline.models.Episode;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Api;
 
@@ -27,5 +28,10 @@ public class MovieRequest {
     @NonNull
     public static GsonRequest<Comment[]> getComments(int id, Response.Listener<Comment[]> listener, Response.ErrorListener errorListener) {
         return new GsonRequest<>(Comment[].class, Request.Method.GET, Api.Movie.GET_COMMENTS, id, listener, errorListener);
+    }
+
+    @NonNull
+    public static GsonRequest<Episode[]> getEpisodes(int id, Response.Listener<Episode[]> listener, Response.ErrorListener errorListener) {
+        return new GsonRequest<>(Episode[].class, Request.Method.GET, Api.Movie.GET_EPISODES, id, listener, errorListener);
     }
 }

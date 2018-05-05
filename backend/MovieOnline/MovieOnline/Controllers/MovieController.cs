@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using MovieOnline.Data.Entities;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 
@@ -34,7 +34,7 @@ namespace MovieOnline.Controllers
                 movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
             }
 
-            var reponses = _mapper.Map<List<MovieReponse>>(movies.ToList());
+            var reponses = _mapper.Map<List<MovieResponse>>(movies.ToList());
             return Ok(reponses);
         }
 
@@ -42,7 +42,7 @@ namespace MovieOnline.Controllers
         public IActionResult Get(int id)
         {
             var movie = _movieRepository.FindById(id);
-            var reponse = _mapper.Map<MovieReponse>(movie);
+            var reponse = _mapper.Map<MovieResponse>(movie);
             return Ok(reponse);
         }
 
@@ -50,7 +50,15 @@ namespace MovieOnline.Controllers
         public IActionResult GetComments(int id)
         {
             var comments = _movieRepository.FindCommentsById(id).ToList();
-            var reponses = _mapper.Map<List<CommentReponse>>(comments);
+            var reponses = _mapper.Map<List<CommentResponse>>(comments);
+            return Ok(reponses);
+        }
+
+        [HttpGet("episodes/{id}")]
+        public IActionResult GetEpisodes(int id)
+        {
+            var comments = _movieRepository.FindEpisodesById(id).ToList();
+            var reponses = _mapper.Map<List<EpisodeResponse>>(comments);
             return Ok(reponses);
         }
 
@@ -59,7 +67,7 @@ namespace MovieOnline.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             var movie = _mapper.Map<MovieEntity>(model);
@@ -77,7 +85,7 @@ namespace MovieOnline.Controllers
 
             if (!ModelState.IsValid || movie == null)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             movie.Name = model.Name;
@@ -96,7 +104,7 @@ namespace MovieOnline.Controllers
 
             if (movie == null)
             {
-                return BadRequest(ErrorReponse.InvalidPayload);
+                return BadRequest(ErrorResponse.InvalidPayload);
             }
 
             _movieRepository.Remove(movie);
