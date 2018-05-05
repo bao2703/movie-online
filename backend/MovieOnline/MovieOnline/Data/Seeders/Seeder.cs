@@ -111,7 +111,7 @@ namespace MovieOnline.Data.Seeders
                 {
                     o.Episodes.Add(new EpisodeEntity()
                     {
-                        Name = $"Ep {i}"
+                        Name = "Ep " + i
                     });
                 }
             });

@@ -35,7 +35,7 @@ namespace MovieOnline.Repositories
             {
                 return null;
             }
-            return movie.Episodes.OrderByDescending(c => c.Name);
+            return movie.Episodes.OrderByDescending(e => e.Name.Length).ThenByDescending(e => e.Name);
         }
     }
 }

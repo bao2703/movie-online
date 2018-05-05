@@ -10,7 +10,7 @@ public class Episode implements Serializable {
 
     private Integer id;
     private String name;
-    private String Url;
+    private String url;
     private Integer movieId;
 
     public Integer getId() {
@@ -30,11 +30,11 @@ public class Episode implements Serializable {
     }
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
     public void setUrl(String url) {
-        Url = url;
+        this.url = url;
     }
 
     public Integer getMovieId() {
