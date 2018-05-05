@@ -42,10 +42,12 @@
         <activity
             android:name=".activities.CommentActivity"
             android:parentActivityName=".activities.MovieDetailActivity" />
-        <activity
-            android:name=".activities.SearchActivity" />
+        <activity android:name=".activities.SearchActivity" />
         <activity
             android:name=".activities.EpisodeListActivity"
+            android:parentActivityName=".activities.MovieDetailActivity" />
+        <activity
+            android:name=".activities.WatchActivity"
             android:parentActivityName=".activities.MovieDetailActivity" />
     </application>
 

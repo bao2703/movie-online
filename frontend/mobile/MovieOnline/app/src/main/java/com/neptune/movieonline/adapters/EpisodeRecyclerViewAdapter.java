@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.fragments.EpisodeListFragment;
 import com.neptune.movieonline.models.Episode;
 
 import java.util.List;
@@ -24,10 +25,12 @@ public class EpisodeRecyclerViewAdapter extends RecyclerView.Adapter<EpisodeRecy
 
     private Context context;
     private List<Episode> items;
+    private EpisodeListFragment.OnEpisodeClickListener listener;
 
-    public EpisodeRecyclerViewAdapter(Context context, List<Episode> items) {
+    public EpisodeRecyclerViewAdapter(Context context, List<Episode> items, EpisodeListFragment.OnEpisodeClickListener listener) {
         this.context = context;
         this.items = items;
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,6 +46,12 @@ public class EpisodeRecyclerViewAdapter extends RecyclerView.Adapter<EpisodeRecy
         final Episode item = items.get(position);
 
         holder.textViewName.setText(item.getName());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onEpisodeClickListener(item);
+            }
+        });
     }
 
     @Override
@@ -53,9 +62,11 @@ public class EpisodeRecyclerViewAdapter extends RecyclerView.Adapter<EpisodeRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.textViewName) TextView textViewName;
+        View itemView;
 
         public ViewHolder(View itemView) {
             super(itemView);
+            this.itemView = itemView;
             ButterKnife.bind(this, itemView);
         }
     }

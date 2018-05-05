@@ -1,9 +1,11 @@
 package com.neptune.movieonline.fragments;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,10 +32,17 @@ import butterknife.ButterKnife;
 public class EpisodeListFragment extends Fragment implements Response.Listener<Episode[]> {
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    private OnEpisodeClickListener listener;
     private EpisodeRecyclerViewAdapter adapter;
 
     public static EpisodeListFragment newInstance() {
         return new EpisodeListFragment();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (OnEpisodeClickListener) context;
     }
 
     @Override
@@ -51,6 +60,10 @@ public class EpisodeListFragment extends Fragment implements Response.Listener<E
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.line_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     public void fetchEpisodes(Integer movieId) {
@@ -60,7 +73,11 @@ public class EpisodeListFragment extends Fragment implements Response.Listener<E
 
     @Override
     public void onResponse(Episode[] response) {
-        adapter = new EpisodeRecyclerViewAdapter(getActivity(), new ArrayList<>(Arrays.asList(response)));
+        adapter = new EpisodeRecyclerViewAdapter(getActivity(), new ArrayList<>(Arrays.asList(response)), listener);
         recyclerView.setAdapter(adapter);
+    }
+
+    public interface OnEpisodeClickListener {
+        void onEpisodeClickListener(Episode item);
     }
 }

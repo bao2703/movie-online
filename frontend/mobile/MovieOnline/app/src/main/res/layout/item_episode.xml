@@ -11,6 +11,5 @@
         android:layout_height="wrap_content"
         android:padding="10dp"
         android:text="Name"
-        android:textSize="@dimen/text_size_large" />
-
+        android:textSize="@dimen/text_size_larger" />
 </LinearLayout>

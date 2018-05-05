@@ -105,19 +105,19 @@ namespace MovieOnline.Data.Seeders
                 o.GenreMovies = new List<GenreMovieEntity>();
                 var randomGenres = f.PickRandom(genres, f.Random.Number(2, 5)).ToList();
                 randomGenres.ForEach(g => o.GenreMovies.Add(new GenreMovieEntity { Genre = g }));
+
+                o.Episodes = new List<EpisodeEntity>();
+                for (int i = 1; i < f.Random.Number(5, 15); i++)
+                {
+                    o.Episodes.Add(new EpisodeEntity()
+                    {
+                        Name = $"Ep {i}"
+                    });
+                }
             });
 
             var movies = movieFaker.Generate(100);
             _context.Movies.AddRange(movies);
-
-            var episodeFaker =  new Faker<EpisodeEntity>().Rules((f, o) =>
-            {
-                o.Name = f.Name.FirstName();
-                o.MovieId = f.PickRandom(movies).Id;
-            });
-
-            var episodes = episodeFaker.Generate(500);
-            _context.Episodes.AddRange(episodes);
 
             var commentFaker = new Faker<CommentEntity>().Rules((f, o) =>
             {
