@@ -4,7 +4,7 @@ import * as genreService from '../services/genre.service';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 
 export class Genre extends Component {
   constructor(props) {
@@ -48,7 +48,7 @@ export class Genre extends Component {
   add = () => {
     const genre = { name: this.state.name };
     genreService.create(genre).then(() => {
-      this.componentDidMount();
+      this.fetchGenres();
     })
   }
 
@@ -62,7 +62,6 @@ export class Genre extends Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Description</TableCell>
             </TableRow>
@@ -70,7 +69,6 @@ export class Genre extends Component {
           <TableBody>
             {genres.map(genre =>
               <TableRow key={genre.id} onClick={() => this.openDialog(genre)}>
-                <TableCell>{genre.id}</TableCell>
                 <TableCell>{genre.name}</TableCell>
                 <TableCell>{genre.description}</TableCell>
               </TableRow>
@@ -80,7 +78,7 @@ export class Genre extends Component {
 
         <EditGenreDialog
           open={this.state.open}
-          onClose={() => this.closeDialog()}
+          onClose={this.closeDialog}
           genre={selectedGenre}
         />
       </div>
@@ -97,7 +95,8 @@ class EditGenreDialog extends Component {
     this.state = {
       id: '',
       name: '',
-      description: ''
+      description: '',
+      fetching: false
     }
   }
 
@@ -111,16 +110,20 @@ class EditGenreDialog extends Component {
   }
 
   onEdit = () => {
+    this.setState({ fetching: true });
     const { id, name, description } = this.state;
     genreService.edit(id, { name, description }).then(() => {
       this.props.onClose();
+      this.setState({ fetching: false });
     })
   }
 
   onRemove = () => {
+    this.setState({ fetching: true });
     const { id } = this.state;
     genreService.remove(id).then(() => {
       this.props.onClose();
+      this.setState({ fetching: false });
     });
   }
 
@@ -130,7 +133,7 @@ class EditGenreDialog extends Component {
 
   render() {
     const { ...other } = this.props;
-    const { name, description } = this.state;
+    const { name, description, fetching } = this.state;
 
     return (
       <Dialog {...other}>
@@ -156,10 +159,10 @@ class EditGenreDialog extends Component {
           <Button onClick={() => this.props.onClose()} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => this.onRemove()} color="primary">
+          <Button onClick={() => this.onRemove()} color="primary" disabled={fetching}>
             Remove
           </Button>
-          <Button onClick={() => this.onEdit()} color="primary">
+          <Button onClick={() => this.onEdit()} color="primary" disabled={fetching}>
             Save
           </Button>
         </DialogActions>

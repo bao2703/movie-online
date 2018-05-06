@@ -7,6 +7,9 @@ using MovieOnline.Data.Entities;
 using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
+using Microsoft.AspNetCore.Http;
+using System.IO;
+using System;
 
 namespace MovieOnline.Controllers
 {
@@ -90,6 +93,7 @@ namespace MovieOnline.Controllers
 
             movie.Name = model.Name;
             movie.Description = model.Description;
+            movie.PosterUrl = model.PosterUrl;
 
             _movieRepository.Update(movie);
             await _unitOfWork.SaveChangesAsync();
@@ -127,6 +131,17 @@ namespace MovieOnline.Controllers
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();
+        }
+
+        [HttpPost("upload")]
+        public async Task<IActionResult> Upload([FromForm] IFormFile file)
+        {
+            var filePath = $"/{DateTime.Now.ToFileTime()}_{file.FileName}";
+            using (var stream = new FileStream($"wwwroot/{filePath}", FileMode.Create))
+            {
+                await file.CopyToAsync(stream);
+            }
+            return Ok(filePath);
         }
     }
 }

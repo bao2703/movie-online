@@ -4,7 +4,7 @@ import * as movieService from '../services/movie.service';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
-import Dialog, { DialogActions, DialogContent, DialogContentText, DialogTitle } from 'material-ui/Dialog';
+import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
 
 export class Movie extends Component {
 
@@ -47,9 +47,9 @@ export class Movie extends Component {
   }
 
   add = () => {
-    const movie = {name: this.state.name};
+    const movie = { name: this.state.name };
     movieService.create(movie).then(() => {
-      this.componentDidMount();
+      this.fetchGenres();
     })
   }
 
@@ -63,7 +63,6 @@ export class Movie extends Component {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Id</TableCell>
               <TableCell>Name</TableCell>
               <TableCell>Views</TableCell>
               <TableCell>Description</TableCell>
@@ -71,9 +70,11 @@ export class Movie extends Component {
           </TableHead>
           <TableBody>
             {movies.map(movie =>
-              <TableRow key={movie.id} onClick={() => this.openDialog(movie)}>
-                <TableCell>{movie.id}</TableCell>
-                <TableCell>{movie.name}</TableCell>
+              <TableRow key={movie.id} onClick={() => this.openDialog(movie)} className="table-row">
+                <TableCell>
+                  {movie.name}
+                  <img src={"http://localhost:5000" + movie.posterUrl} className="img-fluid" alt="" />
+                </TableCell>
                 <TableCell>{movie.views}</TableCell>
                 <TableCell>{movie.description}</TableCell>
               </TableRow>
@@ -83,7 +84,7 @@ export class Movie extends Component {
 
         <EditMovieDialog
           open={this.state.open}
-          onClose={() => this.closeDialog()}
+          onClose={this.closeDialog}
           movie={selectedMovie}
         />
       </div>
@@ -100,7 +101,8 @@ class EditMovieDialog extends Component {
     this.state = {
       id: '',
       name: '',
-      description: ''
+      description: '',
+      fetching: false
     }
   }
 
@@ -114,17 +116,29 @@ class EditMovieDialog extends Component {
   }
 
   onEdit = () => {
-    const { id, name, description } = this.state;
-    movieService.edit(id, { name, description }).then(() => {
-      this.props.onClose();
-    })
+    this.setState({ fetching: true });
+    const { id, name, description, file } = this.state;
+    movieService.upload(file).then(response => {
+      movieService.edit(id, { name, description, posterUrl: response }).then(() => {
+        this.props.onClose();
+        this.setState({ fetching: false });
+      });
+    });
   }
 
   onRemove = () => {
+    this.setState({ fetching: true });
     const { id } = this.state;
     movieService.remove(id).then(() => {
       this.props.onClose();
+      this.setState({ fetching: false });
     });
+  }
+
+  handleImageChange = e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    this.setState({ file });
   }
 
   onTextChange = name => e => {
@@ -133,7 +147,7 @@ class EditMovieDialog extends Component {
 
   render() {
     const { ...other } = this.props;
-    const { name, description } = this.state;
+    const { name, description, fetching } = this.state;
 
     return (
       <Dialog {...other}>
@@ -154,15 +168,18 @@ class EditMovieDialog extends Component {
             onChange={this.onTextChange('description')}
             fullWidth
           />
+          <div align="center">
+            <input type="file" className="mt-3" onChange={this.handleImageChange} />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.onClose()} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => this.onRemove()} color="primary">
+          <Button onClick={() => this.onRemove()} color="primary" disabled={fetching}>
             Remove
           </Button>
-          <Button onClick={() => this.onEdit()} color="primary">
+          <Button onClick={() => this.onEdit()} color="primary" disabled={fetching}>
             Save
           </Button>
         </DialogActions>

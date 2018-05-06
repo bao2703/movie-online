@@ -5,19 +5,13 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.bumptech.glide.Glide;
 import com.neptune.movieonline.R;
-import com.neptune.movieonline.models.Error;
 import com.neptune.movieonline.models.Movie;
-import com.neptune.movieonline.utils.constants.ErrorCode;
 import com.neptune.movieonline.utils.constants.Extra;
 import com.neptune.movieonline.utils.helpers.GlideHelper;
-import com.neptune.movieonline.utils.helpers.GsonHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
-import com.neptune.movieonline.utils.requests.AuthRequest;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 import com.neptune.movieonline.utils.requests.MovieRequest;
 

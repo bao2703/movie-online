@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../shared/axios';
 import { Genre } from '../shared/api';
 
 export const fetch = () => {

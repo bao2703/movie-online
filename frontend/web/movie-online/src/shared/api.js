@@ -1,20 +1,19 @@
-const BASE_URL = 'http://localhost:5000/api';
-
 const Api = {
-  AUTH: BASE_URL + '/auth',
-  MOVIE: BASE_URL + '/movies',
-  GENRE: BASE_URL + '/genres'
+  AUTH: 'auth',
+  MOVIE: 'movies',
+  GENRE: 'genres'
 }
 
 export const Auth = {
-  LOGIN: Api.AUTH + '/login'
+  LOGIN: 'login'
 }
 
 export const Movie = {
   GET_ALL: Api.MOVIE,
   CREATE: Api.MOVIE,
   EDIT: Api.MOVIE,
-  DELETE: Api.MOVIE
+  DELETE: Api.MOVIE,
+  UPLOAD: Api.MOVIE + "/upload"
 }
 
 export const Genre = {
