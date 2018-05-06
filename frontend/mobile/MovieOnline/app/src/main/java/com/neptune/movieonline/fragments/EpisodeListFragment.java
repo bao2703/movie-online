@@ -67,8 +67,8 @@ public class EpisodeListFragment extends Fragment implements Response.Listener<E
     }
 
     public void fetchEpisodes(Integer movieId) {
-        GsonRequest<Episode[]> moviesRequest = MovieRequest.getEpisodes(movieId, this, null);
-        VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
+        GsonRequest<Episode[]> request = MovieRequest.getEpisodes(movieId, this, null);
+        VolleyHelper.getInstance().addToRequestQueue(request);
     }
 
     @Override

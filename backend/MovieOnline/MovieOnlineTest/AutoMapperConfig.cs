@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 
 namespace MovieOnlineTest
@@ -10,7 +10,7 @@ namespace MovieOnlineTest
             new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new AuthRequestMapperProfile());
-                cfg.AddProfile(new UserReponseMapperProfile());
+                cfg.AddProfile(new UserResponseMapperProfile());
             }).CreateMapper();
     }
 }

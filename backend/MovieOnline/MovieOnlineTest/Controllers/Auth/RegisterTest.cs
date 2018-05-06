@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using MovieOnline.Controllers;
-using MovieOnline.Data.Models.Reponses;
+using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
 using Xunit;
@@ -54,7 +54,7 @@ namespace MovieOnlineTest.Controllers.Auth
             var result = await controller.Register(model);
 
             var response = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal(ErrorReponse.EmailConflict, response.Value);
+            Assert.Equal(ErrorResponse.EmailConflict, response.Value);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace MovieOnlineTest.Controllers.Auth
             var result = await controller.Register(new RegisterRequest());
 
             var response = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.Equal(ErrorReponse.InvalidPayload, response.Value);
+            Assert.Equal(ErrorResponse.InvalidPayload, response.Value);
         }
     }
 }

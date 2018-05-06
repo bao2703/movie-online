@@ -112,5 +112,21 @@ namespace MovieOnline.Controllers
 
             return Ok();
         }
+
+        [HttpPost("increase/{id}")]
+        public async Task<IActionResult> IncreaseView(int id)
+        {
+            var movie = _movieRepository.FindById(id);
+
+            if (movie == null)
+            {
+                return BadRequest(ErrorResponse.InvalidPayload);
+            }
+
+            movie.Views += 1;
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

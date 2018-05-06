@@ -34,4 +34,9 @@ public class MovieRequest {
     public static GsonRequest<Episode[]> getEpisodes(int id, Response.Listener<Episode[]> listener, Response.ErrorListener errorListener) {
         return new GsonRequest<>(Episode[].class, Request.Method.GET, Api.Movie.GET_EPISODES, id, listener, errorListener);
     }
+
+    @NonNull
+    public static GsonRequest<String> incView(int id, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        return new GsonRequest<>(String.class, Request.Method.POST, Api.Movie.INC_VIEW, id, listener, errorListener);
+    }
 }

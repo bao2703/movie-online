@@ -38,6 +38,11 @@ public class LoginActivity extends BaseActivity {
         setContentView(R.layout.activity_login);
     }
 
+    @OnClick(R.id.buttonRegister)
+    public void onClickRegister() {
+        startActivity(RegisterActivity.class);
+    }
+
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
         if (!validateInput()) {

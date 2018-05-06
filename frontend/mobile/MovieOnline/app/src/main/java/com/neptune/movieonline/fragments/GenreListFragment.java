@@ -51,14 +51,14 @@ public class GenreListFragment extends Fragment {
     }
 
     private void fetchGenres() {
-        GsonRequest<Genre[]> moviesRequest = GenreRequest.getAll(
+        GsonRequest<Genre[]> genresRequest = GenreRequest.getAll(
                 new Response.Listener<Genre[]>() {
                     @Override
                     public void onResponse(Genre[] response) {
                         recyclerView.setAdapter(new GenreRecyclerViewAdapter(new ArrayList<>(Arrays.asList(response)), listener));
                     }
                 }, null);
-        VolleyHelper.getInstance().addToRequestQueue(moviesRequest);
+        VolleyHelper.getInstance().addToRequestQueue(genresRequest);
     }
 
     public interface OnGenreClickListener {

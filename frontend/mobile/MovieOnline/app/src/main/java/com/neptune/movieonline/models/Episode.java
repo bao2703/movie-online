@@ -30,7 +30,7 @@ public class Episode implements Serializable {
     }
 
     public String getUrl() {
-        return url;
+        return "http://10.0.2.2:5000/" + url;
     }
 
     public void setUrl(String url) {

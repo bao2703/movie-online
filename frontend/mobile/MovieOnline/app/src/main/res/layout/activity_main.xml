@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="@dimen/padding_standard"
     tools:context="com.neptune.movieonline.activities.MainActivity">
 
     <Button
@@ -11,12 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/action_login" />
-
-    <Button
-        android:id="@+id/buttonRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/action_register" />
 
     <fragment
         android:id="@+id/fragmentGenre"

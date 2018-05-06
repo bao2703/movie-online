@@ -28,6 +28,7 @@ public interface Api {
         String GET = Movie.URL;
         String GET_COMMENTS = Movie.URL + "/comments";
         String GET_EPISODES = Movie.URL + "/episodes";
+        String INC_VIEW = Movie.URL + "/increase";
     }
 
     interface Comment {

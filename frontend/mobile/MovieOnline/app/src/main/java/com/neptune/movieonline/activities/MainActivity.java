@@ -20,11 +20,6 @@ public class MainActivity extends BaseActivity implements GenreListFragment.OnGe
         setContentView(R.layout.activity_main);
     }
 
-    @OnClick(R.id.buttonRegister)
-    public void onClickRegister() {
-        startActivity(RegisterActivity.class);
-    }
-
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
         startActivity(LoginActivity.class);
