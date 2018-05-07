@@ -19,12 +19,14 @@ namespace MovieOnline.Controllers
         private readonly IMapper _mapper;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMovieRepository _movieRepository;
+        private readonly IEpisodeRepository _episodeRepository;
 
-        public MovieController(IMapper mapper, IUnitOfWork unitOfWork, IMovieRepository movieRepository)
+        public MovieController(IMapper mapper, IUnitOfWork unitOfWork, IMovieRepository movieRepository, IEpisodeRepository episodeRepository)
         {
             _mapper = mapper;
             _unitOfWork = unitOfWork;
             _movieRepository = movieRepository;
+            _episodeRepository = episodeRepository;
         }
 
         [HttpGet]
@@ -65,6 +67,37 @@ namespace MovieOnline.Controllers
             return Ok(reponses);
         }
 
+        [HttpPost("episodes/{id}")]
+        [DisableRequestSizeLimit]
+        public async Task<IActionResult> CreateEpisode(int id, [FromForm] EpisodeRequest model)
+        {
+            var movie = _movieRepository.FindById(id);
+
+            if (!ModelState.IsValid || movie == null || model.File == null)
+            {
+                return BadRequest(ErrorResponse.InvalidPayload);
+            }
+
+            var episode = new EpisodeEntity()
+            {
+                Name = model.Name,
+                MovieId = movie.Id,
+            };
+
+            var filePath = $"/{DateTime.Now.ToFileTime()}_{model.File.FileName}";
+            using (var stream = new FileStream($"wwwroot/{filePath}", FileMode.Create))
+            {
+                await model.File.CopyToAsync(stream);
+                episode.Url = filePath;
+            }
+
+            _episodeRepository.Add(episode);
+
+            await _unitOfWork.SaveChangesAsync();
+
+            return Ok();
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] MovieRequest model)
         {
@@ -82,7 +115,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Edit(int id, [FromBody] MovieRequest model)
+        public async Task<IActionResult> Edit(int id, [FromForm] MovieRequest model)
         {
             var movie = _movieRepository.FindById(id);
 
@@ -93,7 +126,19 @@ namespace MovieOnline.Controllers
 
             movie.Name = model.Name;
             movie.Description = model.Description;
-            movie.PosterUrl = model.PosterUrl;
+
+            if (model.File != null)
+            {
+                var filePath = $"/{DateTime.Now.ToFileTime()}_{model.File.FileName}";
+                using (var stream = new FileStream($"wwwroot/{filePath}", FileMode.Create))
+                {
+                    var oldPath = $"wwwroot{movie.PosterUrl}";
+                    if (System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
+
+                    await model.File.CopyToAsync(stream);
+                    movie.PosterUrl = filePath;
+                }
+            }
 
             _movieRepository.Update(movie);
             await _unitOfWork.SaveChangesAsync();
@@ -114,6 +159,8 @@ namespace MovieOnline.Controllers
             _movieRepository.Remove(movie);
             await _unitOfWork.SaveChangesAsync();
 
+            if (System.IO.File.Exists(movie.PosterUrl)) System.IO.File.Delete(movie.PosterUrl);
+
             return Ok();
         }
 
@@ -131,17 +178,6 @@ namespace MovieOnline.Controllers
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();
-        }
-
-        [HttpPost("upload")]
-        public async Task<IActionResult> Upload([FromForm] IFormFile file)
-        {
-            var filePath = $"/{DateTime.Now.ToFileTime()}_{file.FileName}";
-            using (var stream = new FileStream($"wwwroot/{filePath}", FileMode.Create))
-            {
-                await file.CopyToAsync(stream);
-            }
-            return Ok(filePath);
         }
     }
 }

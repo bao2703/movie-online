@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import * as movieService from '../services/movie.service';
 
 import Button from 'material-ui/Button';
@@ -41,7 +43,7 @@ export class Movie extends Component {
   }
 
   fetchMovies = () => {
-    movieService.fetch().then(movies => {
+    movieService.fetchAll().then(movies => {
       this.setState({ movies })
     });
   }
@@ -72,8 +74,7 @@ export class Movie extends Component {
             {movies.map(movie =>
               <TableRow key={movie.id} onClick={() => this.openDialog(movie)} className="table-row">
                 <TableCell>
-                  {movie.name}
-                  <img src={"http://localhost:5000" + movie.posterUrl} className="img-fluid" alt="" />
+                  <Link to={'/movie/' + movie.id}>{movie.name}</Link>
                 </TableCell>
                 <TableCell>{movie.views}</TableCell>
                 <TableCell>{movie.description}</TableCell>
@@ -83,6 +84,7 @@ export class Movie extends Component {
         </Table>
 
         <EditMovieDialog
+          fullWidth
           open={this.state.open}
           onClose={this.closeDialog}
           movie={selectedMovie}
@@ -101,6 +103,7 @@ class EditMovieDialog extends Component {
     this.state = {
       id: '',
       name: '',
+      posterUrl: '',
       description: '',
       fetching: false
     }
@@ -111,6 +114,7 @@ class EditMovieDialog extends Component {
     this.setState({
       id: movie.id,
       name: movie.name,
+      posterUrl: 'http://localhost:5000' + movie.posterUrl,
       description: movie.description
     });
   }
@@ -118,11 +122,9 @@ class EditMovieDialog extends Component {
   onEdit = () => {
     this.setState({ fetching: true });
     const { id, name, description, file } = this.state;
-    movieService.upload(file).then(response => {
-      movieService.edit(id, { name, description, posterUrl: response }).then(() => {
-        this.props.onClose();
-        this.setState({ fetching: false });
-      });
+    movieService.edit(id, { name, description, file }).then(() => {
+      this.props.onClose();
+      this.setState({ fetching: false });
     });
   }
 
@@ -135,7 +137,7 @@ class EditMovieDialog extends Component {
     });
   }
 
-  handleImageChange = e => {
+  handleFileChange = e => {
     e.preventDefault();
     const file = e.target.files[0];
     this.setState({ file });
@@ -147,12 +149,15 @@ class EditMovieDialog extends Component {
 
   render() {
     const { ...other } = this.props;
-    const { name, description, fetching } = this.state;
+    const { name, posterUrl, description, fetching } = this.state;
 
     return (
       <Dialog {...other}>
         <DialogTitle>Edit</DialogTitle>
         <DialogContent>
+          <div align="center">
+            <img src={posterUrl} className="img-fluid" alt="" style={{ height: 200, width: 200 }} />
+          </div>
           <TextField
             autoFocus
             margin="normal"
@@ -169,7 +174,7 @@ class EditMovieDialog extends Component {
             fullWidth
           />
           <div align="center">
-            <input type="file" className="mt-3" onChange={this.handleImageChange} />
+            <input type="file" className="mt-3" onChange={this.handleFileChange} />
           </div>
         </DialogContent>
         <DialogActions>

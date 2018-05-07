@@ -1,7 +1,7 @@
 import axios from '../shared/axios';
 import { Genre } from '../shared/api';
 
-export const fetch = () => {
+export const fetchAll = () => {
   return axios.get(Genre.GET_ALL).then(map);
 }
 

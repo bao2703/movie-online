@@ -97,7 +97,7 @@ namespace MovieOnline.Data.Seeders
             {
                 o.Name = f.Commerce.Product();
                 o.Release = f.Date.Past(5);
-                o.Description = f.Lorem.Sentences(f.Random.Number(5, 10));
+                o.Description = f.Lorem.Sentences(f.Random.Number(2, 5));
                 o.Views = f.Random.Number(1000000);
                 o.Rating = f.Random.Float(1, 5);
                 o.PosterUrl = f.Image.Image();
@@ -111,8 +111,8 @@ namespace MovieOnline.Data.Seeders
                 {
                     o.Episodes.Add(new EpisodeEntity()
                     {
-                        Name = i.ToString(),
-                        Url = f.Random.Number(1, 2) + ".mp4"
+                        Name =  i.ToString(),
+                        Url = "/" + f.Random.Number(1, 2) + ".mp4"
                     });
                 }
             });

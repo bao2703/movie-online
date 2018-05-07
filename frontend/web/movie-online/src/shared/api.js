@@ -1,7 +1,8 @@
 const Api = {
   AUTH: 'auth',
   MOVIE: 'movies',
-  GENRE: 'genres'
+  GENRE: 'genres',
+  EPISODE: 'episodes'
 }
 
 export const Auth = {
@@ -10,10 +11,13 @@ export const Auth = {
 
 export const Movie = {
   GET_ALL: Api.MOVIE,
+  GET: Api.MOVIE,
   CREATE: Api.MOVIE,
   EDIT: Api.MOVIE,
   DELETE: Api.MOVIE,
-  UPLOAD: Api.MOVIE + "/upload"
+  UPLOAD: Api.MOVIE + "/upload",
+  GET_EPISODE: Api.MOVIE + "/episodes",
+  CREATE_EPISODE: Api.MOVIE + "/episodes"
 }
 
 export const Genre = {
@@ -21,4 +25,9 @@ export const Genre = {
   CREATE: Api.GENRE,
   EDIT: Api.GENRE,
   DELETE: Api.GENRE
+}
+
+export const Episode = {
+  EDIT: Api.EPISODE,
+  DELETE: Api.EPISODE
 }

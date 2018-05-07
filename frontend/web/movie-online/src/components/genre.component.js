@@ -14,22 +14,32 @@ export class Genre extends Component {
       genres: [],
       name: '',
       description: '',
-      open: false,
+      openAdd: false,
+      openEdit: false,
       selectedGenre: { name: '', description: '' }
     }
   }
 
-  openDialog = selectedGenre => {
+  openAddDialog = () => {
+    this.setState({ openAdd: true });
+  }
+
+  closeAddDialog = () => {
+    this.setState({ openAdd: false });
+    this.fetchGenres();
+  }
+
+  openEditDialog = selectedGenre => {
     this.setState({
-      open: true,
+      openEdit: true,
       selectedGenre
     });
-  };
+  }
 
-  closeDialog = () => {
-    this.setState({ open: false });
+  closeEditDialog = () => {
+    this.setState({ openEdit: false });
     this.fetchGenres();
-  };
+  }
 
   componentDidMount() {
     this.fetchGenres();
@@ -40,16 +50,9 @@ export class Genre extends Component {
   }
 
   fetchGenres = () => {
-    genreService.fetch().then(genres => {
+    genreService.fetchAll().then(genres => {
       this.setState({ genres })
     });
-  }
-
-  add = () => {
-    const genre = { name: this.state.name };
-    genreService.create(genre).then(() => {
-      this.fetchGenres();
-    })
   }
 
   render() {
@@ -57,8 +60,10 @@ export class Genre extends Component {
 
     return (
       <div>
-        <input onChange={this.onTextChange('name')} />
-        <button onClick={() => this.add()}>Add</button>
+        <Button color="primary" onClick={() => this.openAddDialog()}>
+          Add
+        </Button>
+
         <Table>
           <TableHead>
             <TableRow>
@@ -68,7 +73,7 @@ export class Genre extends Component {
           </TableHead>
           <TableBody>
             {genres.map(genre =>
-              <TableRow key={genre.id} onClick={() => this.openDialog(genre)}>
+              <TableRow key={genre.id} onClick={() => this.openEditDialog(genre)} className="table-row">
                 <TableCell>{genre.name}</TableCell>
                 <TableCell>{genre.description}</TableCell>
               </TableRow>
@@ -76,9 +81,16 @@ export class Genre extends Component {
           </TableBody>
         </Table>
 
+        <AddGenreDialog
+          fullWidth
+          open={this.state.openAdd}
+          onClose={this.closeAddDialog}
+        />
+
         <EditGenreDialog
-          open={this.state.open}
-          onClose={this.closeDialog}
+          fullWidth
+          open={this.state.openEdit}
+          onClose={this.closeEditDialog}
           genre={selectedGenre}
         />
       </div>
@@ -88,7 +100,78 @@ export class Genre extends Component {
 
 export default Genre
 
+class AddGenreDialog extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      description: '',
+      fetching: false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: '',
+      description: '',
+      fetching: false,
+    })
+  }
+
+  onAdd = () => {
+    this.setState({ fetching: true });
+    const { name, description } = this.state;
+    genreService.create({ name, description }).then(() => {
+      this.props.onClose();
+      this.setState({ fetching: false });
+    })
+  }
+
+  onTextChange = name => e => {
+    this.setState({ [name]: e.target.value });
+  }
+
+  render() {
+    const { ...other } = this.props;
+    const { name, description, fetching } = this.state;
+
+    return (
+      <Dialog {...other}>
+        <DialogTitle>Add</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="normal"
+            label="Name"
+            value={name}
+            onChange={this.onTextChange('name')}
+            fullWidth
+          />
+          <TextField
+            margin="normal"
+            label="Description"
+            value={description}
+            onChange={this.onTextChange('description')}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => this.props.onClose()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => this.onAdd()} color="primary" disabled={fetching}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+}
+
 class EditGenreDialog extends Component {
+
   constructor(props) {
     super(props);
 

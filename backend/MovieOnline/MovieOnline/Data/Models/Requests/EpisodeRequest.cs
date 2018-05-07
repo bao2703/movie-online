@@ -9,21 +9,19 @@ using System.Threading.Tasks;
 
 namespace MovieOnline.Data.Models.Requests
 {
-    public class MovieRequest
+    public class EpisodeRequest
     {
         [Required]
         public string Name { get; set; }
 
-        public string Description { get; set; }
-
         public IFormFile File { get; set; }
     }
 
-    public class MovieRequestMapperProfile : Profile
+    public class EpisodeRequestMapperProfile : Profile
     {
-        public MovieRequestMapperProfile()
+        public EpisodeRequestMapperProfile()
         {
-            CreateMap<MovieRequest, MovieEntity>();
+            CreateMap<EpisodeRequest, EpisodeEntity>();
         }
     }
 }
