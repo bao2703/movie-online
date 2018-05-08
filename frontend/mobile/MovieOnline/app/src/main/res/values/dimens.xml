@@ -4,6 +4,7 @@
     <dimen name="vertical_margin">16dp</dimen>
     <dimen name="padding_standard">5dp</dimen>
     <dimen name="card_margin_standard">5dp</dimen>
+    <dimen name="card_elevation_standard">10dp</dimen>
 
     <dimen name="text_size_large">18sp</dimen>
     <dimen name="text_size_small">12sp</dimen>
