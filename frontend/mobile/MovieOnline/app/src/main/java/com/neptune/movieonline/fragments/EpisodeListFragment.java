@@ -60,10 +60,6 @@ public class EpisodeListFragment extends Fragment implements Response.Listener<E
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL);
-        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.line_divider));
-        recyclerView.addItemDecoration(dividerItemDecoration);
     }
 
     public void fetchEpisodes(Integer movieId) {
