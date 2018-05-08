@@ -7,10 +7,10 @@ import android.widget.TextView;
 
 import com.android.volley.Response;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Extra;
-import com.neptune.movieonline.utils.helpers.GlideHelper;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 import com.neptune.movieonline.utils.requests.MovieRequest;
@@ -41,7 +41,7 @@ public class MovieDetailActivity extends BaseActivity {
         textViewDescription.setText(MOVIE.getDescription());
         Glide.with(this)
                 .load(MOVIE.getPosterUrl())
-                .apply(GlideHelper.POSTER_OPTIONS)
+                .apply(RequestOptions.centerCropTransform())
                 .into(imageViewPoster);
     }
 

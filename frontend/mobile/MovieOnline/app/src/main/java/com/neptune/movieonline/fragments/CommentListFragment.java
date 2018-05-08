@@ -4,7 +4,6 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +69,7 @@ public class CommentListFragment extends Fragment {
                 new Response.Listener<Comment[]>() {
                     @Override
                     public void onResponse(Comment[] response) {
-                        recyclerView.setAdapter(new CommentRecyclerViewAdapter(Arrays.asList(response)));
+                        recyclerView.setAdapter(new CommentRecyclerViewAdapter(getActivity(), Arrays.asList(response)));
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(commentRequest);

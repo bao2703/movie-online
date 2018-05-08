@@ -1,5 +1,6 @@
 package com.neptune.movieonline.adapters;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Comment;
 
@@ -23,9 +26,11 @@ import butterknife.ButterKnife;
 
 public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecyclerViewAdapter.ViewHolder> {
 
+    private Context context;
     private List<Comment> items;
 
-    public CommentRecyclerViewAdapter(List<Comment> items) {
+    public CommentRecyclerViewAdapter(Context context, List<Comment> items) {
+        this.context = context;
         this.items = items;
     }
 
@@ -44,6 +49,13 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
         holder.textViewName.setText(item.getUser().getName());
         holder.textViewContent.setText(item.getContent());
         holder.textViewDateCreated.setText(DateFormat.getDateInstance().format(item.getDateCreated()));
+
+        RequestOptions requestOptions = new RequestOptions();
+
+        Glide.with(context)
+                .load(item.getUser().getAvatarUrl())
+                .apply(requestOptions.placeholder(R.mipmap.ic_launcher).centerCrop().circleCrop())
+                .into(holder.imageViewAvatar);
     }
 
     @Override

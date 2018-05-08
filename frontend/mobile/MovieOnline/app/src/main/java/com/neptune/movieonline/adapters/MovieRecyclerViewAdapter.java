@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.fragments.MovieListFragment;
 import com.neptune.movieonline.models.Movie;
-import com.neptune.movieonline.utils.helpers.GlideHelper;
 
 import java.util.List;
 
@@ -52,7 +52,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         holder.textViewViews.setText(String.valueOf(item.getViews()));
         Glide.with(context)
                 .load(item.getPosterUrl())
-                .apply(GlideHelper.POSTER_OPTIONS)
+                .apply(RequestOptions.centerCropTransform())
                 .into(holder.imageViewPoster);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
