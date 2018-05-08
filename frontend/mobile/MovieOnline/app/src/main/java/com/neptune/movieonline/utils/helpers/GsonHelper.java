@@ -17,7 +17,7 @@ public class GsonHelper {
     private static Gson getGson() {
         if (gson == null) {
             gson = new GsonBuilder()
-                    .setDateFormat("dd-MM-yyyy")
+                    .setDateFormat("yyyy-MM-dd")
                     .create();
         }
         return gson;

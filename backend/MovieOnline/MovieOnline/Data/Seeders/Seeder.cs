@@ -96,11 +96,10 @@ namespace MovieOnline.Data.Seeders
             var movieFaker = new Faker<MovieEntity>().Rules((f, o) =>
             {
                 o.Name = f.Commerce.Product();
-                o.Release = f.Date.Past(5);
                 o.Description = f.Lorem.Sentences(f.Random.Number(2, 5));
                 o.Views = f.Random.Number(1000000);
-                o.Rating = f.Random.Float(1, 5);
                 o.PosterUrl = f.Image.Image();
+                o.DateCreated = f.Date.Past(5);
 
                 o.GenreMovies = new List<GenreMovieEntity>();
                 var randomGenres = f.PickRandom(genres, f.Random.Number(2, 5)).ToList();

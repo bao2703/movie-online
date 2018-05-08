@@ -108,6 +108,8 @@ namespace MovieOnline.Controllers
 
             var movie = _mapper.Map<MovieEntity>(model);
 
+            movie.DateCreated = DateTime.Now;
+
             await _movieRepository.AddAsync(movie);
             await _unitOfWork.SaveChangesAsync();
 

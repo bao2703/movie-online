@@ -3,6 +3,7 @@ package com.neptune.movieonline.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Comment;
 
-import java.text.DateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,19 +48,22 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
 
         holder.textViewName.setText(item.getUser().getName());
         holder.textViewContent.setText(item.getContent());
-        holder.textViewDateCreated.setText(DateFormat.getDateInstance().format(item.getDateCreated()));
-
-        RequestOptions requestOptions = new RequestOptions();
+        holder.textViewDateCreated.setText(DateFormat.format("MM/dd/yyyy", item.getDateCreated()));
 
         Glide.with(context)
                 .load(item.getUser().getAvatarUrl())
-                .apply(requestOptions.placeholder(R.mipmap.ic_launcher).centerCrop().circleCrop())
+                .apply(new RequestOptions().placeholder(R.mipmap.ic_launcher).centerCrop().circleCrop())
                 .into(holder.imageViewAvatar);
     }
 
     @Override
     public int getItemCount() {
         return items.size();
+    }
+
+    public void setItems(List<Comment> items) {
+        this.items = items;
+        notifyDataSetChanged();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

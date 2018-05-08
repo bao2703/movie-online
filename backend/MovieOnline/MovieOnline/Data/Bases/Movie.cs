@@ -9,14 +9,12 @@ namespace MovieOnline.Data.Bases
 
         public string Name { get; set; }
 
-        public DateTime Release { get; set; }
-
         public string Description { get; set; }
 
         public long Views { get; set; }
 
-        public float Rating { get; set; }
-
         public string PosterUrl { get; set; }
+
+        public DateTime DateCreated { get; set; }
     }
 }

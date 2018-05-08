@@ -42,7 +42,8 @@ namespace MovieOnline.Controllers
             }
 
             var comment = _mapper.Map<CommentEntity>(model);
-            comment.DateCreated = DateTime.Today;
+
+            comment.DateCreated = DateTime.Now;
 
             await _commentRepository.AddAsync(comment);
             await _unitOfWork.SaveChangesAsync();

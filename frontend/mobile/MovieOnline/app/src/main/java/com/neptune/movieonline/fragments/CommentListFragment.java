@@ -17,6 +17,7 @@ import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 import com.neptune.movieonline.utils.requests.MovieRequest;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import butterknife.BindView;
@@ -30,6 +31,7 @@ public class CommentListFragment extends Fragment {
 
     private static final String ARG_MOVIE_ID = "MOVIE_ID";
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
+    private CommentRecyclerViewAdapter adapter;
     private Integer MOVIE_ID;
 
     public static CommentListFragment newInstance(Integer movieId) {
@@ -61,6 +63,8 @@ public class CommentListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
+        adapter = new CommentRecyclerViewAdapter(getActivity(), new ArrayList<Comment>());
+        recyclerView.setAdapter(adapter);
         fetchComments();
     }
 
@@ -69,7 +73,7 @@ public class CommentListFragment extends Fragment {
                 new Response.Listener<Comment[]>() {
                     @Override
                     public void onResponse(Comment[] response) {
-                        recyclerView.setAdapter(new CommentRecyclerViewAdapter(getActivity(), Arrays.asList(response)));
+                        adapter.setItems(Arrays.asList(response));
                     }
                 }, null);
         VolleyHelper.getInstance().addToRequestQueue(commentRequest);

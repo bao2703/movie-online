@@ -52,7 +52,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
         holder.textViewViews.setText(String.valueOf(item.getViews()));
         Glide.with(context)
                 .load(item.getPosterUrl())
-                .apply(RequestOptions.centerCropTransform())
+                .apply(new RequestOptions().centerCrop())
                 .into(holder.imageViewPoster);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,6 @@
 package com.neptune.movieonline.models;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -9,12 +8,11 @@ import java.util.List;
  */
 
 public class Movie implements Serializable {
+
     private Integer id;
     private String name;
-    private Date release;
     private String description;
     private long views;
-    private float rating;
     private String posterUrl;
     private List<Comment> comments;
 
@@ -34,14 +32,6 @@ public class Movie implements Serializable {
         this.name = name;
     }
 
-    public Date getRelease() {
-        return release;
-    }
-
-    public void setRelease(Date release) {
-        this.release = release;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -56,14 +46,6 @@ public class Movie implements Serializable {
 
     public void setViews(long views) {
         this.views = views;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public void setRating(float rating) {
-        this.rating = rating;
     }
 
     public String getPosterUrl() {
