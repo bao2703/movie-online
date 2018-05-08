@@ -79,7 +79,7 @@ public class CommentActivity extends BaseActivity {
 
         Comment payload = new Comment();
         payload.setContent(getComment());
-        payload.setUserId(1);
+        payload.setUserId(5);
         payload.setMovieId(MOVIE.getId());
 
         GsonRequest<String> commentRequest = CommentRequest.createComment(payload,

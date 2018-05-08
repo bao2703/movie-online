@@ -41,6 +41,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Comment item = items.get(position);
 
+        holder.textViewName.setText(item.getUser().getName());
         holder.textViewContent.setText(item.getContent());
         holder.textViewDateCreated.setText(DateFormat.getDateInstance().format(item.getDateCreated()));
     }
@@ -53,6 +54,7 @@ public class CommentRecyclerViewAdapter extends RecyclerView.Adapter<CommentRecy
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.imageViewAvatar) ImageView imageViewAvatar;
+        @BindView(R.id.textViewName) TextView textViewName;
         @BindView(R.id.textViewContent) TextView textViewContent;
         @BindView(R.id.textViewDateCreated) TextView textViewDateCreated;
 

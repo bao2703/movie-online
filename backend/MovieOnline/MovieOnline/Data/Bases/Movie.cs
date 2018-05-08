@@ -7,7 +7,6 @@ namespace MovieOnline.Data.Bases
     {
         public int Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public DateTime Release { get; set; }

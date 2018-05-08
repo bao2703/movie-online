@@ -10,11 +10,9 @@ namespace MovieOnline.Data.Bases
 
         public string AvatarUrl { get; set; }
 
-        [Required]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
         public string Password { get; set; }
 
         public Role Role { get; set; }

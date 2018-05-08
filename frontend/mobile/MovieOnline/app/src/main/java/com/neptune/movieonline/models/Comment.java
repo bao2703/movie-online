@@ -13,6 +13,7 @@ public class Comment {
     private Date dateCreated;
     private Integer userId;
     private Integer movieId;
+    private User user;
 
     public Integer getId() {
         return id;
@@ -52,5 +53,13 @@ public class Comment {
 
     public void setMovieId(Integer movieId) {
         this.movieId = movieId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

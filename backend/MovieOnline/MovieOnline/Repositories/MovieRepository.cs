@@ -20,7 +20,7 @@ namespace MovieOnline.Repositories
 
         public IEnumerable<CommentEntity> FindCommentsById(int id)
         {
-            var movie = DbSet.Include(m => m.Comments).SingleOrDefault(m => m.Id == id);
+            var movie = DbSet.Include(m => m.Comments).ThenInclude(m => m.User).SingleOrDefault(m => m.Id == id);
             if (movie == null)
             {
                 return null;
