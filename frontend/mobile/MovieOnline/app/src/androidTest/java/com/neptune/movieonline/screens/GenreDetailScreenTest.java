@@ -58,7 +58,7 @@ public class GenreDetailScreenTest {
 
     @Test
     public void shouldDisplayItems() {
-        ViewInteraction recyclerView = onView(withId(R.id.recyclerViewMovie));
+        ViewInteraction recyclerView = onView(withId(R.id.recyclerView));
 
         recyclerView.check(matches(hasDescendant(withId(R.id.textViewName))));
         recyclerView.check(matches(hasDescendant(withId(R.id.textViewViews))));
@@ -67,7 +67,7 @@ public class GenreDetailScreenTest {
 
     @Test
     public void shouldNavigateToDetail_whenClickOnItem() {
-        onView(withId(R.id.recyclerViewMovie))
+        onView(withId(R.id.recyclerView))
                 .perform(actionOnItemAtPosition(5, click()));
 
         intended(hasComponent(MovieDetailActivity.class.getName()));

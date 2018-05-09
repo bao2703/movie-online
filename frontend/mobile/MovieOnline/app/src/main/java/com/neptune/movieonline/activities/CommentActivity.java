@@ -40,11 +40,12 @@ public class CommentActivity extends BaseActivity {
     }
 
     private void initViews() {
-        commentListFragment = CommentListFragment.newInstance(MOVIE.getId());
+        commentListFragment = CommentListFragment.newInstance();
         getFragmentManager()
                 .beginTransaction()
                 .replace(fragment_container, commentListFragment)
                 .commit();
+        commentListFragment.fetchComments(MOVIE.getId());
     }
 
     private void setData() {
@@ -90,7 +91,7 @@ public class CommentActivity extends BaseActivity {
                         imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                         editTextComment.setText("");
                         progressDialog.dismiss();
-                        commentListFragment.fetchComments();
+                        commentListFragment.fetchComments(MOVIE.getId());
                     }
                 },
                 new Response.ErrorListener() {

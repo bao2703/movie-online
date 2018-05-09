@@ -58,7 +58,7 @@ public class CommentScreenTest {
 
     @Test
     public void shouldDisplayItems() {
-        ViewInteraction recyclerView = onView(withId(R.id.recyclerViewComment));
+        ViewInteraction recyclerView = onView(withId(R.id.recyclerView));
 
         recyclerView.check(matches(hasDescendant(withId(R.id.textViewName))));
         recyclerView.check(matches(hasDescendant(withId(R.id.textViewContent))));
@@ -77,12 +77,12 @@ public class CommentScreenTest {
 
         assertEquals(prev + 1, after);
 
-        onView(withId(R.id.recyclerViewComment))
+        onView(withId(R.id.recyclerView))
                 .check(matches(atPosition(0, hasDescendant(withText("test")))));
     }
 
     private int getRecyclerViewItemCount() {
-        RecyclerView recyclerView = activityRule.getActivity().findViewById(R.id.recyclerViewComment);
+        RecyclerView recyclerView = activityRule.getActivity().findViewById(R.id.recyclerView);
         return recyclerView.getAdapter().getItemCount();
     }
 }

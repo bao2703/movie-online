@@ -31,7 +31,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
             android:hint="@string/label_email"
             android:inputType="textEmailAddress" />
     </LinearLayout>
@@ -46,7 +45,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
             android:hint="@string/label_password"
             android:inputType="textPassword" />
     </LinearLayout>
@@ -61,7 +59,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:ems="10"
             android:hint="@string/label_confirm_password"
             android:inputType="textPassword" />
     </LinearLayout>

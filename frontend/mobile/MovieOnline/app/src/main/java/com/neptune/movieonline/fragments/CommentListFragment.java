@@ -29,28 +29,11 @@ import butterknife.ButterKnife;
 
 public class CommentListFragment extends Fragment {
 
-    private static final String ARG_MOVIE_ID = "MOVIE_ID";
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     private CommentRecyclerViewAdapter adapter;
-    private Integer MOVIE_ID;
 
-    public static CommentListFragment newInstance(Integer movieId) {
-        CommentListFragment fragment = new CommentListFragment();
-
-        Bundle args = new Bundle();
-        args.putInt(ARG_MOVIE_ID, movieId);
-        fragment.setArguments(args);
-
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            MOVIE_ID = getArguments().getInt(ARG_MOVIE_ID);
-        }
+    public static CommentListFragment newInstance() {
+        return new CommentListFragment();
     }
 
     @Override
@@ -65,11 +48,10 @@ public class CommentListFragment extends Fragment {
         ButterKnife.bind(this, view);
         adapter = new CommentRecyclerViewAdapter(getActivity(), new ArrayList<Comment>());
         recyclerView.setAdapter(adapter);
-        fetchComments();
     }
 
-    public void fetchComments() {
-        GsonRequest<Comment[]> commentRequest = MovieRequest.getComments(MOVIE_ID,
+    public void fetchComments(int movieId) {
+        GsonRequest<Comment[]> commentRequest = MovieRequest.getComments(movieId,
                 new Response.Listener<Comment[]>() {
                     @Override
                     public void onResponse(Comment[] response) {

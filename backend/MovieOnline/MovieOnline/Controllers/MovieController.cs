@@ -30,13 +30,35 @@ namespace MovieOnline.Controllers
         }
 
         [HttpGet]
-        public IActionResult GetAll(string searchString)
+        public IActionResult GetAll(string searchString, string order, int? take)
         {
-            var movies = _movieRepository.OrderBy(m => m.Name);
+            IEnumerable<MovieEntity> movies;
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
+                movies = _movieRepository.FindBy(m => m.Name.ToLower().Contains(searchString.ToLower()));
+            }
+            else
+            {
+                movies = _movieRepository.FindAll();
+            }
+
+            if (order == "date-created")
+            {
+                movies = movies.OrderByDescending(m => m.DateCreated);
+            }
+            else if (order == "views")
+            {
+                movies = movies.OrderByDescending(m => m.Views);
+            }
+            else
+            {
+                movies = movies.OrderBy(m => m.Name);
+            }
+
+            if (take != null)
+            {
+                movies = movies.Take((int) take);
             }
 
             var reponses = _mapper.Map<List<MovieResponse>>(movies.ToList());
