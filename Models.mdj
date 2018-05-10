@@ -47673,7 +47673,7 @@
 															"height": 13,
 															"autoResize": false,
 															"underline": false,
-															"text": "SearchController",
+															"text": "MovieController",
 															"horizontalAlignment": 2,
 															"verticalAlignment": 5,
 															"wordWrap": false
@@ -49192,7 +49192,7 @@
 									"_parent": {
 										"$ref": "AAAAAAFjRB5ZK4GTZuc="
 									},
-									"name": "SearchController",
+									"name": "MovieController",
 									"visibility": "public",
 									"represent": {
 										"$ref": "AAAAAAFjRCERaYN3Clw="
