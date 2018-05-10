@@ -52,18 +52,20 @@ public class MovieDetailScreenTest {
         MOVIE = new Movie();
         MOVIE.setId(1);
         MOVIE.setName("Test");
+        MOVIE.setViews(10000);
         MOVIE.setDescription("Test Test");
     }
 
     @Test
     public void shouldShowRightData() {
         onView(withId(R.id.textViewName)).check(matches(withText(MOVIE.getName())));
-        onView(withId(R.id.textViewDescription)).check(matches(withText(MOVIE.getDescription())));
+        onView(withId(R.id.textViewViews)).check(matches(withText("Views: " + MOVIE.getViews())));
+        onView(withId(R.id.textViewDescription)).check(matches(withText("Description: " + MOVIE.getDescription())));
     }
 
     @Test
     public void shouldNavigateToComment_whenClickCommentButton() {
-        onView(withId(R.id.buttonComment)).perform(click());
+        onView(withId(R.id.buttonComments)).perform(click());
 
         intended(hasComponent(CommentActivity.class.getName()));
     }

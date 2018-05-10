@@ -25,7 +25,6 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/edit_text_comment"
-            android:ems="10"
             android:hint="Type something"
             android:inputType="textMultiLine"
             android:maxLines="4" />

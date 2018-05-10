@@ -21,6 +21,7 @@ import butterknife.OnClick;
 public class MovieDetailActivity extends BaseActivity {
 
     @BindView(R.id.textViewName) TextView textViewName;
+    @BindView(R.id.textViewViews) TextView textViewViews;
     @BindView(R.id.textViewDescription) TextView textViewDescription;
     @BindView(R.id.imageViewPoster) ImageView imageViewPoster;
 
@@ -38,7 +39,8 @@ public class MovieDetailActivity extends BaseActivity {
         MOVIE = (Movie) getIntent().getSerializableExtra(Extra.MOVIE);
         setTitle(MOVIE.getName());
         textViewName.setText(MOVIE.getName());
-        textViewDescription.setText(MOVIE.getDescription());
+        textViewViews.setText("Views: " + MOVIE.getViews());
+        textViewDescription.setText("Description: " + MOVIE.getDescription());
         Glide.with(this)
                 .load(MOVIE.getPosterUrl())
                 .apply(RequestOptions.centerCropTransform())
@@ -52,8 +54,8 @@ public class MovieDetailActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    @OnClick(R.id.buttonComment)
-    public void onClickComment() {
+    @OnClick(R.id.buttonComments)
+    public void onClickComments() {
         Intent intent = new Intent(this, CommentActivity.class);
         intent.putExtra(Extra.MOVIE, MOVIE);
         startActivity(intent);

@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.neptune.movieonline.R;
-import com.neptune.movieonline.fragments.MovieListFragment;
 import com.neptune.movieonline.models.Movie;
 
 import java.util.List;
@@ -27,11 +26,13 @@ import butterknife.ButterKnife;
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 
     private Context context;
+    private int resource;
     private List<Movie> items;
-    private MovieListFragment.OnMovieClickListener listener;
+    private OnMovieClickListener listener;
 
-    public MovieRecyclerViewAdapter(Context context, List<Movie> items, MovieListFragment.OnMovieClickListener listener) {
+    public MovieRecyclerViewAdapter(int resource, Context context, List<Movie> items, OnMovieClickListener listener) {
         this.context = context;
+        this.resource = resource;
         this.items = items;
         this.listener = listener;
     }
@@ -40,7 +41,7 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View view = inflater.inflate(R.layout.item_movie, parent, false);
+        View view = inflater.inflate(resource, parent, false);
         return new ViewHolder(view);
     }
 
@@ -71,6 +72,10 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
     public void setItems(List<Movie> items) {
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    public interface OnMovieClickListener {
+        void onMovieClickListener(Movie item);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
