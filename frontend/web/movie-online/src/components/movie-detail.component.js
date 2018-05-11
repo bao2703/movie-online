@@ -64,9 +64,24 @@ export class MovieDetail extends Component {
 
     return (
       <div>
-        <Button color="primary" onClick={() => this.openAddDialog()}>
-          Add
-        </Button>
+        {movie &&
+          <div className="row">
+            <div className="col-3">
+              <img className="img-fluid" src={'http://localhost:5000' + movie.posterUrl} alt="" style={{ height: 200 }} />
+            </div>
+            <div className="col-9">
+              <h3>{movie.name}</h3>
+              <div>{movie.description}</div>
+              <div className="mt-3">
+                <Button color="primary" variant="raised" onClick={() => this.openAddDialog()}>
+                  Add Episodes
+                </Button>
+              </div>
+            </div>
+          </div>
+        }
+
+        <div className="mt-3"></div>
 
         {episodes.map(episode =>
           <span key={episode.id} onClick={() => this.openEditDialog(episode)} className="px-1">
