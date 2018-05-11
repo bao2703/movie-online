@@ -57,6 +57,7 @@ namespace MovieOnline.Data.Seeders
                 o.Email = f.Person.Email.ToLower();
                 o.Password = "1";
                 o.Role = f.PickRandom(o.Role);
+                o.DateCreated = f.Date.Past(5);
             });
 
             var admins = userFaker.Generate(25);

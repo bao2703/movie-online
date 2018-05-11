@@ -6,6 +6,7 @@ using MovieOnline.Data.Entities;
 using MovieOnline.Data.Models.Responses;
 using MovieOnline.Data.Models.Requests;
 using MovieOnline.Repositories;
+using System;
 
 namespace MovieOnline.Controllers
 {
@@ -33,6 +34,7 @@ namespace MovieOnline.Controllers
 
             var user = _mapper.Map<UserEntity>(model);
             user.Email = user.Email.ToLower();
+            user.DateCreated = DateTime.Now;
 
             if (_userRepository.IsExistEmail(user.Email))
             {

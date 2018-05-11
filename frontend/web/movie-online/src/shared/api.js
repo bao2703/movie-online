@@ -2,7 +2,8 @@ const Api = {
   AUTH: 'auth',
   MOVIE: 'movies',
   GENRE: 'genres',
-  EPISODE: 'episodes'
+  EPISODE: 'episodes',
+  STATISTIC: 'statistics'
 }
 
 export const Auth = {
@@ -30,4 +31,8 @@ export const Genre = {
 export const Episode = {
   EDIT: Api.EPISODE,
   DELETE: Api.EPISODE
+}
+
+export const Statistic = {
+  USER: Api.STATISTIC
 }

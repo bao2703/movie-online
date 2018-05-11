@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MovieOnline.Data.Bases
 {
@@ -16,5 +17,7 @@ namespace MovieOnline.Data.Bases
         public string Password { get; set; }
 
         public Role Role { get; set; }
+
+        public DateTime DateCreated { get; set; }
     }
 }
