@@ -17,22 +17,41 @@ export class Movie extends Component {
       movies: [],
       name: '',
       description: '',
-      open: false,
+      openAdd: false,
+      openEdit: false,
+      openSearch: false,
       selectedMovie: { name: '', description: '' }
     }
   }
 
-  openDialog = selectedMovie => {
+  openAddDialog = () => {
+    this.setState({ openAdd: true });
+  }
+
+  closeAddDialog = () => {
+    this.setState({ openAdd: false });
+    this.fetchMovies();
+  }
+
+  openEditDialog = selectedMovie => {
     this.setState({
-      open: true,
+      openEdit: true,
       selectedMovie
     });
-  };
+  }
 
-  closeDialog = () => {
-    this.setState({ open: false });
+  closeEditDialog = () => {
+    this.setState({ openEdit: false });
     this.fetchMovies();
-  };
+  }
+
+  openSearchDialog = () => {
+    this.setState({ openSearch: true });
+  }
+
+  closeSearchDialog = () => {
+    this.setState({ openSearch: false });
+  }
 
   componentDidMount() {
     this.fetchMovies();
@@ -51,7 +70,7 @@ export class Movie extends Component {
   add = () => {
     const movie = { name: this.state.name };
     movieService.create(movie).then(() => {
-      this.fetchGenres();
+      this.fetchMovies();
     })
   }
 
@@ -60,8 +79,14 @@ export class Movie extends Component {
 
     return (
       <div>
-        <input onChange={this.onTextChange('name')} />
-        <button onClick={() => this.add()}>Add</button>
+        <Button color="primary" onClick={() => this.openAddDialog()}>
+          Add
+        </Button>
+        
+        <Button color="primary" onClick={() => this.openSearchDialog()}>
+          Search
+        </Button>
+
         <Table>
           <TableHead>
             <TableRow>
@@ -72,7 +97,7 @@ export class Movie extends Component {
           </TableHead>
           <TableBody>
             {movies.map(movie =>
-              <TableRow key={movie.id} onClick={() => this.openDialog(movie)} className="table-row">
+              <TableRow key={movie.id} onClick={() => this.openEditDialog(movie)} className="table-row">
                 <TableCell>
                   <Link to={'/movie/' + movie.id}>{movie.name}</Link>
                 </TableCell>
@@ -83,11 +108,23 @@ export class Movie extends Component {
           </TableBody>
         </Table>
 
+        <AddMovieDialog
+          fullWidth
+          open={this.state.openAdd}
+          onClose={this.closeAddDialog}
+        />
+
         <EditMovieDialog
           fullWidth
-          open={this.state.open}
-          onClose={this.closeDialog}
+          open={this.state.openEdit}
+          onClose={this.closeEditDialog}
           movie={selectedMovie}
+        />
+
+        <SearchDialog
+          fullWidth
+          open={this.state.openSearch}
+          onClose={this.closeSearchDialog}
         />
       </div>
     )
@@ -95,6 +132,76 @@ export class Movie extends Component {
 }
 
 export default Movie
+
+class AddMovieDialog extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+      description: '',
+      fetching: false
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      name: '',
+      description: '',
+      fetching: false,
+    })
+  }
+
+  onAdd = () => {
+    this.setState({ fetching: true });
+    const { name, description } = this.state;
+    movieService.create({ name, description }).then(() => {
+      this.props.onClose();
+      this.setState({ fetching: false });
+    })
+  }
+
+  onTextChange = name => e => {
+    this.setState({ [name]: e.target.value });
+  }
+
+  render() {
+    const { ...other } = this.props;
+    const { name, description, fetching } = this.state;
+
+    return (
+      <Dialog {...other}>
+        <DialogTitle>Add</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="normal"
+            label="Name"
+            value={name}
+            onChange={this.onTextChange('name')}
+            fullWidth
+          />
+          <TextField
+            margin="normal"
+            label="Description"
+            value={description}
+            onChange={this.onTextChange('description')}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => this.props.onClose()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => this.onAdd()} color="primary" disabled={fetching}>
+            Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+}
 
 class EditMovieDialog extends Component {
   constructor(props) {
@@ -186,6 +293,56 @@ class EditMovieDialog extends Component {
           </Button>
           <Button onClick={() => this.onEdit()} color="primary" disabled={fetching}>
             Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+}
+
+class SearchDialog extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      movies: [],
+      name: '',
+      fetching: false
+    }
+  }
+
+  onSearch = () => {
+    
+  }
+
+  onTextChange = name => e => {
+    this.setState({ [name]: e.target.value });
+  }
+
+  render() {
+    const { ...other } = this.props;
+    const { name, fetching } = this.state;
+
+    return (
+      <Dialog {...other}>
+        <DialogTitle>Search</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="normal"
+            label="Name"
+            value={name}
+            onChange={this.onTextChange('name')}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => this.props.onClose()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => this.onSearch()} color="primary" disabled={fetching}>
+            Search
           </Button>
         </DialogActions>
       </Dialog>
