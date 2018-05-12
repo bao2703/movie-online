@@ -15,6 +15,7 @@ export class Movie extends Component {
 
     this.state = {
       movies: [],
+      filterMovies: [],
       name: '',
       description: '',
       openAdd: false,
@@ -63,26 +64,26 @@ export class Movie extends Component {
 
   fetchMovies = () => {
     movieService.fetchAll().then(movies => {
-      this.setState({ movies })
+      this.setState({ movies, filterMovies: movies });
     });
   }
 
-  add = () => {
-    const movie = { name: this.state.name };
-    movieService.create(movie).then(() => {
-      this.fetchMovies();
-    })
+  onSearch = searchString => {
+    searchString = searchString.toLowerCase();
+    const filterMovies = this.state.movies.filter(item => item.name.toLowerCase().includes(searchString) || item.description.toLowerCase().includes(searchString));
+    this.setState({ filterMovies });
+    this.closeSearchDialog();
   }
 
   render() {
-    const { movies, selectedMovie } = this.state;
+    const { filterMovies, selectedMovie } = this.state;
 
     return (
       <div>
         <Button color="primary" onClick={() => this.openAddDialog()}>
           Add
         </Button>
-        
+
         <Button color="primary" onClick={() => this.openSearchDialog()}>
           Search
         </Button>
@@ -96,10 +97,10 @@ export class Movie extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {movies.map(movie =>
+            {filterMovies.map(movie =>
               <TableRow key={movie.id} onClick={() => this.openEditDialog(movie)} className="table-row">
                 <TableCell>
-                  <Link to={'/movie/' + movie.id}>{movie.name}</Link>
+                  <Link to={`/movie/${movie.id}`}>{movie.name}</Link>
                 </TableCell>
                 <TableCell>{movie.views}</TableCell>
                 <TableCell>{movie.description}</TableCell>
@@ -125,6 +126,7 @@ export class Movie extends Component {
           fullWidth
           open={this.state.openSearch}
           onClose={this.closeSearchDialog}
+          onSearch={this.onSearch}
         />
       </div>
     )
@@ -306,14 +308,14 @@ class SearchDialog extends Component {
     super(props);
 
     this.state = {
-      movies: [],
-      name: '',
-      fetching: false
+      key: '',
     }
   }
 
-  onSearch = () => {
-    
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.props.onSearch(this.state.key);
+    }
   }
 
   onTextChange = name => e => {
@@ -321,8 +323,8 @@ class SearchDialog extends Component {
   }
 
   render() {
-    const { ...other } = this.props;
-    const { name, fetching } = this.state;
+    const { onSearch, ...other } = this.props;
+    const { key } = this.state;
 
     return (
       <Dialog {...other}>
@@ -331,9 +333,10 @@ class SearchDialog extends Component {
           <TextField
             autoFocus
             margin="normal"
-            label="Name"
-            value={name}
-            onChange={this.onTextChange('name')}
+            label="Key"
+            value={key}
+            onChange={this.onTextChange('key')}
+            onKeyPress={this.handleKeyPress}
             fullWidth
           />
         </DialogContent>
@@ -341,7 +344,7 @@ class SearchDialog extends Component {
           <Button onClick={() => this.props.onClose()} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => this.onSearch()} color="primary" disabled={fetching}>
+          <Button onClick={() => onSearch(key)} color="primary">
             Search
           </Button>
         </DialogActions>

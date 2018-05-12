@@ -22,3 +22,7 @@ a:hover {
 .table-row:hover {
   background-color: #e3e5ea;
 }
+
+button:focus {
+  outline: none;
+}

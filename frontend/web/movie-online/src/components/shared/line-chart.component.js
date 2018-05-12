@@ -39,14 +39,16 @@ export class LineChart extends Component {
 
   render() {
     const { options } = this.state;
+    const { data, width, height } = this.props;
+
     return (
       <div>
         <Chart
           chartType="LineChart"
-          data={this.props.data}
+          data={data}
           options={options}
-          width={this.props.width}
-          height={this.props.height}
+          width={width}
+          height={height}
         />
       </div>
     )

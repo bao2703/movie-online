@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-import Header from './../components/header.component';
-import SideBar from './../components/side-bar.component';
+import Header from './../components/core/header.component';
+import SideBar from './../components/core/side-bar.component';
 import Home from './../components/home.component';
 import Movie from './../components/movie.component';
 import Login from './../components/login.component';

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { LineChart } from './line-chart.component';
+import { LineChart } from './shared/line-chart.component';
 
 import * as statisticService from '../services/statistic.service';
 
@@ -25,9 +25,11 @@ export class Home extends Component {
   }
 
   render() {
+    const { data } = this.state;
+
     return (
       <div>
-        <LineChart data={this.state.data} title="User Per Month" />
+        {data.length !== 0 && <LineChart data={data} title="User Per Month" />}
       </div>
     )
   }
