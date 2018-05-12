@@ -10,7 +10,7 @@ export class Home extends Component {
 
     this.state = {
       data: []
-    }
+    };
   }
 
   componentDidMount() {

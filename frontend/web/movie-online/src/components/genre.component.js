@@ -64,6 +64,10 @@ export class Genre extends Component {
           Add
         </Button>
 
+        <Button color="primary" onClick={() => this.openSearchDialog()}>
+          Search
+        </Button>
+
         <Table>
           <TableHead>
             <TableRow>
@@ -109,15 +113,15 @@ class AddGenreDialog extends Component {
       name: '',
       description: '',
       fetching: false
-    }
+    };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
       name: '',
       description: '',
-      fetching: false,
-    })
+      fetching: false
+    });
   }
 
   onAdd = () => {
@@ -126,7 +130,7 @@ class AddGenreDialog extends Component {
     genreService.create({ name, description }).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
-    })
+    });
   }
 
   onTextChange = name => e => {

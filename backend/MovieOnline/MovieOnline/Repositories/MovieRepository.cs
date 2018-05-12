@@ -18,6 +18,11 @@ namespace MovieOnline.Repositories
         {
         }
 
+        public new MovieEntity FindById(object id)
+        {
+            return DbSet.Include(m => m.GenreMovies).ThenInclude(gm => gm.Genre).SingleOrDefault(m => m.Id == (int) id);
+        }
+
         public IEnumerable<CommentEntity> FindCommentsById(int id)
         {
             var movie = DbSet.Include(m => m.Comments).ThenInclude(m => m.User).SingleOrDefault(m => m.Id == id);

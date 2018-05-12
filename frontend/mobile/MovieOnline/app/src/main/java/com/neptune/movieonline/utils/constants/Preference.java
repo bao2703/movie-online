@@ -8,6 +8,8 @@ public interface Preference {
     String SESSION = "SESSION";
 
     interface Key {
+        String ID = "ID";
+        String NAME = "NAME";
         String EMAIL = "EMAIL";
     }
 }

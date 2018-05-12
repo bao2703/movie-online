@@ -1,16 +1,17 @@
 package com.neptune.movieonline.models;
 
 /**
- * Created by Neptune on 3/12/2018.
+ * Created by Neptune on 5/12/2018.
  */
-public class User {
+
+public class Auth {
 
     private Integer id;
     private String name;
     private String avatarUrl;
     private String email;
-    private String password;
     private Role role;
+    private String jwt;
 
     public Integer getId() {
         return id;
@@ -29,8 +30,7 @@ public class User {
     }
 
     public String getAvatarUrl() {
-        if (avatarUrl.contains("http")) return avatarUrl;
-        return "http://10.0.2.2:5000/" + avatarUrl;
+        return avatarUrl;
     }
 
     public void setAvatarUrl(String avatarUrl) {
@@ -45,19 +45,19 @@ public class User {
         this.email = email;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public Role getRole() {
         return role;
     }
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getJwt() {
+        return jwt;
+    }
+
+    public void setJwt(String jwt) {
+        this.jwt = jwt;
     }
 }

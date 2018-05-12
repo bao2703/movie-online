@@ -12,6 +12,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.neptune.movieonline.R;
+import com.neptune.movieonline.models.Auth;
 import com.neptune.movieonline.models.Error;
 import com.neptune.movieonline.models.User;
 import com.neptune.movieonline.utils.constants.ErrorCode;
@@ -56,12 +57,12 @@ public class LoginActivity extends BaseActivity {
         payload.setEmail(getEmail());
         payload.setPassword(getPassword());
 
-        GsonRequest<String> loginRequest = AuthRequest.login(payload,
-                new Response.Listener<String>() {
+        GsonRequest<Auth> loginRequest = AuthRequest.login(payload,
+                new Response.Listener<Auth>() {
                     @Override
-                    public void onResponse(String response) {
+                    public void onResponse(Auth response) {
                         progressDialog.dismiss();
-                        saveSession();
+                        saveSession(response);
                         startActivity(MainActivity.class);
                         finish();
                     }
@@ -85,9 +86,11 @@ public class LoginActivity extends BaseActivity {
         VolleyHelper.getInstance().addToRequestQueue(loginRequest);
     }
 
-    public void saveSession() {
+    public void saveSession(Auth response) {
         SharedPreferences.Editor editor = getSharedPreferences(Preference.SESSION, Context.MODE_PRIVATE).edit();
-        editor.putString(Preference.Key.EMAIL, getEmail());
+        editor.putString(Preference.Key.ID, response.getId().toString());
+        editor.putString(Preference.Key.NAME, response.getName());
+        editor.putString(Preference.Key.EMAIL, response.getEmail());
         editor.apply();
     }
 

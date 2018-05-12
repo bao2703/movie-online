@@ -1,7 +1,10 @@
 package com.neptune.movieonline.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -11,6 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.models.Movie;
 import com.neptune.movieonline.utils.constants.Extra;
+import com.neptune.movieonline.utils.constants.Preference;
 import com.neptune.movieonline.utils.helpers.VolleyHelper;
 import com.neptune.movieonline.utils.requests.GsonRequest;
 import com.neptune.movieonline.utils.requests.MovieRequest;
@@ -31,6 +35,7 @@ public class MovieDetailActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
+        checkLogin();
         setData();
         incView();
     }
@@ -68,5 +73,14 @@ public class MovieDetailActivity extends BaseActivity {
             }
         }, null);
         VolleyHelper.getInstance().addToRequestQueue(request);
+    }
+
+    public void checkLogin() {
+        SharedPreferences prefs = getSharedPreferences(Preference.SESSION, MODE_PRIVATE);
+        String id = prefs.getString(Preference.Key.ID, null);
+        if (id == null) {
+            Button buttonComments = findViewById(R.id.buttonComments);
+            buttonComments.setVisibility(View.GONE);
+        }
     }
 }

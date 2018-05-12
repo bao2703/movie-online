@@ -66,7 +66,14 @@ namespace MovieOnline.Controllers
 
             var jwt = Helper.GenerateJwt(user);
 
-            return Ok(jwt);
+            return Ok(new {
+                jwt,
+                id = user.Id,
+                name = user.Name,
+                email = user.Email,
+                avatarUrl = user.AvatarUrl,
+                role = user.Role
+            });
         }
     }
 }

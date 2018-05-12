@@ -11,12 +11,6 @@
         android:orientation="vertical"
         android:padding="@dimen/padding_standard">
 
-        <Button
-            android:id="@+id/buttonLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/action_login" />
-
         <FrameLayout
             android:id="@+id/fragment_container_newest"
             android:layout_width="match_parent"
@@ -34,6 +28,18 @@
             android:name="com.neptune.movieonline.fragments.GenreListFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <Button
+            android:id="@+id/buttonLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_login" />
+
+        <Button
+            android:id="@+id/buttonLogout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/action_logout" />
     </LinearLayout>
 
 </ScrollView>

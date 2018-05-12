@@ -8,7 +8,7 @@ const Storage = {
 export const login = (email, password) => {
   return axios.post(Auth.LOGIN, { email, password })
     .then(response => {
-      localStorage.setItem(Storage.TOKEN, response.data);
+      localStorage.setItem(Storage.TOKEN, response.data.jwt);
     });
 }
 

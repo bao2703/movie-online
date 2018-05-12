@@ -1,15 +1,19 @@
 package com.neptune.movieonline.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.neptune.movieonline.R;
 import com.neptune.movieonline.fragments.GenreListFragment;
 import com.neptune.movieonline.fragments.MovieListFragment;
 import com.neptune.movieonline.models.Genre;
 import com.neptune.movieonline.utils.constants.Extra;
+import com.neptune.movieonline.utils.constants.Preference;
 
 import butterknife.OnClick;
 
@@ -20,11 +24,16 @@ public class MainActivity extends BaseActivity implements GenreListFragment.OnGe
 
     private MovieListFragment newMovieListFragment;
     private MovieListFragment popularMovieListFragment;
+    private SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        prefs = getSharedPreferences(Preference.SESSION, MODE_PRIVATE);
+
+        checkLogin();
 
         newMovieListFragment = MovieListFragment.newInstanceGrid("NEW MOVIES");
         newMovieListFragment.fetchMovies("date-created", 6);
@@ -42,6 +51,27 @@ public class MainActivity extends BaseActivity implements GenreListFragment.OnGe
     @OnClick(R.id.buttonLogin)
     public void onClickLogin() {
         startActivity(LoginActivity.class);
+    }
+
+    @OnClick(R.id.buttonLogout)
+    public void onClickLogout() {
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+        checkLogin();
+    }
+
+    public void checkLogin() {
+        Button buttonLogin = findViewById(R.id.buttonLogin);
+        Button buttonLogout = findViewById(R.id.buttonLogout);
+        String id = prefs.getString(Preference.Key.ID, null);
+        if (id != null) {
+            buttonLogin.setVisibility(View.GONE);
+            buttonLogout.setVisibility(View.VISIBLE);
+        } else {
+            buttonLogin.setVisibility(View.VISIBLE);
+            buttonLogout.setVisibility(View.GONE);
+        }
     }
 
     @Override
