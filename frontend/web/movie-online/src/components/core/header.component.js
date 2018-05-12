@@ -14,12 +14,10 @@ export class Header extends Component {
 
   logout = () => {
     authService.logout();
-    this.props.history.push('/login');
+    this.props.onLogout();
   }
 
   render() {
-    const { isLoggedIn } = false;
-
     return (
       <div>
         <AppBar position="static" color="primary">
@@ -34,7 +32,7 @@ export class Header extends Component {
                 </Typography>
               </Button>
             </div>
-            {isLoggedIn &&
+            {authService.isLoggedIn() &&
               <Button className="ml-auto" color="inherit" onClick={() => this.logout()}>
                 Log out
               </Button>

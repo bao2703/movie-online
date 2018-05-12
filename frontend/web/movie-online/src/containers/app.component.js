@@ -10,29 +10,51 @@ import Login from './../components/login.component';
 import Genre from './../components/genre.component';
 import MovieDetail from './../components/movie-detail.component';
 
+import * as authService from '../services/auth.service';
+
 export class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoggedIn: authService.isLoggedIn()
+    };
+  }
+
+  loginSuccess = () => {
+    this.setState({ isLoggedIn: true });
+  }
+
+  onLogout = () => {
+    this.setState({ isLoggedIn: false });
+  }
 
   render() {
     return (
-      <div className="">
+      <div>
         <Router>
           <div>
-            <Header />
-            <div className="container-fluid">
-              <div className="row border-bottom">
-                <div className="col-md-2 border-right">
-                  <SideBar />
-                </div>
-                <div className="col-md-10 mt-3 pb-5">
-                  <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/movie/:id" component={MovieDetail} />
-                    <Route path="/movie" component={Movie} />
-                    <Route path="/genre" component={Genre} />
-                  </Switch>
+            <Header onLogout={this.onLogout} />
+            {this.state.isLoggedIn ? (
+              <div className="container-fluid">
+                <div className="row border-bottom">
+                  <div className="col-md-2 border-right">
+                    <SideBar />
+                  </div>
+                  <div className="col-md-10 mt-3 pb-5">
+                    <Switch>
+                      <Route exact path="/" component={Home} />
+                      <Route path="/movie/:id" component={MovieDetail} />
+                      <Route path="/movie" component={Movie} />
+                      <Route path="/genre" component={Genre} />
+                    </Switch>
+                  </div>
                 </div>
               </div>
-            </div>
+            ) : (
+                <Login loginSuccess={this.loginSuccess} />
+              )}
           </div>
         </Router>
       </div>

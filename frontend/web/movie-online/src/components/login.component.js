@@ -28,7 +28,7 @@ class Login extends Component {
     this.setState({ fetching: true });
     authService.login(email, password).then(() => {
       this.setState({ fetching: false });
-      this.props.history.push('/');
+      this.props.loginSuccess();
     });
   }
 

@@ -7,7 +7,7 @@ const Api = {
 }
 
 export const Auth = {
-  LOGIN: 'login'
+  LOGIN: Api.AUTH + '/login'
 }
 
 export const Movie = {
