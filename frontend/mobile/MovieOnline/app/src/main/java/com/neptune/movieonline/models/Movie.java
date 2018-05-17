@@ -49,6 +49,7 @@ public class Movie implements Serializable {
     }
 
     public String getPosterUrl() {
+        if (posterUrl == null) return "";
         if (posterUrl.contains("http")) return posterUrl;
         return "http://10.0.2.2:5000/" + posterUrl;
     }
