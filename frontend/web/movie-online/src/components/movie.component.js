@@ -265,7 +265,7 @@ class EditMovieDialog extends Component {
         <DialogTitle>Edit</DialogTitle>
         <DialogContent>
           <div align="center">
-            <img src={posterUrl} className="img-fluid" alt="" style={{ height: 200, width: 200 }} />
+            <img src={posterUrl} className="img-fluid" alt="" />
           </div>
           <TextField
             autoFocus

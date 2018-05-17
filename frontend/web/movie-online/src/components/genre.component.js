@@ -12,10 +12,12 @@ export class Genre extends Component {
 
     this.state = {
       genres: [],
+      filterGenres: [],
       name: '',
       description: '',
       openAdd: false,
       openEdit: false,
+      openSearch: false,
       selectedGenre: { name: '', description: '' }
     }
   }
@@ -41,6 +43,14 @@ export class Genre extends Component {
     this.fetchGenres();
   }
 
+  openSearchDialog = () => {
+    this.setState({ openSearch: true });
+  }
+
+  closeSearchDialog = () => {
+    this.setState({ openSearch: false });
+  }
+
   componentDidMount() {
     this.fetchGenres();
   }
@@ -51,12 +61,19 @@ export class Genre extends Component {
 
   fetchGenres = () => {
     genreService.fetchAll().then(genres => {
-      this.setState({ genres })
+      this.setState({ genres, filterGenres: genres })
     });
   }
 
+  onSearch = searchString => {
+    searchString = searchString.toLowerCase();
+    const filterGenres = this.state.genres.filter(item => item.name.toLowerCase().includes(searchString) || item.description.toLowerCase().includes(searchString));
+    this.setState({ filterGenres });
+    this.closeSearchDialog();
+  }
+
   render() {
-    const { genres, selectedGenre } = this.state;
+    const { filterGenres, selectedGenre } = this.state;
 
     return (
       <div>
@@ -76,7 +93,7 @@ export class Genre extends Component {
             </TableRow>
           </TableHead>
           <TableBody>
-            {genres.map(genre =>
+            {filterGenres.map(genre =>
               <TableRow key={genre.id} onClick={() => this.openEditDialog(genre)} className="table-row">
                 <TableCell>{genre.name}</TableCell>
                 <TableCell>{genre.description}</TableCell>
@@ -96,6 +113,13 @@ export class Genre extends Component {
           open={this.state.openEdit}
           onClose={this.closeEditDialog}
           genre={selectedGenre}
+        />
+
+        <SearchDialog
+          fullWidth
+          open={this.state.openSearch}
+          onClose={this.closeSearchDialog}
+          onSearch={this.onSearch}
         />
       </div>
     )
@@ -251,6 +275,57 @@ class EditGenreDialog extends Component {
           </Button>
           <Button onClick={() => this.onEdit()} color="primary" disabled={fetching}>
             Save
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
+  }
+}
+
+class SearchDialog extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      key: '',
+    }
+  }
+
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.props.onSearch(this.state.key);
+    }
+  }
+
+  onTextChange = name => e => {
+    this.setState({ [name]: e.target.value });
+  }
+
+  render() {
+    const { onSearch, ...other } = this.props;
+    const { key } = this.state;
+
+    return (
+      <Dialog {...other}>
+        <DialogTitle>Search</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="normal"
+            label="Key"
+            value={key}
+            onChange={this.onTextChange('key')}
+            onKeyPress={this.handleKeyPress}
+            fullWidth
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => this.props.onClose()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => onSearch(key)} color="primary">
+            Search
           </Button>
         </DialogActions>
       </Dialog>

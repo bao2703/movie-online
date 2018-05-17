@@ -29,11 +29,11 @@ export const fetchEpisodes = id => {
   return axios.get(Movie.GET_EPISODE + '/' + id).then(map);
 }
 
-export const addEpisode = (id, episode) => {
+export const addEpisode = (id, episode, onUploadProgress) => {
   const formData = new FormData();
   formData.append('name', episode.name);
   formData.append('file', episode.file);
-  return axios.post(Movie.CREATE_EPISODE + '/' + id, formData, { 'content-type': 'multipart/form-data' });
+  return axios.post(Movie.CREATE_EPISODE + '/' + id, formData, { 'content-type': 'multipart/form-data', onUploadProgress });
 }
 
 const map = response => response.data;

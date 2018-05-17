@@ -17,7 +17,7 @@ export class MovieDetail extends Component {
       episodes: [],
       openEdit: false,
       openAdd: false,
-      selectedEpisode: { name: '' }
+      selectedEpisode: { name: '' },
     }
   }
 
@@ -66,8 +66,8 @@ export class MovieDetail extends Component {
       <div>
         {movie &&
           <div className="row">
-            <div className="col-3">
-              <img className="img-fluid" src={'http://localhost:5000' + movie.posterUrl} alt="" style={{ height: 200 }} />
+            <div className="col-3" align="center">
+              <img className="img-fluid" src={'http://localhost:5000' + movie.posterUrl} alt="" />
             </div>
             <div className="col-9">
               <h3>{movie.name}</h3>
@@ -130,6 +130,7 @@ class AddEpisodeDialog extends Component {
       name: '',
       file: null,
       fetching: false,
+      completed: 0
     })
   }
 
@@ -137,10 +138,13 @@ class AddEpisodeDialog extends Component {
     this.setState({ fetching: true });
     const { movieId } = this.props;
     const { name, file } = this.state;
-    movieService.addEpisode(movieId, { name, file }).then(() => {
+    const onUploadProgress = progressEvent => {
+      this.setState({ completed: (progressEvent.loaded / progressEvent.total * 100) - 5 });
+    };
+    movieService.addEpisode(movieId, { name, file }, onUploadProgress).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
-    })
+    });
   }
 
   onTextChange = name => e => {
@@ -155,7 +159,7 @@ class AddEpisodeDialog extends Component {
 
   render() {
     const { movieId, ...other } = this.props;
-    const { name, fetching } = this.state;
+    const { name, fetching, completed } = this.state;
 
     return (
       <Dialog {...other}>
@@ -178,6 +182,11 @@ class AddEpisodeDialog extends Component {
               </div>
             </div>
           </div>
+          {completed !== 0 &&
+            <div className="progress mt-4">
+              <div className="progress-bar" style={{ width: `${completed}%` }}></div>
+            </div>
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.onClose()} color="primary">
@@ -199,7 +208,8 @@ class EditEpisodeDialog extends Component {
     this.state = {
       id: '',
       name: '',
-      fetching: false
+      fetching: false,
+      completed: 0
     }
   }
 
@@ -208,14 +218,18 @@ class EditEpisodeDialog extends Component {
     this.setState({
       id: episode.id,
       name: episode.name,
-      url: 'http://localhost:5000' + episode.url
+      url: 'http://localhost:5000' + episode.url,
+      completed: 0
     });
   }
 
   onEdit = () => {
     this.setState({ fetching: true, url: '' });
     const { id, name, file } = this.state;
-    episodeService.edit(id, { name, file }).then(() => {
+    const onUploadProgress = progressEvent => {
+      this.setState({ completed: (progressEvent.loaded / progressEvent.total * 100) - 5 });
+    };
+    episodeService.edit(id, { name, file }, onUploadProgress).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
     });
@@ -242,7 +256,7 @@ class EditEpisodeDialog extends Component {
 
   render() {
     const { ...other } = this.props;
-    const { name, url, fetching } = this.state;
+    const { name, url, fetching, completed } = this.state;
 
     return (
       <Dialog {...other}>
@@ -265,9 +279,15 @@ class EditEpisodeDialog extends Component {
               </div>
             </div>
           </div>
-          <div className="embed-responsive embed-responsive-16by9">
-            <iframe className="embed-responsive-item" src={url} title={name}></iframe>
-          </div>
+          {completed !== 0 ? (
+            <div className="progress mt-4">
+              <div className="progress-bar" style={{ width: `${completed}%` }}></div>
+            </div>
+          ) : (
+              <div className="embed-responsive embed-responsive-16by9">
+                <iframe className="embed-responsive-item" src={url} title={name}></iframe>
+              </div>
+            )}
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.onClose()} color="primary">
