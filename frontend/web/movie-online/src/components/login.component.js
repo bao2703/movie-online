@@ -29,7 +29,8 @@ class Login extends Component {
     authService.login(email, password).then(() => {
       this.setState({ fetching: false });
       this.props.loginSuccess();
-    });
+    })
+    .catch(() => this.setState({ fetching: false }));
   }
 
   render() {

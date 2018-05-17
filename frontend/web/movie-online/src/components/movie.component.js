@@ -26,7 +26,7 @@ export class Movie extends Component {
       openAdd: false,
       openEdit: false,
       openSearch: false,
-      selectedMovie: { name: '', description: '' }
+      selectedMovie: { name: '', description: '', genres: [] }
     }
   }
 
@@ -222,7 +222,7 @@ class AddMovieDialog extends Component {
             onChange={this.onTextChange('description')}
             fullWidth
           />
-          <Select
+          <Select className="my-3"
             multiple
             value={selectedGenres}
             onChange={this.handleChange}
@@ -274,14 +274,15 @@ class EditMovieDialog extends Component {
       id: movie.id,
       name: movie.name,
       posterUrl: 'http://localhost:5000' + movie.posterUrl,
-      description: movie.description
+      description: movie.description,
+      selectedGenres: movie.genres.map(g => g.id)
     });
   }
 
   onEdit = () => {
     this.setState({ fetching: true });
-    const { id, name, description, file } = this.state;
-    movieService.edit(id, { name, description, file }).then(() => {
+    const { id, name, description, file, selectedGenres } = this.state;
+    movieService.edit(id, { name, description, file, selectedGenres }).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
     });
@@ -308,13 +309,17 @@ class EditMovieDialog extends Component {
     this.setState({ file });
   }
 
+  handleChange = event => {
+    this.setState({ selectedGenres: event.target.value });
+  }
+
   onTextChange = name => e => {
     this.setState({ [name]: e.target.value });
   }
 
   render() {
     const { ...other } = this.props;
-    const { name, posterUrl, description, fetching } = this.state;
+    const { name, posterUrl, description, fetching, genres, selectedGenres } = this.state;
 
     return (
       <Dialog {...other}>
@@ -338,6 +343,19 @@ class EditMovieDialog extends Component {
             onChange={this.onTextChange('description')}
             fullWidth
           />
+          <Select className="my-3"
+            multiple
+            value={selectedGenres}
+            onChange={this.handleChange}
+            input={<Input />}
+            style={{ width: 552 }}
+          >
+            {genres.map(genre =>
+              <MenuItem key={genre.id} value={genre.id}>
+                {genre.name}
+              </MenuItem>
+            )}
+          </Select>
           <div align="center">
             <input type="file" className="mt-3" onChange={this.handleFileChange} />
           </div>

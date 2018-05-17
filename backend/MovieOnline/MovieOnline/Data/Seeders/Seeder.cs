@@ -73,7 +73,7 @@ namespace MovieOnline.Data.Seeders
             {
                 users[i].Role = Role.None;
                 users[i].Name = $"user{i}";
-                users[i].Email = $"user{i}gmail.com";
+                users[i].Email = $"user{i}@gmail.com";
             }
 
             _context.Users.AddRange(users);

@@ -27,7 +27,7 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var genres = _genreRepository.OrderBy(g => g.Name).ToList();
+            var genres = _genreRepository.OrderBy(g => g.Name.ToLower()).ToList();
             var reponses = _mapper.Map<List<GenreResponse>>(genres);
             return Ok(reponses);
         }

@@ -7,8 +7,13 @@ const Storage = {
 
 export const login = (email, password) => {
   return axios.post(Auth.LOGIN, { email, password })
+    .then(response => response.data)
     .then(response => {
-      localStorage.setItem(Storage.TOKEN, response.data.jwt);
+      if (response.role === 'Administrator') {
+        localStorage.setItem(Storage.TOKEN, response.jwt);
+      } else {
+        throw new DOMException();
+      }
     });
 }
 

@@ -50,7 +50,7 @@ namespace MovieOnline.Controllers
             }
             else
             {
-                movies = movies.OrderBy(m => m.Name);
+                movies = movies.OrderBy(m => m.Name.ToLower());
             }
 
             if (take != null)
@@ -162,7 +162,7 @@ namespace MovieOnline.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Edit(int id, [FromForm] MovieRequest model)
         {
-            var movie = _movieRepository.FindById(id);
+            var movie = _movieRepository.FindByIdWithGenres(id);
 
             if (!ModelState.IsValid || movie == null)
             {
@@ -171,6 +171,7 @@ namespace MovieOnline.Controllers
 
             movie.Name = model.Name;
             movie.Description = model.Description;
+            movie.GenreMovies.Clear();
 
             if (model.File != null)
             {
@@ -185,7 +186,12 @@ namespace MovieOnline.Controllers
                 }
             }
 
-            _movieRepository.Update(movie);
+            await _unitOfWork.SaveChangesAsync();
+
+            model.SelectedGenres.ForEach(item => {
+                movie.GenreMovies.Add(new GenreMovieEntity() { GenreId = item });
+            });
+
             await _unitOfWork.SaveChangesAsync();
 
             return Ok();
