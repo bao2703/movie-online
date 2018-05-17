@@ -158,6 +158,7 @@ class AddMovieDialog extends Component {
       selectedGenres: [],
       genres: []
     }
+    this.fetchGenres();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -167,13 +168,12 @@ class AddMovieDialog extends Component {
       fetching: false,
       selectedGenres: []
     });
-    this.fetchGenres();
   }
 
   onAdd = () => {
     this.setState({ fetching: true });
-    const { name, description, selectedGenres } = this.state;
-    movieService.create({ name, description, selectedGenres }).then(() => {
+    const { name, description, file, selectedGenres } = this.state;
+    movieService.create({ name, description, file, selectedGenres }).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
     });
@@ -183,6 +183,12 @@ class AddMovieDialog extends Component {
     genreService.fetchAll().then(genres => {
       this.setState({ genres });
     });
+  }
+
+  handleFileChange = e => {
+    e.preventDefault();
+    const file = e.target.files[0];
+    this.setState({ file });
   }
 
   handleChange = event => {
@@ -229,6 +235,9 @@ class AddMovieDialog extends Component {
               </MenuItem>
             )}
           </Select>
+          <div align="center">
+            <input type="file" className="mt-3" onChange={this.handleFileChange} />
+          </div>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.onClose()} color="primary">
@@ -252,8 +261,11 @@ class EditMovieDialog extends Component {
       name: '',
       posterUrl: '',
       description: '',
-      fetching: false
+      fetching: false,
+      selectedGenres: [],
+      genres: []
     }
+    this.fetchGenres();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -281,6 +293,12 @@ class EditMovieDialog extends Component {
     movieService.remove(id).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
+    });
+  }
+
+  fetchGenres = () => {
+    genreService.fetchAll().then(genres => {
+      this.setState({ genres });
     });
   }
 

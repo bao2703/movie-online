@@ -124,7 +124,7 @@ namespace MovieOnline.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] MovieRequest model)
+        public async Task<IActionResult> Create([FromForm] MovieRequest model)
         {
             if (!ModelState.IsValid)
             {
@@ -139,6 +139,19 @@ namespace MovieOnline.Controllers
             });
 
             movie.DateCreated = DateTime.Now;
+
+            if (model.File != null)
+            {
+                var filePath = $"/{DateTime.Now.ToFileTime()}_{model.File.FileName}";
+                using (var stream = new FileStream($"wwwroot/{filePath}", FileMode.Create))
+                {
+                    var oldPath = $"wwwroot{movie.PosterUrl}";
+                    if (System.IO.File.Exists(oldPath)) System.IO.File.Delete(oldPath);
+
+                    await model.File.CopyToAsync(stream);
+                    movie.PosterUrl = filePath;
+                }
+            }
 
             await _movieRepository.AddAsync(movie);
             await _unitOfWork.SaveChangesAsync();

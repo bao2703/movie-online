@@ -10,7 +10,14 @@ export const fetch = id => {
 }
 
 export const create = movie => {
-  return axios.post(Movie.CREATE, movie);
+  const formData = new FormData();
+  formData.append('name', movie.name);
+  formData.append('description', movie.description);
+  formData.append('file', movie.file);
+  for (var i = 0; i < movie.selectedGenres.length; i++) {
+    formData.append('selectedGenres[]', movie.selectedGenres[i]);
+  }
+  return axios.post(Movie.CREATE, formData, { 'content-type': 'multipart/form-data' });
 }
 
 export const edit = (id, movie) => {
@@ -18,6 +25,9 @@ export const edit = (id, movie) => {
   formData.append('name', movie.name);
   formData.append('description', movie.description);
   formData.append('file', movie.file);
+  for (var i = 0; i < movie.selectedGenres.length; i++) {
+    formData.append('selectedGenres[]', movie.selectedGenres[i]);
+  }
   return axios.put(Movie.EDIT + '/' + id, formData, { 'content-type': 'multipart/form-data' });
 }
 
