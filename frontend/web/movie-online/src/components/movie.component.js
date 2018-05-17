@@ -2,11 +2,16 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 import * as movieService from '../services/movie.service';
+import * as genreService from '../services/genre.service';
 
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 import Dialog, { DialogActions, DialogContent, DialogTitle } from 'material-ui/Dialog';
+import Input from 'material-ui/Input';
+
+import Select from 'material-ui/Select';
+import { MenuItem } from 'material-ui/Menu';
 
 export class Movie extends Component {
 
@@ -93,6 +98,7 @@ export class Movie extends Component {
             <TableRow>
               <TableCell>Name</TableCell>
               <TableCell>Views</TableCell>
+              <TableCell>Genres</TableCell>
               <TableCell>Description</TableCell>
             </TableRow>
           </TableHead>
@@ -103,6 +109,11 @@ export class Movie extends Component {
                   <Link to={`/movie/${movie.id}`}>{movie.name}</Link>
                 </TableCell>
                 <TableCell>{movie.views}</TableCell>
+                <TableCell>
+                  {movie.genres.map((genre, index) =>
+                    <span key={genre.id}>{genre.name}{index < movie.genres.length - 1 && ', '}</span>
+                  )}
+                </TableCell>
                 <TableCell>{movie.description}</TableCell>
               </TableRow>
             )}
@@ -143,7 +154,9 @@ class AddMovieDialog extends Component {
     this.state = {
       name: '',
       description: '',
-      fetching: false
+      fetching: false,
+      selectedGenres: [],
+      genres: []
     }
   }
 
@@ -152,16 +165,28 @@ class AddMovieDialog extends Component {
       name: '',
       description: '',
       fetching: false,
-    })
+      selectedGenres: []
+    });
+    this.fetchGenres();
   }
 
   onAdd = () => {
     this.setState({ fetching: true });
-    const { name, description } = this.state;
-    movieService.create({ name, description }).then(() => {
+    const { name, description, selectedGenres } = this.state;
+    movieService.create({ name, description, selectedGenres }).then(() => {
       this.props.onClose();
       this.setState({ fetching: false });
-    })
+    });
+  }
+
+  fetchGenres = () => {
+    genreService.fetchAll().then(genres => {
+      this.setState({ genres });
+    });
+  }
+
+  handleChange = event => {
+    this.setState({ selectedGenres: event.target.value });
   }
 
   onTextChange = name => e => {
@@ -170,7 +195,7 @@ class AddMovieDialog extends Component {
 
   render() {
     const { ...other } = this.props;
-    const { name, description, fetching } = this.state;
+    const { name, description, fetching, selectedGenres, genres } = this.state;
 
     return (
       <Dialog {...other}>
@@ -191,6 +216,19 @@ class AddMovieDialog extends Component {
             onChange={this.onTextChange('description')}
             fullWidth
           />
+          <Select
+            multiple
+            value={selectedGenres}
+            onChange={this.handleChange}
+            input={<Input />}
+            style={{ width: 552 }}
+          >
+            {genres.map(genre =>
+              <MenuItem key={genre.id} value={genre.id}>
+                {genre.name}
+              </MenuItem>
+            )}
+          </Select>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => this.props.onClose()} color="primary">

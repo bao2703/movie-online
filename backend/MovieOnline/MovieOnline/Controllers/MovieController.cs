@@ -10,6 +10,7 @@ using MovieOnline.Repositories;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System;
+using MovieOnline.Data.Bases;
 
 namespace MovieOnline.Controllers
 {
@@ -32,15 +33,11 @@ namespace MovieOnline.Controllers
         [HttpGet]
         public IActionResult GetAll(string searchString, string order, int? take)
         {
-            IEnumerable<MovieEntity> movies;
+            IEnumerable<MovieEntity> movies = _movieRepository.FindAllWithGenres();
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                movies = _movieRepository.FindBy(m => m.Name.ToLower().Contains(searchString.ToLower()));
-            }
-            else
-            {
-                movies = _movieRepository.FindAll();
+                movies = movies.Where(m => m.Name.ToLower().Contains(searchString.ToLower()));
             }
 
             if (order == "date-created")
@@ -68,7 +65,13 @@ namespace MovieOnline.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var movie = _movieRepository.FindById(id);
+            var movie = _movieRepository.FindByIdWithGenres(id);
+
+            if (movie == null)
+            {
+                return BadRequest();
+            }
+
             var reponse = _mapper.Map<MovieResponse>(movie);
             return Ok(reponse);
         }
@@ -129,6 +132,11 @@ namespace MovieOnline.Controllers
             }
 
             var movie = _mapper.Map<MovieEntity>(model);
+
+            movie.GenreMovies = new List<GenreMovieEntity>();
+            model.SelectedGenres.ForEach(item => {
+                movie.GenreMovies.Add(new GenreMovieEntity() { GenreId = item });
+            });
 
             movie.DateCreated = DateTime.Now;
 

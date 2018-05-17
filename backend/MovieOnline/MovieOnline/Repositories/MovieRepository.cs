@@ -8,6 +8,8 @@ namespace MovieOnline.Repositories
 {
     public interface IMovieRepository : IRepository<MovieEntity>
     {
+        MovieEntity FindByIdWithGenres(int id);
+        IEnumerable<MovieEntity> FindAllWithGenres();
         IEnumerable<CommentEntity> FindCommentsById(int id);
         IEnumerable<EpisodeEntity> FindEpisodesById(int id);
     }
@@ -18,9 +20,14 @@ namespace MovieOnline.Repositories
         {
         }
 
-        public new MovieEntity FindById(object id)
+        public MovieEntity FindByIdWithGenres(int id)
         {
             return DbSet.Include(m => m.GenreMovies).ThenInclude(gm => gm.Genre).SingleOrDefault(m => m.Id == (int) id);
+        }
+
+        public IEnumerable<MovieEntity> FindAllWithGenres()
+        {
+            return DbSet.Include(m => m.GenreMovies).ThenInclude(gm => gm.Genre);
         }
 
         public IEnumerable<CommentEntity> FindCommentsById(int id)

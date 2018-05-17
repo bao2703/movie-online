@@ -17,6 +17,8 @@ namespace MovieOnline.Data.Models.Requests
         public string Description { get; set; }
 
         public IFormFile File { get; set; }
+
+        public List<int> SelectedGenres { get; set; }
     }
 
     public class MovieRequestMapperProfile : Profile
